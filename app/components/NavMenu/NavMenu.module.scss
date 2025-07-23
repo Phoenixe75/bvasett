@@ -1,0 +1,31 @@
+.navMenu {
+    width: 12rem;
+    background: transparent;
+
+    .menuContainer {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.navItem {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: right;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease-in-out;
+    border-right: 2px solid #d1d5db;
+    color: #374151;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+        color: #2563eb;
+    }
+
+    &.active {
+        border-right-color: #3b82f6;
+        color: #2563eb;
+    }
+}

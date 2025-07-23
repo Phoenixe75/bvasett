@@ -1,0 +1,16 @@
+.wrapper {
+  h1 {
+    font-weight: 900;
+    letter-spacing: 0;
+    word-spacing: -10px;
+    span {
+      color:#0F01DF
+    }
+  }
+  h2,h3,h4,h5,span {
+    word-spacing: -3px;
+  }
+  h4 {
+    line-height: 0;
+  }
+}

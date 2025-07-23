@@ -1,0 +1,4 @@
+{
+  "/(main)/page": "app/(main)/page.js",
+  "/(main)/(pages)/filterResult/page": "app/(main)/(pages)/filterResult/page.js"
+}

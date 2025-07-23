@@ -1,0 +1,18 @@
+.dialog_wrapper {
+  width: min(80vw, 500px);
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+.chipContainer {
+  overflow-x: auto;
+  width: 100%;
+  display: flex;
+  gap:16px;
+  scrollbar-width: thin;
+}
+.chip {
+  span {
+    white-space: nowrap;
+  }
+}
