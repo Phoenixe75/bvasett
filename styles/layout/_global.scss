@@ -477,11 +477,22 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
  }
 
  .guide-btn {
-   background-color: rgb(223, 15, 43);
+   background-color: #9b2208;
    color: white;
+   padding: 1.25rem;
+   font-weight: 700;
+   line-height: 1;
+   font-size: 14px;
+ }
+ .novin-btn {
+   background-color: #FFE700;
+   color: black;
  }
  .guide-btn:not(.p-disabled):not([disabled]):hover {
    background-color: rgb(154, 11, 31);
+ }
+ .novin-btn:not(.p-disabled):not([disabled]):hover {
+   background-color: #bcaa02;
  }
  @media screen and (max-width: 769px) {
    .home_property_wallet {
@@ -557,4 +568,27 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    font-family: Gandom !important; 
    font-weight: 800 !important;  
 
+ }
+ .custom-marquee {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   overflow-x: hidden;
+   height: 40px;
+   .marquee-content {
+     animation-name: custom-marquee-animation;
+     animation-iteration-count: infinite;
+     animation-timing-function: linear;
+     white-space: nowrap;
+     animation-duration: 60s;
+   }
+ }
+
+ @keyframes custom-marquee-animation {
+   from {
+     transform: translateX(-13%);
+   }
+   to {
+     transform: translateX(100%);
+   }
  }

@@ -10,10 +10,11 @@ import AppCopyRight from '@/layout/AppCopyRight';
 import {SliderProvider} from '@/layout/context/SliderContext';
 import {Accordion, AccordionTab, AccordionTabChangeEvent} from 'primereact/accordion';
 import Joyride, {BeaconRenderProps} from 'react-joyride';
-import TimeBanner from '../components/TimeBanner';
+import MarqueeBanner from '../components/TimeBanner';
 import {Button} from 'primereact/button';
 import Link from 'next/link';
 import {useLocalStorage} from 'primereact/hooks';
+import {StaticTime} from '@/app/components/StaticTime';
 
 const joyRideSteps = [
   {
@@ -41,8 +42,12 @@ const joyRideSteps = [
 const free7FilesTourJoyRideSteps = [
   {
     target: '.search-button',
-    content: 'جهت راستی آزمایی بیشتر شما مخاطبین و مشتریان عزیز، پس از وارد کردن مقادیر مد نظرتون برای یافتن ملک مورد نظر و دلخواه می‌توانید بعد از ثبت نام اولیه اطلاعات کامل ۷ مورد را به صورت رایگان مشاهده کنید'
-  }
+    content: '7 فایل رایگان:یکی از تفاوت های اصلی ما با سایر پلتفرم های آگهی دهنده معرفی مالکین بدون حضور واسطه هاست که در نهایت بدون پرداخت کمیسیون معاملتون انجام میشه.در جهت اثبات این موضوع پس از اولین ثبت نام،چنانچه مایل باشید درخواست 7 عدد فایل رایگان را کلیک کنید،و با انتخاب حداکثر 7 فایل رایگان و 7 فایل جایگزین،درخواست شما بلا فاصله به اپراتور منتقل و سپس اپراتور به لحظه،با مالک تماس گرفته و موجودیت فایل احراز میگردد،و پس از آن برای شما ارسال میگردد.در ادامه چنانچه مایل بودید میتوانید از خرید فایل های استعلامی یا اشتراک ماهانه بهره مند شوید.همراهتان هستیم تا انتقال قراردادتان در سامانه رسمی(ثبت قرارداد برای شما رایگان میباشد)'
+  },
+  {
+    target: '.search-button',
+    content: 'تک فایل استعلامی:پس از دریافت 7 فایل رایگان خود میتوانید با انتخاب موارد درخواستی به همراه جایگزین توسط اپراتور ما استعلام موجودیت به لحظه انجام شده و سپس برایتان ارسال میگردد.یکی از ارزش های فایل موجودیت به لحظه میباشد،و باز این تفاوت ماست با سایر پلتفرم ها،همراهتان هستیم تا پایان قرارداد رسمی.'
+  },
 ];
 const singleInquiryTourJoyRideSteps = [];
 const LandingPage = () => {
@@ -124,9 +129,12 @@ const LandingPage = () => {
       <div id="home" className="landing-wrapper overflow-hidden">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid align-items-center justify-content-center" style={{backgroundColor: '#111'}}>
-          <div className="col-12 md:col-6 pb-0">
-            <TimeBanner/>
+        <div className="grid align-items-center justify-content-start px-3 py-2" style={{backgroundColor: '#111'}}>
+          <div className="col-auto">
+            <StaticTime/>
+          </div>
+          <div className="col-8 pb-0">
+            <MarqueeBanner/>
           </div>
         </div>
         <div id="Carousel" className="hidden lg:flex flex-column overflow-hidden carousel-custom">
@@ -159,29 +167,38 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <div id="CardCell" className="py-4 pr-4 mx-0 flex-1 property_home_cards ads_sample">
-            <div className="grid mb-2">
-              <div className="col">
-                <Button raised type="button"
+          <div id="CardCell" className="pb-4 pt-3 pr-4 mx-0 flex-1 property_home_cards ads_sample">
+            <div className="grid justify-content-start mb-1">
+              <div className="md:col-6 sm:col-10">
+                <div className="grid justify-content-center">
+                  <div className="col py-0">
+                    <Button raised type="button"
                         id="free7Files"
-                        className="guide-btn w-full justify-content-center"
+                        className="guide-btn justify-content-center w-full"
                         onClick={preview7FreeFiles}>
-                  7 فایل رایگان
-                </Button>
-              </div>
-              <div className="col">
-                <Button raised type="button"
-                        className="guide-btn w-full justify-content-center">
-                  تک فایل استعلامی
-                </Button>
-              </div>
-              <div className="col">
-                <Link href="/subscriptions">
+                      7 فایل رایگان
+                    </Button>
+                  </div>
+                  <div className="col py-0">
+                    <Button raised type="button"
+                        className="guide-btn justify-content-center w-full">
+                      تک فایل استعلامی
+                    </Button>
+                  </div>
+                  <div className="col py-0">
+                    <Link href="/subscriptions">
                   <Button raised type="button"
-                          className="guide-btn w-full justify-content-center">
+                          className="guide-btn justify-content-center w-full">
                     خرید اشتراک
-                  </Button>
-                </Link>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="grid justify-content-start">
+              <div className="md:col-6 sm:col-10 py-0 text-center">
+                <Button className="novin-btn w-full">خدمات نوین، به‌زودی</Button>
               </div>
             </div>
             <div className="grid justify-content-center">

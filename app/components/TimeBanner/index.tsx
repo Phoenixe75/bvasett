@@ -1,35 +1,83 @@
-
-import React, { useEffect, useState } from 'react';
-import moment from 'jalali-moment';
+import React, {useState} from 'react';
 import styles from './timeBanner.module.scss';
 import Marquee from "react-fast-marquee";
-const TimeBanner = () => {
+
+const MarqueeBanner = () => {
   const [jalaliTime, setJalaliTime] = useState('');
-  const [intervalKey, setIntervalKey] = useState(0)
-  useEffect(() => {
-    const updateTime = () => {
-      const now = moment().locale('fa').format('HH:mm | jD jMMMM jYYYY');
-      setJalaliTime(now);
-    };
+  const [content, setContent] = useState('');
+  const contents = [
+    'ثبت قرار داد رایگان',
+    'چی می خوای برات پیدا کنم ، خواستت رو‌بگو‌‌بکردم برات',
+    'پیگیری مشتری',
+    'ثبت قرار داد رایگان',
+    'ثبت آگهی رایگان',
+    'معرفی ارائه دهدنگان خدمات ساختمانی',
+    'معرفی فروشندگان محصولات ساختمانی',
+    'معرفی فروسندگان لوازم خانگی',
+    'اولین و بزرگترین پلتفرم جامع ساختمان',
+    'از معرفی تا بستن قرار داد بی کمیسیون تا نظافت و خدمات ساختمانی و خرید اقلام ساختمان و لوازم خانگی همراهتان هستیم',
+    'اولین و جامع ترین پلتفرم ساختمان ( خرید /اجاره و محصولات) بی‌واسط‌بی‌کمیسیون',
+    'هدف ما حذف واسطه ،حذف کمیسیون/ ارایه کلیه خدمات در راستای خانه دار شدن شما تا استفاده بهینه',
+    'ارائه خدمات ثبت قرار داد فروش و اجاره ملک به طور کاملا رایگان جهت کاربران پلتفرم بی واسط',
+    'و ثبت قرار داد اجاره /فروش  با ۵۰۰ هزار تومان برای کاریران خارج پلتفرم',
+    'از معرفی و ارتباط مستقیم با توجه به خواسته شما تا پایان ثبت قرار داد کنارتان هستیم ، دیگه نگران قیمت های غیر واقعی /عکس های غیر واقعی / و تنظیم قرار داد و خدمات و خرید کلیه اقلام ساختمانی نباشید',
+    'همه موارد به طور جامع در یک پلتفرم',
+    'و‌برای اولین بار بدون واسطه ارتباط مستقیم با مالک بدون کمیسیون',
+    'پايين هدر زير نويس مثل شبكه خبر اونجا كه ساعت متحرك داره',
+    'تبلیغ در بله',
+    'استراتژی قرعه خدمات',
+  ];
+  const staticContent = 'ثبت قرار داد رایگان \n' +
+    'چی می خوای برات پیدا کنم ، خواستت رو‌بگو‌‌بکردم برات\n' +
+    'پیگیری مشتری\n' +
+    'ثبت قرار داد رایگان\n' +
+    'ثبت آگهی رایگان\n' +
+    ' معرفی ارائه دهدنگان خدمات ساختمانی\n' +
+    'معرفی فروشندگان محصولات ساختمانی\n' +
+    'معرفی فروسندگان لوازم خانگی\n' +
+    'اولین و بزرگترین پلتفرم جامع ساختمان\n' +
+    'از معرفی تا بستن قرار داد بی کمیسیون تا نظافت و خدمات ساختمانی و خرید اقلام ساختمان و لوازم خانگی همراهتان هستیم\n' +
+    'اولین و جامع ترین پلتفرم ساختمان ( خرید /اجاره و محصولات) بی‌واسط‌بی‌کمیسیون\n' +
+    'هدف ما حذف واسطه ،حذف کمیسیون/ ارایه کلیه خدمات در راستای خانه دار شدن شما تا استفاده بهینه\n' +
+    'ارائه خدمات ثبت قرار داد فروش و اجاره ملک به طور کاملا رایگان جهت کاربران پلتفرم بی واسط\n' +
+    'و ثبت قرار داد اجاره /فروش  با ۵۰۰ هزار تومان برای کاریران خارج پلتفرم\n' +
+    'از معرفی و ارتباط مستقیم با توجه به خواسته شما تا پایان ثبت قرار داد کنارتان هستیم ، دیگه نگران قیمت های غیر واقعی /عکس های غیر واقعی / و تنظیم قرار داد و خدمات و خرید کلیه اقلام ساختمانی نباشید\n' +
+    'همه موارد به طور جامع در یک پلتفرم\n' +
+    'و‌برای اولین بار بدون واسطه ارتباط مستقیم با مالک بدون کمیسیون\n' +
+    'پايين هدر زير نويس مثل شبكه خبر اونجا كه ساعت متحرك داره\n' +
+    'تبلیغ در بله\n' +
+    'استراتژی قرعه خدمات';
+  /*useEffect(() => {
+    // const updateTime = () => {
+    //   const now = moment().locale('fa').format('HH:mm | jD jMMMM jYYYY');
+    //   setJalaliTime(now);
+    // };
 
-    const resetKeys = () => {
-      setIntervalKey(pre => pre + 1)
-    }
+    // const resetKeys = () => {
+    //   setIntervalKey(pre => pre + 1)
+    // }
 
-    updateTime();
-    const interval = setInterval(updateTime, 60000); // update every minute
-    const intervalKeys = setInterval(updateTime, 1000); 
+    // updateTime();
+    updateContent();
+    const interval = setInterval(updateContent, 240000); // update every minute
+    const intervalKeys = setInterval(updateContent, 3000);
     return () => {
       clearInterval(interval);
       clearInterval(intervalKeys);
     }
-  }, []);
+  }, []);*/
   return (
-
-      <Marquee speed={100} className={styles.wrapper}>
-          <span>{jalaliTime} • </span>
-      </Marquee>
+    <div className="custom-marquee">
+      <span className="marquee-content text-white">{staticContent}</span>
+    </div>
+    // <Marquee speed={400} direction="right"
+    //          className={styles.wrapper}>
+    //   {
+    //     contents.map((content, index) => content)
+    //   }
+    //   {/*<div className="">{staticContent}</div>*/}
+    // </Marquee>
   )
 };
 
-export default TimeBanner;
+export default MarqueeBanner;
