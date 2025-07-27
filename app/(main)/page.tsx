@@ -10,7 +10,7 @@ import AppCopyRight from '@/layout/AppCopyRight';
 import {SliderProvider} from '@/layout/context/SliderContext';
 import {Accordion, AccordionTab, AccordionTabChangeEvent} from 'primereact/accordion';
 import Joyride, {BeaconRenderProps} from 'react-joyride';
-import MarqueeBanner from '../components/TimeBanner';
+import MarqueeBanner from '../components/MarqueeBanner';
 import {Button} from 'primereact/button';
 import Link from 'next/link';
 import {useLocalStorage} from 'primereact/hooks';

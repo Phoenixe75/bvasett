@@ -109,7 +109,7 @@ export const getPurposeLabelwithColor = (purpose: PurposeEnum | null): { label: 
         case PurposeEnum.Barter:
             return { label: 'معاوضه', className: 'bg-green-200', bgColor: '#9800ff', color:'white', iconClass: 'text-green-700' };
         case PurposeEnum.MORTGAGE:
-            return { label: 'رهن کامل', className: 'bg-green-200', bgColor: '#9800ff', color:'white', iconClass: 'text-green-700' };
+            return { label: 'رهن کامل', className: 'bg-green-200', bgColor: '#8e0697', color:'white', iconClass: 'text-green-700' };
         case PurposeEnum.PARTNERSHIP:
             return { label: 'مشارکت', className: 'bg-green-200', bgColor: '#9800ff', color:'white', iconClass: 'text-green-700' };
         default:
