@@ -34,6 +34,7 @@
   color: rgba(0, 0, 0, .56);
   font-size: .875rem;
   line-height: 12px;
+  min-height: 25px;
   height: 25px;
   min-width: 100%;
   overflow: hidden;
@@ -41,6 +42,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 0;
+  position: relative;
 }
 .card_thumbnail {
   width: 136px;

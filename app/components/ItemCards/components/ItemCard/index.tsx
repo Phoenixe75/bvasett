@@ -46,7 +46,7 @@ const ItemCard = ({selectedPackage, data, isSelected, onClick, selectable, onSho
             </div>
             <div className={styles.card_info}>
                 <div className={styles.description}>
-                    <span className={'p-2 chips rounded-1'} style={{ backgroundColor: statusCond.bgColor, color: statusCond.color }}>
+                    <span className={'px-2 py-1 chips rounded-1'} style={{ backgroundColor: statusCond.bgColor, color: statusCond.color }}>
                         {statusCond.label}
                     </span>
                 </div>
@@ -83,8 +83,9 @@ const ItemCard = ({selectedPackage, data, isSelected, onClick, selectable, onSho
                         </div>
                     )}
                     {/* <i className="pi pi-eye text-yellow-500 pointer" style={{ fontSize: '1.5rem' }} onClick={(e) => onShowDetails(data, e)}></i> */}
-                    <div>
-                        <Button raised size="small" severity="success" className="pointer" onClick={(e) => onShowDetails(data, e)}>
+                    <div className="w-full">
+                        <Button raised size="small" severity="success" className="pointer w-full justify-content-center"
+                                onClick={(e) => onShowDetails(data, e)}>
                             جزئیات
                         </Button>
                     </div>

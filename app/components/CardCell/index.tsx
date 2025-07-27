@@ -13,13 +13,13 @@ import Image from "next/image";
 import { images } from '@/app/(main)/(pages)/filterResult/(contants)/images';
 import PropertyDialog from '../PropertyDialog';
 
-export default function CardCell() {
+export default function CardCell({count, setCount}: {count: number, setCount: React.Dispatch<React.SetStateAction<number>>}) {
     const [ads, setAds] = useState<IAdsBase[]>([]);
     const [isLoading, setLoading] = useState<boolean>(true);
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [page, setPage] = useState(1)
     const [next, setNext] = useState(false);
-    const [count, setCount] = useState<null | number>(null)
+    // const [count, setCount] = useState<null | number>(null)
     const [selectedRowData, setSelectedRowData] = useState<any | null>(null);
     const [displayDialog, setDisplayDialog] = useState<boolean>(false);
     const fetchData = async () => {
@@ -75,9 +75,9 @@ export default function CardCell() {
 
     return (
         <>
-        <div className='flex flex-row-reverse w-full'>
-            <h5>{`تعداد: ${count}`}</h5>
-        </div>
+        {/*<div className='flex flex-row-reverse w-full'>*/}
+        {/*    <h5>{`تعداد: ${count}`}</h5>*/}
+        {/*</div>*/}
         <div className="col-12 p-0 lg:pb-5 mt-4 lg:mt-0 surface-card grid">
             {ads?.map((item,idx) => {
                 return <div key={idx} className="field col-12 md:col-3"><ItemCard showSelectable={false} onShowDetails={showDetails} data={item} key={item.id} isSelected={false} onClick={()=>{}} selectable={false}/></div>

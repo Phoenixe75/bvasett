@@ -1983,6 +1983,7 @@
   .search-btn {
     background-color: #475569;
     color: #ffffff;
+    font-weight: 700;
   }
   .search-btn-wrapper a.p-accordion-header-link {
     background-color: #475569 !important;

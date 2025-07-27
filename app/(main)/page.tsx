@@ -58,6 +58,7 @@ const LandingPage = () => {
   const [showBanner, setShowBanner] = useState(() => showFree7FilesTour || false);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | number[] | null | undefined>(null);
   const [showSingleInquiryTourJoyRideSteps, setShowSingleInquiryTourJoyRideSteps] = useState(false);
+  const [count, setCount] = useState(0);
 
   const toggleAccordion = () => {
     setShowBanner(pre => !pre);
@@ -169,43 +170,68 @@ const LandingPage = () => {
 
           <div id="CardCell" className="pb-4 pt-3 pr-4 mx-0 flex-1 property_home_cards ads_sample">
             <div className="grid justify-content-start mb-1">
-              <div className="md:col-6 sm:col-10">
+              <div className="md:col-6 col-12">
                 <div className="grid justify-content-center">
                   <div className="col py-0">
                     <Button raised type="button"
-                        id="free7Files"
-                        className="guide-btn justify-content-center w-full"
-                        onClick={preview7FreeFiles}>
+                            id="free7Files"
+                            className="guide-btn justify-content-center w-full"
+                            onClick={preview7FreeFiles}>
                       7 فایل رایگان
                     </Button>
                   </div>
                   <div className="col py-0">
                     <Button raised type="button"
-                        className="guide-btn justify-content-center w-full">
+                            className="guide-btn justify-content-center w-full">
                       تک فایل استعلامی
                     </Button>
                   </div>
                   <div className="col py-0">
                     <Link href="/subscriptions">
-                  <Button raised type="button"
-                          className="guide-btn justify-content-center w-full">
-                    خرید اشتراک
+                      <Button raised type="button"
+                              className="guide-btn justify-content-center w-full">
+                        خرید اشتراک
                       </Button>
                     </Link>
                   </div>
                 </div>
+                <div className="grid mt-1">
+                  <div className="col-12 py-0 text-center">
+                    <Button className="novin-btn justify-content-center w-full">خدمات نوین، به‌زودی...</Button>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="grid justify-content-start">
-              <div className="md:col-6 sm:col-10 py-0 text-center">
-                <Button className="novin-btn w-full">خدمات نوین، به‌زودی</Button>
+              <div className="md:col-6 col-12 text-left">
+                <div className="grid justify-content-center">
+                  <div className="col py-0">
+                    <Button raised
+                            type="button"
+                            className="guide-btn justify-content-center w-full">
+                      مورد 1
+                    </Button>
+                  </div>
+                  <div className="col py-0">
+                    <Button raised
+                            type="button"
+                            className="guide-btn justify-content-center w-full">
+                      مورد 2
+                    </Button>
+                  </div>
+                  <div className="col py-0">
+                    <Button raised
+                            type="button"
+                            className="guide-btn justify-content-center w-full">
+                      مورد 3
+                    </Button>
+                  </div>
+                </div>
+                <div className='flex flex-row-reverse w-full mt-1'>
+                  <h5 className="mb-0 mt-3">{`آخرین ملک های ثبت شده: ${count}`}</h5>
+                </div>
               </div>
             </div>
             <div className="grid justify-content-center">
-              <div className="col text-left mb-2">
-                <h2 className="text-900 font-normal white-space-nowrap mb-2">آخرین ملک های ثبت شده</h2>
-              </div>
-              <CardCell/>
+              <CardCell count={count} setCount={setCount}/>
 
               <div className="col-12 md:p-8">
                 <div

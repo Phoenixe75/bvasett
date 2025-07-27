@@ -451,9 +451,13 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    padding: 4px 8px !important;
 }
 .chips {
-   position: absolute;
-   top: -6px;
-   font-size: 1rem !important;
+   //position: absolute;
+   //top: -6px;
+   font-size: 12px !important;
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  min-height: 20px;
 }
  .home_property_wallet {
    display: flex;
@@ -489,6 +493,7 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    background-color: #475569;
    border-color: black;
    color: white;
+   font-weight: 700;
  }
  .guide-btn:not(.p-disabled):not([disabled]):hover {
    background-color: rgb(154, 11, 31);
