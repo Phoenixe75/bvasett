@@ -197,13 +197,13 @@ const LandingPage = () => {
                 </div>
                 <div className="grid mt-1">
                   <div className="col-12 py-0 text-center">
-                    <Button className="novin-btn justify-content-center w-full">خدمات نوین، به‌زودی...</Button>
+                    <h5 className="mb-0 mt-3">{`آخرین ملک های ثبت شده: ${count}`}</h5>
                   </div>
                 </div>
               </div>
               <div className="md:col-6 col-12 text-left">
                 <div className="grid justify-content-center">
-                  <div className="col py-0">
+                  {/*<div className="col py-0">
                     <Button raised
                             type="button"
                             className="guide-btn justify-content-center w-full">
@@ -223,10 +223,12 @@ const LandingPage = () => {
                             className="guide-btn justify-content-center w-full">
                       مورد 3
                     </Button>
-                  </div>
+                  </div>*/}
                 </div>
-                <div className='flex flex-row-reverse w-full mt-1'>
-                  <h5 className="mb-0 mt-3">{`آخرین ملک های ثبت شده: ${count}`}</h5>
+                {/*<div className='flex flex-row-reverse w-full mt-1'>*/}
+                <div className='flex flex-row-reverse w-full'>
+                  {/*<h5 className="mb-0 mt-3">{`آخرین ملک های ثبت شده: ${count}`}</h5>*/}
+                  <Button className="novin-btn justify-content-center w-full">خدمات نوین، به‌زودی...</Button>
                 </div>
               </div>
             </div>
