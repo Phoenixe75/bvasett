@@ -130,7 +130,7 @@ const LandingPage = () => {
       <div id="home" className="landing-wrapper overflow-hidden">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid align-items-center justify-content-start px-3 py-2" style={{backgroundColor: '#111'}}>
+        <div className="grid align-items-center justify-content-start px-3 py-2 mt-0" style={{backgroundColor: '#111'}}>
           <div className="col-auto">
             <StaticTime/>
           </div>
