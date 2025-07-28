@@ -1817,17 +1817,17 @@
 
   .p-button {
     color: #ffffff;
-    background: var(--search-btn);
-    border: 1px solid var(--search-btn);
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     border-radius: 6px;
   }
   .p-button:not(:disabled):hover {
-    background: black;
+    background: #4F46E5;
     color: #ffffff;
-    border-color: black;
+    border-color: #4F46E5;
   }
   .p-button:not(:disabled):active {
     background: #4338CA;
@@ -1987,7 +1987,7 @@
     font-weight: 700;
   }
   .search-btn-wrapper a.p-accordion-header-link {
-    background-color: #475569 !important;
+    background-color: var(--search-btn) !important;
     color: #ffffff !important;
   }
   .search-btn:not(:disabled):hover, .search-btn-wrapper a.p-accordion-header-link:not(:disabled):hover {

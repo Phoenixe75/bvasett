@@ -169,7 +169,7 @@ const LandingPage = () => {
           </div>
 
           <div id="CardCell" className="pb-4 pt-3 pr-4 mx-0 flex-1 property_home_cards ads_sample">
-            <div className="grid justify-content-start mb-1">
+            <div className="grid justify-content-start mb-4">
               <div className="md:col-6 col-12">
                 <div className="grid justify-content-center">
                   <div className="col py-0">
@@ -224,7 +224,7 @@ const LandingPage = () => {
                       مورد 3
                     </Button>
                   </div>*/}
-                  <Button className="novin-btn justify-content-center w-full">خدمات جدید، <span className="text-danger d-inline-block align-middle mr-1">به‌زودی</span>...</Button>
+                  <Button className="novin-btn justify-content-center w-full">خدمات جدید، <span className="text-danger d-inline-block align-middle mx-1">به‌زودی</span>...</Button>
                 </div>
                 {/*<div className='flex flex-row-reverse w-full mt-1'>*/}
                 {/*<div className='flex flex-row-reverse w-full'>*/}
