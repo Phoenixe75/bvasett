@@ -490,14 +490,20 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    font-size: 14px;
  }
  .novin-btn {
-   background-color: #475569;
+   background-color: #1d16e1;
    border-color: black;
    color: white;
    font-weight: 700;
 
    padding: 1.25rem;
-   font-size: 14px;
+   font-size: 20px;
    line-height: 1;
+ }
+ .d-inline-block {
+   display: inline-block;
+ }
+ .text-danger {
+   color: var(--red-500);
  }
  .guide-btn:not(.p-disabled):not([disabled]):hover {
    background-color: rgb(154, 11, 31);

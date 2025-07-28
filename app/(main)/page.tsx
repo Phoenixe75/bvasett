@@ -224,7 +224,7 @@ const LandingPage = () => {
                       مورد 3
                     </Button>
                   </div>*/}
-                  <Button className="novin-btn justify-content-center w-full">خدمات جدید، به‌زودی...</Button>
+                  <Button className="novin-btn justify-content-center w-full">خدمات جدید، <span className="text-danger d-inline-block align-middle mr-1">به‌زودی</span>...</Button>
                 </div>
                 {/*<div className='flex flex-row-reverse w-full mt-1'>*/}
                 {/*<div className='flex flex-row-reverse w-full'>*/}
