@@ -55,7 +55,7 @@ const LandingPage = () => {
   const [showTour, setShowTour] = useState(false);
   const [fullyLoaded, setFullyLoaded] = useState(false);
   const [showFree7FilesTour, setShowFree7FilesTour] = useState(false);
-  const [showBanner, setShowBanner] = useState(() => showFree7FilesTour || false);
+  const [showBanner, setShowBanner] = useState(() => showFree7FilesTour || true);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | number[] | null | undefined>(null);
   const [showSingleInquiryTourJoyRideSteps, setShowSingleInquiryTourJoyRideSteps] = useState(false);
   const [count, setCount] = useState(0);
@@ -162,7 +162,7 @@ const LandingPage = () => {
                 درخواست ثبت قرارداد
               </Button>
               {showBanner &&
-                <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"/images/ad-banner.jpg"}
+                <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
                      alt='banner'/>}
 
             </div>
