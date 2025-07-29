@@ -55,7 +55,7 @@ const LandingPage = () => {
   const [showTour, setShowTour] = useState(false);
   const [fullyLoaded, setFullyLoaded] = useState(false);
   const [showFree7FilesTour, setShowFree7FilesTour] = useState(false);
-  const [showBanner, setShowBanner] = useState(() => showFree7FilesTour || true);
+  const [showBanner, setShowBanner] = useState(true);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | number[] | null | undefined>(null);
   const [showSingleInquiryTourJoyRideSteps, setShowSingleInquiryTourJoyRideSteps] = useState(false);
   const [count, setCount] = useState(0);
