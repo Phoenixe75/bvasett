@@ -1,5 +1,5 @@
 'use client';
-import React, {ElementType, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Carousel from '../components/Carousel';
 import CardCell from '@/app/components/CardCell';
 import Questions from '@/app/components/Question';
@@ -9,12 +9,14 @@ import AppFooter from '@/layout/AppFooter';
 import AppCopyRight from '@/layout/AppCopyRight';
 import {SliderProvider} from '@/layout/context/SliderContext';
 import {Accordion, AccordionTab, AccordionTabChangeEvent} from 'primereact/accordion';
-import Joyride, {BeaconRenderProps} from 'react-joyride';
+import Joyride from 'react-joyride';
 import MarqueeBanner from '../components/MarqueeBanner';
 import {Button} from 'primereact/button';
 import Link from 'next/link';
 import {useLocalStorage} from 'primereact/hooks';
 import {StaticTime} from '@/app/components/StaticTime';
+import bannerImage from '../../public/images/ad-banner.jpg';
+import Image from 'next/image';
 
 const joyRideSteps = [
   {
@@ -162,8 +164,12 @@ const LandingPage = () => {
                 درخواست ثبت قرارداد
               </Button>
               {showBanner &&
-                <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
-                     alt='banner'/>}
+                // <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
+                //      alt='banner'/>
+                <Image className="main_page_banner"
+                       style={{width: '100%', height: 'auto'}}
+                       src={bannerImage} alt='banner'/>
+              }
 
             </div>
           </div>
