@@ -19,7 +19,7 @@ import SubscrptionCard from './(components)/SubscrptionCard/SubscrptionCard';
 const initialData:SubscriptionPlanItem = {
 active:true,
 created: '',
-description: ['قابل استفاده برای کاربران جدید', 'قابلیت مشاهده 10 فایل انتخابی به صورت رایگان', 'قابلیت مشاهده 10 فایل انتخابی به صورت رایگان'],
+description: ['قابل استفاده برای کاربران جدید', 'قابلیت مشاهده 7 فایل انتخابی به صورت رایگان', 'فعال بر روی تمامی معاملات خرید و فروش / رهن / اجاره'],
 duration_days: 0,
 id: 0,
 name: 'معمولی',
