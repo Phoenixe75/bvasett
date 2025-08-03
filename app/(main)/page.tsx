@@ -88,9 +88,6 @@ const LandingPage = () => {
     }
   }, [fullyLoaded]);
   useEffect(() => {
-    if (showBanner) {
-      return;
-    }
     if (showFree7FilesTour) {
       openAccordion();
       setActiveAccordionIndex(0);
@@ -101,7 +98,7 @@ const LandingPage = () => {
         });
       }, 1000);
     }
-  }, [showBanner, openAccordion, setActiveAccordionIndex,  showFree7FilesTour]);
+  }, [openAccordion, setActiveAccordionIndex,  showFree7FilesTour]);
 
   const onTabChange = (event: AccordionTabChangeEvent) => {
     console.log(event.index)
@@ -270,7 +267,7 @@ const LandingPage = () => {
             skip: 'نمی‌خواهم',
             close: 'بستن'
           }}
-          run={showFree7FilesTour && !showBanner && activeAccordionIndex === 0}
+          run={showFree7FilesTour && activeAccordionIndex === 0}
           callback={handleFree7FilesTourJoyRideCallback}
         />
         <Joyride
