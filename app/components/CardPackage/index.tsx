@@ -18,7 +18,7 @@ const PackageItem = ({ selectedPackage, setSelectedPackage, tourTarget, firstBuy
             disabled: firstBuyer
         },
         {
-            name: firstBuyer ? "ده تایی رایگان" : `بدون استعلام ${formatMoneyToPersianUnit(price?.[WITHOUT_INQUIRY])}`,
+            name: firstBuyer ? "هفت تایی رایگان" : `بدون استعلام ${formatMoneyToPersianUnit(price?.[WITHOUT_INQUIRY])}`,
             value: WITHOUT_INQUIRY,
             disabled: !firstBuyer
         },

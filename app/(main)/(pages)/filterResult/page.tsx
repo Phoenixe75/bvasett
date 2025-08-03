@@ -152,7 +152,7 @@ const FilterResultPage: React.FC = () => {
 
     const maxCount = useMemo(()=>{
         if(firstBuyer) {
-            return 10
+            return 7
         }
         if (!selectedPackage) {
             return 0
