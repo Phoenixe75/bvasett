@@ -12,6 +12,7 @@ export default function CardCell({count, setCount}: {
   setCount: React.Dispatch<React.SetStateAction<number>>
 }) {
   const [ads, setAds] = useState<IAdsBase[]>([]);
+  const [firstLoadedAddIndex, setFirstLoadedAddIndex] = useState<number>(-1);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [buttonLoading, setButtonLoading] = useState<boolean>(false);
   const [page, setPage] = useState(1)
@@ -23,10 +24,28 @@ export default function CardCell({count, setCount}: {
     try {
       setButtonLoading(true);
       const response = await getAllAdsMain(page);
-      setAds(pre => [...pre, ...response.results]);
+      if (response.results?.length) {
+        setAds(pre => {
+          const newAds = pre?.length ? [...pre] : [];
+          response.results?.forEach((item: any, index: number) => {
+            if (!newAds.length) {
+              if (index === 0) {
+                setFirstLoadedAddIndex(newAds.length);
+              }
+              newAds.push(item);
+            } else if (!newAds.some(newAd => newAd.id === item.id)) {
+              if (index === 0) {
+                setFirstLoadedAddIndex(newAds.length);
+              }
+              newAds.push(item);
+            }
+          });
+          return newAds;
+        });
+      }
       setCount(response.count)
       setNext(!!response.next);
-      setPage(pre => pre + 1)
+      setPage(pre => pre + 1);
     } catch (error) {
       console.error('Error retrieving ads:', error);
     } finally {
@@ -34,6 +53,7 @@ export default function CardCell({count, setCount}: {
       setButtonLoading(false);
     }
   };
+
   const showDetails = (rowData: any, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
@@ -52,6 +72,10 @@ export default function CardCell({count, setCount}: {
   if (isLoading || ads.length === 0) {
     return <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)"
                             animationDuration=".5s"/>;
+  }
+
+  const scrollIntoViewFirstLoadedAdd = () => {
+    document.getElementsByClassName(`result-${firstLoadedAddIndex}`)[0]?.scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 
   // const getPurposeLabel = (purpose: PurposeEnum | null): { label: string; className: string; iconClass: string } => {
@@ -78,21 +102,23 @@ export default function CardCell({count, setCount}: {
       {/*</div>*/}
       <div className="col-12 p-0 lg:pb-5 mt-4 lg:mt-0 surface-card grid">
         {ads?.map((item, idx) => {
-          return <div key={idx} className="field col-12 xl:col-3 lg:col-4 sm:col-6"><ItemCard showSelectable={false}
-                                                                            onShowDetails={showDetails} data={item}
-                                                                            key={item.id} isSelected={false}
-                                                                            onClick={() => {
-                                                                            }} selectable={false}/></div>
+          return <div key={idx} className={"field col-12 xl:col-3 lg:col-4 sm:col-6" + ' result-' + idx}><ItemCard
+            showSelectable={false}
+            onShowDetails={showDetails} data={item}
+            key={item.id} isSelected={false}
+            onClick={() => {
+            }} selectable={false}/></div>
         })}
         {next ? (
           <div className="w-full flex justify-content-center align-items-center">
             <div>
-              <Button loading={buttonLoading} onClick={fetchData}>
+              <Button loading={buttonLoading} onClick={() => fetchData()}>
                 نمایش بیشتر
               </Button>
             </div>
           </div>
         ) : null}
+        <Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd} iconPos="top" icon="pi pi-fw pi-arrow-up" />
       </div>
       <PropertyDialog onHide={hideDialog} visible={displayDialog} selectedRowData={selectedRowData}/>
     </>
