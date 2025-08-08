@@ -329,6 +329,16 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    
 
 }
+.bg-header {
+   background-color: var(--primary-color)!important;
+}
+@media (min-width: 992px) {
+  .bg-header {
+    background-color: transparent!important;
+    padding-top: 100px;
+  }
+}
+
 .header_footer_background {
    background: #0E00DB;
    background: linear-gradient(0deg,rgba(14, 0, 219, 1) 0%, rgba(0, 0, 0, 1) 100%);
@@ -345,6 +355,11 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .body {
    margin-top: 112px;
+}
+@media (min-width: 992px) {
+  .body {
+     margin-top: 191px;
+  }
 }
 .headerColor {
    background: #0E00DB;

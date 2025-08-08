@@ -141,7 +141,7 @@ const AppHeader = ({ toggleMenuItemClick, isHidden, loadingIsFinished , setIsHid
                 <i ref={menuRef} className="pi pi-bars text-4xl cursor-pointer block lg:hidden text-700 miniMenu"></i>
             </StyleClass>
             {/* , backgroundColor: '#083b19' */}
-            <div className={classNames('align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2 mr-3 navcolor', { hidden: isHidden })} style={{ top: '100%', backgroundColor: 'transparent' }}>
+            <div className={classNames('align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2 mr-3 navcolor bg-header', { hidden: isHidden })} style={{ top: '100%' }}>
                 <ul className="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row cursor-pointer">
                     <li>
                         <Link href="/" onClick={toggleMenuItemClick} className="p-ripple flex m-0 md:ml-5 px-0 py-3 text-900 hover:text-cyan-700 font-medium line-height-3 align-items-center gap-2">
