@@ -3,7 +3,7 @@
   background-color: var(--white);
   border-radius: 4px;
   display: flex;
-  height: 210px;
+  height: 260px;
   padding: 16px;
   position: relative;
   border: 1px solid rgba(190, 190, 190, 0.56);
@@ -23,8 +23,8 @@
   color: rgba(0, 0, 0, .87);
   font-size: 1rem;
   font-weight: 500;
-  height: 56px;
-  line-height: 28px;
+  height: 100%;
+  line-height: normal;
   margin-bottom: auto;
   margin-top: 0;
   overflow: hidden;
