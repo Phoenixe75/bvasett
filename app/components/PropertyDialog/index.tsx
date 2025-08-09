@@ -39,13 +39,13 @@ function PropertyDialog({visible, onHide, selectedRowData}: PropertyDialogProps)
                     <InputText id="title" value={selectedRowData.owner_name ?? null} readOnly />
                 </div>: null}
                 {selectedRowData.owner_phone?<div className="field col-12 md:col-4">
-                    <label htmlFor="title">نام مالک</label>
+                    <label htmlFor="title">تلفن مالک</label>
                     <InputText id="title" value={selectedRowData.owner_phone ?? null} readOnly />
                 </div>: null}
-                <div className="field col-12 md:col-4">
-                    <label htmlFor="title">عنوان</label>
-                    <InputText id="title" value={selectedRowData.title ?? null} readOnly />
-                </div>
+                {/*<div className="field col-12 md:col-4">*/}
+                {/*    <label htmlFor="title">عنوان</label>*/}
+                {/*    <InputText id="title" value={selectedRowData.title ?? null} readOnly />*/}
+                {/*</div>*/}
                 <div className="field col-12 md:col-4">
                     <label htmlFor="rooms">تعداد اتاق </label>
                     <InputNumber id="rooms" value={selectedRowData.rooms ?? null} readOnly />

@@ -129,11 +129,11 @@ const LandingPage = () => {
       <div id="home" className="landing-wrapper overflow-hidden">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid align-items-center justify-content-start px-3 py-2 mt-0" style={{backgroundColor: '#111'}}>
+        <div className="grid flex-nowrap align-items-center justify-content-start px-3 py-2 mt-0" style={{backgroundColor: '#111'}}>
           <div className="col-auto">
             <StaticTime/>
           </div>
-          <div className="col-8 pb-0">
+          <div className="col-auto pb-0">
             <MarqueeBanner/>
           </div>
         </div>

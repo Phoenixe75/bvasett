@@ -637,6 +637,9 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   font-size: 24px;
   display: none;
 }
+.text-nowrap {
+  white-space: nowrap;
+}
 @media all and (min-width: 992px) {
   .go-top-btn {
     display: flex;

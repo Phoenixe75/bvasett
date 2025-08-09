@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, createContext } from 'react';
+import React, {useState, createContext, useEffect} from 'react';
 import { LayoutState, ChildContainerProps, LayoutConfig, LayoutContextProps } from '@/types';
 export const LayoutContext = createContext({} as LayoutContextProps);
 
@@ -45,6 +45,12 @@ export const LayoutProvider = ({ children }: ChildContainerProps) => {
     const isDesktop = () => {
         return window.innerWidth > 991;
     };
+
+    useEffect(() => {
+        if (!isDesktop()) {
+            window.location.href = 'https://app.bvasett.ir/'
+        }
+    }, []);
 
     const value: LayoutContextProps = {
         layoutConfig,
