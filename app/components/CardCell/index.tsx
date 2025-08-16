@@ -92,7 +92,6 @@ export default function CardCell({count, setCount}: {
 
   const scrollIntoViewFirstLoadedAdd = () => {
     if (loadedAddIndexes.length) {
-      console.log(loadedAddIndexes);
       document.querySelector(`.result-${loadedAddIndexes[loadedAddIndexes.length - 1] - 1}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
       setLoadedAddIndexes(pre => {
         pre.pop();
