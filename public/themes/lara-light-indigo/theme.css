@@ -1989,6 +1989,7 @@
   .search-btn-wrapper a.p-accordion-header-link {
     background-color: var(--search-btn) !important;
     color: #ffffff !important;
+    border-radius: 6px;
   }
   .search-btn:not(:disabled):hover, .search-btn-wrapper a.p-accordion-header-link:not(:disabled):hover {
     background-color: #000!important;
@@ -2087,6 +2088,11 @@
   }
 
   .p-button.p-button-success, .p-buttonset.p-button-success > .p-button, .p-splitbutton.p-button-success > .p-button, .p-fileupload-choose.p-button-success {
+    color: #ffffff;
+    background: #22C55E;
+    border: 1px solid #22C55E;
+  }
+  .p-button.p-button-success.info-color, .p-buttonset.p-button-success > .p-button.info-color, .p-splitbutton.p-button-success > .p-button.info-color, .p-fileupload-choose.p-button-success.info-color {
     color: #ffffff;
     background: var(--info-color);
     border: 1px solid var(--info-color);
