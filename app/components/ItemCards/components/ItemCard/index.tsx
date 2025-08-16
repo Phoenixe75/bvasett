@@ -89,7 +89,7 @@ const ItemCard = ({
           )}
           {/* <i className="pi pi-eye text-yellow-500 pointer" style={{ fontSize: '1.5rem' }} onClick={(e) => onShowDetails(data, e)}></i> */}
           <div className="w-full">
-            <Button raised size="small" severity="success" className="pointer w-full justify-content-center"
+            <Button raised size="small" severity="success" className="pointer w-full justify-content-center info-color"
                     onClick={(e) => onShowDetails(data, e)}>
               جزئیات
             </Button>

@@ -12,7 +12,7 @@ export default function CardCell({count, setCount}: {
   setCount: React.Dispatch<React.SetStateAction<number>>
 }) {
   const [ads, setAds] = useState<IAdsBase[]>([]);
-  const [firstLoadedAddIndex, setFirstLoadedAddIndex] = useState<number>(-1);
+  const [loadedAddIndexes, setLoadedAddIndexes] = useState<Array<number>>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [buttonLoading, setButtonLoading] = useState<boolean>(false);
   const [page, setPage] = useState(1)
@@ -30,12 +30,28 @@ export default function CardCell({count, setCount}: {
           response.results?.forEach((item: any, index: number) => {
             if (!newAds.length) {
               if (index === 0) {
-                setFirstLoadedAddIndex(newAds.length);
+                setLoadedAddIndexes(newArray => {
+                  if (!newArray) {
+                    newArray = [];
+                  }
+                  if (!newArray.includes(newAds.length)) {
+                    newArray.push(newAds.length);
+                  }
+                  return newArray;
+                });
               }
               newAds.push(item);
             } else if (!newAds.some(newAd => newAd.id === item.id)) {
               if (index === 0) {
-                setFirstLoadedAddIndex(newAds.length);
+                setLoadedAddIndexes(newArray => {
+                  if (!newArray) {
+                    newArray = [];
+                  }
+                  if (!newArray.includes(newAds.length)) {
+                    newArray.push(newAds.length);
+                  }
+                  return newArray;
+                });
               }
               newAds.push(item);
             }
@@ -75,7 +91,14 @@ export default function CardCell({count, setCount}: {
   }
 
   const scrollIntoViewFirstLoadedAdd = () => {
-    document.getElementsByClassName(`result-${firstLoadedAddIndex}`)[0]?.scrollIntoView({behavior: 'smooth', block: 'center'});
+    if (loadedAddIndexes.length) {
+      console.log(loadedAddIndexes);
+      document.querySelector(`.result-${loadedAddIndexes[loadedAddIndexes.length - 1] - 1}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+      setLoadedAddIndexes(pre => {
+        pre.pop();
+        return pre;
+      });
+    }
   }
 
   // const getPurposeLabel = (purpose: PurposeEnum | null): { label: string; className: string; iconClass: string } => {
@@ -118,7 +141,9 @@ export default function CardCell({count, setCount}: {
             </div>
           </div>
         ) : null}
-        <Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd} iconPos="top" icon="pi pi-fw pi-arrow-up" />
+        <Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd}>
+          بازگشت
+        </Button>
       </div>
       <PropertyDialog onHide={hideDialog} visible={displayDialog} selectedRowData={selectedRowData}/>
     </>
