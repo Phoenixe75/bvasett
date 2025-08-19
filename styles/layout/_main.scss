@@ -126,7 +126,8 @@ This set of fonts are used in this project under the license: M367PNHD
 }
 
 html {
-    height: 100%;
+    //height: 100%;
+	overflow-x: hidden;
 }
 
 body {

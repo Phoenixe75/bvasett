@@ -354,11 +354,12 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    z-index: 100;
 }
 .body {
-   margin-top: 112px;
+  padding-top: 112px;
+  //overflow-x: hidden !important;
 }
 @media (min-width: 992px) {
   .body {
-     margin-top: 160px;
+     padding-top: 160px;
   }
 }
 .headerColor {
@@ -606,13 +607,16 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    display: flex;
    align-items: center;
    overflow-x: hidden;
-   height: 40px;
    .marquee-content {
      animation-name: custom-marquee-animation;
      animation-iteration-count: infinite;
      animation-timing-function: linear;
      white-space: nowrap;
      animation-duration: 100s;
+     animation-play-state: running;
+   }
+   &:hover .marquee-content {
+     animation-play-state: paused;
    }
  }
 
@@ -634,11 +638,16 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   right: 16px;
   z-index: 9999;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 14px;
   display: none;
+  padding: 8px 12px;
 }
 .text-nowrap {
   white-space: nowrap;
+}
+.sticky-filters {
+  position: sticky;
+  top: 160px;
 }
 @media all and (min-width: 992px) {
   .go-top-btn {

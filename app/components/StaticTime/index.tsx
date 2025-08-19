@@ -18,6 +18,6 @@ export const StaticTime = () => {
     }
   }, []);
   return (
-    <span className="text-white d-inline-block text-nowrap pl-3">{jalaliTime}</span>
+    <span className="text-white d-inline-block text-nowrap pl-3 py-3">{jalaliTime}</span>
   )
 }

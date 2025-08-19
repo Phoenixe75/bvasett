@@ -1985,6 +1985,7 @@
     background-color: #475569;
     color: #ffffff;
     font-weight: 700;
+    padding: 14px;
   }
   .search-btn-wrapper a.p-accordion-header-link {
     background-color: var(--search-btn) !important;

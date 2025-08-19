@@ -125,11 +125,11 @@ const LandingPage = () => {
   }, [oldFormData]);
 
   return (
-    <div className="flex justify-content-center body" style={{backgroundColor: '#fcfcff'}}>
-      <div id="home" className="landing-wrapper overflow-hidden">
+    <div className="flex flex-column justify-content-center body" style={{backgroundColor: '#fcfcff'}}>
+      <div id="home" className="landing-wrapper">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid flex-nowrap align-items-center justify-content-start px-3 py-2 mt-0" style={{backgroundColor: '#111'}}>
+        <div className="grid flex-nowrap align-items-center justify-content-start px-3 mt-0" style={{backgroundColor: '#111'}}>
           <div className="col-auto">
             <StaticTime/>
           </div>
@@ -148,8 +148,11 @@ const LandingPage = () => {
             {/*    <h2 className="text-900 font-light mb-2">‎ </h2>*/}
             {/*</div>*/}
             {/*<h5 className='hide_in_mobile'>‎</h5>*/}
-            <div className="pt-0 md:pt-2">
+            <div className="pt-0 md:pt-2 sticky-filters">
               {/*<Accordion activeIndex={activeAccordionIndex} onTabChange={(e) => setActiveAccordionIndex(pre => Number(e.index) == Number(pre) ? null : e.index)}>*/}
+              <Button className="search-btn w-full mb-2">
+                درخواست ثبت قرارداد
+              </Button>
               <Accordion activeIndex={activeAccordionIndex} onTabChange={e => {
                 setActiveAccordionIndex(pre => e.index == pre ? null : e.index);
               }} onTabClose={closeAccordion} onTabOpen={openAccordion}>
@@ -157,9 +160,6 @@ const LandingPage = () => {
                   <FilterItem oldForm={oldForm}/>
                 </AccordionTab>
               </Accordion>
-              <Button className="search-btn w-full mb-2">
-                درخواست ثبت قرارداد
-              </Button>
               {showBanner &&
                 // <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
                 //      alt='banner'/>
@@ -198,7 +198,7 @@ const LandingPage = () => {
                     </Link>
                   </div>
                 </div>
-                <div className="grid mt-1">
+                <div className="grid mt-3">
                   <div className="col-12 py-0 text-center">
                     <h5 className="mb-0 mt-3">{`آخرین ملک های ثبت شده: ${count}`}</h5>
                   </div>
