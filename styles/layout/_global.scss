@@ -629,7 +629,7 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
  @keyframes custom-marquee-animation {
    from {
-     transform: translateX(-13%);
+     transform: translateX(-15%);
    }
    to {
      transform: translateX(100%);
@@ -658,6 +658,9 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 .sticky-filters {
   position: sticky;
   top: 166px;
+}
+.over-flow-x-hidden {
+  overflow-x: hidden;
 }
 @media all and (min-width: 992px) {
   .go-top-btn {
