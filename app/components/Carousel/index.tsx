@@ -34,7 +34,6 @@ const Carousel = () => {
   if (loading) return <ProgressSpinner style={{width: '50px', height: '50px'}}/>;
   if (error) return <div style={{color: 'red', textAlign: 'center'}}>{error}</div>;
   return data.length > 0 ? <Swiper
-    cssMode={true}
     autoplay={{
       delay: 4000,
       disableOnInteraction: false,
