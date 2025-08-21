@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {useSliderContext} from '@/layout/context/SliderContext';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {Keyboard, Mousewheel, Navigation, Pagination} from 'swiper/modules';
+import {Keyboard, Mousewheel, Navigation, Pagination, Autoplay} from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -34,11 +34,16 @@ const Carousel = () => {
   if (loading) return <ProgressSpinner style={{width: '50px', height: '50px'}}/>;
   if (error) return <div style={{color: 'red', textAlign: 'center'}}>{error}</div>;
   return data.length > 0 ? <Swiper
+    cssMode={true}
+    autoplay={{
+      delay: 4000,
+      disableOnInteraction: false,
+    }}
     navigation={true}
     pagination={true}
     keyboard={true}
     draggable={true}
-    modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+    modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
     className="mySwiper"
   >
     {data.map((image, index) => (
