@@ -585,15 +585,22 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
    height: 100%;
    object-fit: cover;
  }
+ .swiper-pagination {
+   --swiper-pagination-bullet-width: 12px;
+   --swiper-pagination-bullet-height: 12px;
+   //& .swiper-pagination-bullet {
+   //}
+ }
  .swiper-button-prev, .swiper-button-next {
    font-size: 24px;
-   width: 32px !important;
-   height: 32px !important;
+   width: 35px !important;
+   height: 35px !important;
    border-radius: 100%;
    background-color: gray !important;
    &::after, &::before {
-      font-size: 10px !important;
-      color: darkgray !important;
+      font-size: 16px !important;
+      color: white !important;
+     font-weight: 700;
    }
  }
 
@@ -635,19 +642,22 @@ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 .go-top-btn {
   position: fixed;
   bottom: 16px;
-  right: 16px;
+  left: 16px;
   z-index: 9999;
   cursor: pointer;
   font-size: 14px;
   display: none;
   padding: 8px 12px;
+  background-color: #9b2208;
+  border-color: #9b2208;
+  outline-color: #9b2208;
 }
 .text-nowrap {
   white-space: nowrap;
 }
 .sticky-filters {
   position: sticky;
-  top: 160px;
+  top: 166px;
 }
 @media all and (min-width: 992px) {
   .go-top-btn {

@@ -148,26 +148,27 @@ const LandingPage = () => {
             {/*    <h2 className="text-900 font-light mb-2">‎ </h2>*/}
             {/*</div>*/}
             {/*<h5 className='hide_in_mobile'>‎</h5>*/}
-            <div className="pt-0 md:pt-2 sticky-filters">
+            <div className="pt-0 md:pt-2 h-full">
               {/*<Accordion activeIndex={activeAccordionIndex} onTabChange={(e) => setActiveAccordionIndex(pre => Number(e.index) == Number(pre) ? null : e.index)}>*/}
               <Button className="search-btn w-full mb-2">
                 درخواست ثبت قرارداد
               </Button>
-              <Accordion activeIndex={activeAccordionIndex} onTabChange={e => {
-                setActiveAccordionIndex(pre => e.index == pre ? null : e.index);
-              }} onTabClose={closeAccordion} onTabOpen={openAccordion}>
-                <AccordionTab headerClassName="search-btn-wrapper" header="جستجو">
-                  <FilterItem oldForm={oldForm}/>
-                </AccordionTab>
-              </Accordion>
-              {showBanner &&
-                // <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
-                //      alt='banner'/>
-                <Image className="main_page_banner"
-                       style={{width: '100%', height: 'auto'}}
-                       src={bannerImage} alt='banner'/>
-              }
-
+              <div className="sticky-filters">
+                <Accordion activeIndex={activeAccordionIndex} onTabChange={e => {
+                  setActiveAccordionIndex(pre => e.index == pre ? null : e.index);
+                }} onTabClose={closeAccordion} onTabOpen={openAccordion}>
+                  <AccordionTab headerClassName="search-btn-wrapper" header="جستجو">
+                    <FilterItem oldForm={oldForm}/>
+                  </AccordionTab>
+                </Accordion>
+                {showBanner &&
+                  // <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
+                  //      alt='banner'/>
+                  <Image className="main_page_banner"
+                         style={{width: '100%', height: 'auto'}}
+                         src={bannerImage} alt='banner'/>
+                }
+              </div>
             </div>
           </div>
 

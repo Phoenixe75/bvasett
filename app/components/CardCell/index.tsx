@@ -20,7 +20,7 @@ export default function CardCell({count, setCount}: {
   // const [count, setCount] = useState<null | number>(null)
   const [selectedRowData, setSelectedRowData] = useState<any | null>(null);
   const [displayDialog, setDisplayDialog] = useState<boolean>(false);
-  const fetchData = async () => {
+  const fetchData = async (addGoToTopHistory: boolean = false) => {
     try {
       setButtonLoading(true);
       const response = await getAllAdsMain(page);
@@ -29,7 +29,7 @@ export default function CardCell({count, setCount}: {
           const newAds = pre?.length ? [...pre] : [];
           response.results?.forEach((item: any, index: number) => {
             if (!newAds.length) {
-              if (index === 0) {
+              if (index === 0 && addGoToTopHistory) {
                 setLoadedAddIndexes(newArray => {
                   if (!newArray) {
                     newArray = [];
@@ -42,7 +42,7 @@ export default function CardCell({count, setCount}: {
               }
               newAds.push(item);
             } else if (!newAds.some(newAd => newAd.id === item.id)) {
-              if (index === 0) {
+              if (index === 0 && addGoToTopHistory) {
                 setLoadedAddIndexes(newArray => {
                   if (!newArray) {
                     newArray = [];
@@ -97,6 +97,8 @@ export default function CardCell({count, setCount}: {
         pre.pop();
         return pre;
       });
+    } else {
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
   }
 
@@ -134,15 +136,16 @@ export default function CardCell({count, setCount}: {
         {next ? (
           <div className="w-full flex justify-content-center align-items-center">
             <div>
-              <Button loading={buttonLoading} onClick={() => fetchData()}>
+              <Button loading={buttonLoading} onClick={() => fetchData(true)}>
                 نمایش بیشتر
               </Button>
             </div>
           </div>
         ) : null}
-        <Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd}>
-          بازگشت
-        </Button>
+        {/*<Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd}>*/}
+        {/*  بازگشت*/}
+        {/*</Button>*/}
+        <Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd} iconPos="top" icon="pi pi-fw pi-arrow-up" />
       </div>
       <PropertyDialog onHide={hideDialog} visible={displayDialog} selectedRowData={selectedRowData}/>
     </>
