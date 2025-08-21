@@ -129,7 +129,7 @@ const LandingPage = () => {
       <div id="home" className="landing-wrapper">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid over-flow-x-hidden flex-nowrap align-items-center justify-content-start px-3 mt-0" style={{backgroundColor: '#111'}}>
+        <div className="grid mx-0 over-flow-x-hidden flex-nowrap align-items-center justify-content-start px-3 mt-0" style={{backgroundColor: '#111'}}>
           <div className="col-auto">
             <StaticTime/>
           </div>
