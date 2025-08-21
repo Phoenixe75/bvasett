@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {getPrice, getPurposeLabelwithColor, getRooms, getTypeLabel} from '@/app/dashboard/admin/ads/constant/converter';
 import {randomPic} from '@/app/(main)/(pages)/filterResult/(contants)/images';
 import {Button} from 'primereact/button';
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {Inquiry} from '@/app/components/CardPackage/(models)/package';
 import {formatDate} from '@/app/utils/dateUtils';
 import Favorite from './favorite/favorite';
@@ -14,6 +14,7 @@ interface ItemCard {
   isSelected: boolean;
   onClick?: (data: any) => void;
   data: any;
+  idx?: number;
   selectable: boolean;
   disableMsg?: string;
   onShowDetails: (data: any, e: any) => void;
@@ -25,6 +26,7 @@ const defaultDisableMessage = 'ابتدا پکیج مورد نظر خود را �
 const ItemCard = ({
                     selectedPackage,
                     data,
+                    idx,
                     isSelected,
                     onClick,
                     selectable,
@@ -44,7 +46,7 @@ const ItemCard = ({
 
 
   return (
-    <article className={styles.wrapper}>
+    <article className={styles.wrapper + ' result-' + idx}>
       <div className={styles.heart_container}>
         <Favorite data={data}/>
       </div>

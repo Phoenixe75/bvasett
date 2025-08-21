@@ -56,6 +56,18 @@ const FilterResultPage: React.FC = () => {
     const { user } = useUserContext();
     const firstBuyer = user?.orders === 0
     const doesGetInitialData = useRef(false);
+    const [loadedAddIndexes, setLoadedAddIndexes] = useState<Array<number>>([]);
+    const scrollIntoViewFirstLoadedAdd = () => {
+        if (loadedAddIndexes.length) {
+            document.querySelector(`.result-${loadedAddIndexes[loadedAddIndexes.length - 1] - 1}`)?.scrollIntoView({behavior: 'smooth', block: 'center'});
+            setLoadedAddIndexes(pre => {
+                pre.pop();
+                return pre;
+            });
+        } else {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    }
     useEffect(()=>{
         if( !user ) {
             return
@@ -78,7 +90,7 @@ const FilterResultPage: React.FC = () => {
             console.log(error)
         }
     }
-    const fetchData = async (page: number) => {
+    const fetchData = async (page: number, canSetNewPageHistoryGoTop: boolean = false) => {
         setNextPageBtnLoading(true);
         doesGetInitialData.current = true;
         try {
@@ -93,7 +105,19 @@ const FilterResultPage: React.FC = () => {
                 const newResults = data.results.map((item:any) => ({
                     ...item,
                     priceInfo: recievedPrices.get(item.purpose)
-                }))
+                }));
+                if (canSetNewPageHistoryGoTop) {
+                    setLoadedAddIndexes(newArray => {
+                        if (!newArray) {
+                            newArray = [];
+                        }
+                        if (!newArray.includes(newResults.length)) {
+                            newArray.push(newResults.length);
+                        }
+                        newArray.sort();
+                        return newArray;
+                    });
+                }
                 setFormData(pre=> [...pre, ...newResults]);
                 setCount(data.count);
                 setNext(data.next);
@@ -120,7 +144,7 @@ const FilterResultPage: React.FC = () => {
         if (page === 0 && doesGetInitialData.current) {
             return
         }
-        fetchData(page + 1);
+        fetchData(page + 1, true);
     }, [searchParams, page]);
 
     const onPageChange = (event: any) => {
@@ -174,6 +198,10 @@ const FilterResultPage: React.FC = () => {
     };
 
     const handleBuyClick = async () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
         if (selectedPackage === WITH_INQUIRY && !firstBuyer && !hasShownInquryModal) {
             setShowInquiryModal(true);
             return;
@@ -284,6 +312,8 @@ const FilterResultPage: React.FC = () => {
     return (
         <>
             <AppHeader />
+            <Button className='go-top-btn' raised onClick={scrollIntoViewFirstLoadedAdd} iconPos="top"
+                    icon="pi pi-fw pi-arrow-up"/>
             <div className="card p-fluid">
                 <div className="packagess">
                     <PackageItem prices={prices} firstBuyer={firstBuyer} selectedPackage={selectedPackage} setSelectedPackage={setSelectedPackage} tourTarget=".packagess" />

@@ -36,7 +36,7 @@ const ItemCards = ({selectedPackage, data,onSelectionChange,selectable, maxCount
     onSelectionChange(Array.from(newState.values()));
   }
   return <div className={styles.wrapper}>
-    {data.map(item =><ItemCard selectedPackage={selectedPackage} showSelectable={showSelectable} onShowDetails={onShowDetails} data={item} key={item.id} isSelected={selectedItem.has(item.id)} onClick={onCardClick} selectable={selectable}/>)}
+    {data.map((item, idx) =><ItemCard selectedPackage={selectedPackage} showSelectable={showSelectable} onShowDetails={onShowDetails} data={item} idx={idx} key={item.id} isSelected={selectedItem.has(item.id)} onClick={onCardClick} selectable={selectable}/>)}
   </div>
 }
 export default ItemCards
