@@ -158,7 +158,9 @@ export default function CardCell({count, setCount}: {
                 onClick={scrollIntoViewFirstLoadedAdd} iconPos="top"
                 icon="pi pi-fw pi-arrow-up"/>
       </div>
-      <PropertyDialog onHide={hideDialog} visible={displayDialog} selectedRowData={selectedRowData}/>
+      <PropertyDialog onHide={hideDialog}
+                      visible={displayDialog}
+                      selectedRowData={selectedRowData} canShowExtraDescription={true}/>
     </>
   );
 }
