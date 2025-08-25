@@ -9,7 +9,7 @@ import PropertyDialog from '../PropertyDialog';
 
 export default function CardCell({count, setCount}: {
   count: number,
-  setCount: React.Dispatch<React.SetStateAction<number>>
+  setCount: any
 }) {
   const [ads, setAds] = useState<IAdsBase[]>([]);
   const [loadedAddIndexes, setLoadedAddIndexes] = useState<Array<number>>([]);
