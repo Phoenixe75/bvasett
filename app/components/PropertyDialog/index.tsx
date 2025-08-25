@@ -115,7 +115,10 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
             {
               canShowExtraDescription && (
                 <div className="guide-box mt-3">
-                  <p>.کاربر گرامی، جهت اخذ و نمایش اطلاعات کامل این فایل و مشاهده بقیه موارد مشابه، فیلتر های مورد نظر را انتخاب و به صفحه‌ی جستجو مراجعه نماییدک</p>
+                  <p className="font-bold mb-0 rtl">
+                    <i className="pi pi-info-circle fs-md ml-2" style={{display: "inline-block", verticalAlign: "middle", fontSize: "20px"}}></i>
+                    کاربر گرامی، جهت اخذ و نمایش اطلاعات کامل این فایل و مشاهده بقیه موارد مشابه، فیلتر های مورد نظر را
+                    انتخاب و به صفحه‌ی جستجو مراجعه نمایید.</p>
                 </div>
               )
             }
