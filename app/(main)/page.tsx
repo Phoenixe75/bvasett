@@ -165,7 +165,7 @@ const LandingPage = () => {
                   // <img className='main_page_banner' style={{width: '100%', height: 'auto'}} src={"images/ad-banner.jpg"}
                   //      alt='banner'/>
                   <Image className="main_page_banner"
-                         style={{width: '100%', height: 'auto'}}
+                         style={{aspectRatio: '.3333', maxHeight: '720px', maxWidth: '100%'}}
                          src={bannerImage} alt='banner'/>
                 }
               </div>
