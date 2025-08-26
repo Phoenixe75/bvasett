@@ -146,7 +146,10 @@ const Sale = ({oldForm}: {oldForm: IFilter | null}) => {
                         </div>
                     </div>
                 </div>
-                <SelectNeighbourHoodModal isVisible={openNeighbourhood} onCancel={()=> setOpenNeighbourhood(false)} onOk={onModalOk}/>
+                <SelectNeighbourHoodModal isVisible={openNeighbourhood}
+                                          onCancel={()=> setOpenNeighbourhood(false)}
+                                          onOk={onModalOk}
+                                          oldNeighbourhoods={formData?.neighbourhood}/>
                 <div className="text-left mt-4">
                     <Button raised label="جستجو" disabled={loading} className="customBtn w-full border-0 search-button" />
                     {/* className="customBtn border-0" */}

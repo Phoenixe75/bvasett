@@ -44,7 +44,7 @@ export default function Favorite({data}: { data: any }) {
           ['pi-bookmark-fill']: isFavorite,
           ['pi-bookmark']: !isFavorite
         })}
-        style={{fontSize: '1rem'}}
+        style={{fontSize: '1.5rem'}}
         onClick={toggleFavorite}
       ></i>
     </div>

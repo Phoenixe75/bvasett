@@ -145,7 +145,10 @@ const Mortgage = ({oldForm}: {oldForm: IFilter | null}) => {
                         </div>
                     </div>
                 </div>
-                <SelectNeighbourHoodModal isVisible={openNeighbourhood} onCancel={()=> setOpenNeighbourhood(false)} onOk={onModalOk}/>
+                <SelectNeighbourHoodModal isVisible={openNeighbourhood}
+                                          onCancel={()=> setOpenNeighbourhood(false)}
+                                          onOk={onModalOk}
+                                          oldNeighbourhoods={formData?.neighbourhood}/>
                 <div className="text-left mt-4">
                     {/* className="customBtn border-0" /> */}
                     <Button raised label="جستجو" disabled={loading} className="w-full search-button" />

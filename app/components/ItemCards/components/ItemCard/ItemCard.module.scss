@@ -45,8 +45,8 @@
   position: relative;
 }
 .card_thumbnail {
-  width: 136px;
-  height: 136px;
+  width: var(--card-thumbnail-height);
+  height: var(--card-thumbnail-height);
   align-items: center;
     background-color: rgba(0, 0, 0, .04);
     color: rgba(0, 0, 0, .32);
@@ -80,7 +80,7 @@
 }
 .heart_container {
   position: absolute;
-  top:4px;
+  top: calc(20px + #{var(--card-thumbnail-height)});
   left: 4px;
 }
 
