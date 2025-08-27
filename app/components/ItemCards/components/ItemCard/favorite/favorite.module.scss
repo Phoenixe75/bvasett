@@ -7,10 +7,10 @@
   //filter: brightness(.8);
   font-weight: 900;
   display: flex;
-  color: #ffeb3b;
+  color: var(--guide-btn-bg);
   justify-content: center;
   align-items: center;
   &_fill {
-    color: #ffeb3b;
+    color: var(--guide-btn-bg);
   }
 }

@@ -50,7 +50,7 @@ const AppFooter = () => {
                         <h4 className="font-medium text-2xl line-height-3 mb-3 text-900">تماس با ما</h4>
                         <a className="line-height-3 text-md block cursor-pointer mb-2 text-900">جستجوی ملک</a>
                         <a className="line-height-3 text-md block cursor-pointer mb-2 text-900">ارسال تیکت</a>
-                        <a className="line-height-3 text-md block cursor-pointer mb-2 text-900">سوالات متداول</a>
+                        <a href={'/faq'} className="line-height-3 text-md block cursor-pointer mb-2 text-900">سوالات متداول</a>
                         <a className="line-height-3 text-md block cursor-pointer text-900">املاک سپرده شده</a>
                     </div>
 
