@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Sale from './(shared-components)/Sale';
 import Rent from './(shared-components)/Rent';
 import Mortgage from './(shared-components)/Mortgage';
@@ -24,6 +24,25 @@ const navItems: { key: NavItems, label: string }[] = [
 ]
 const FilterItem = ({oldForm}: { oldForm: IFilter | null }) => {
   const [activeItem, setActiveItem] = useState<NavItems>('sale');
+
+  useEffect(() => {
+    if (oldForm) {
+      switch (activeItem) {
+        case "sale":
+          oldForm.purpose = 1;
+          break;
+        case "rent":
+          oldForm.purpose = 2;
+          break;
+        case "mortgage":
+          oldForm.purpose = 4;
+          break;
+        default:
+          break;
+      }
+      localStorage.setItem('filterForm', JSON.stringify(oldForm));
+    }
+  }, [activeItem, oldForm]);
 
   return (
     <div className="grid sm:w-full my-0 pt-0 md:pt-3 pr-3">
