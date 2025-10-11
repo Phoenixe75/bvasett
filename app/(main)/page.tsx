@@ -17,6 +17,9 @@ import {useLocalStorage} from 'primereact/hooks';
 import {StaticTime} from '@/app/components/StaticTime';
 import bannerImage from '../../public/images/ad-banner.jpg';
 import Image from 'next/image';
+import {useRouter} from 'next/navigation';
+import styles from '@/app/components/SelectNeighbourhoodModal/select-neighbourhood-modal.module.scss';
+import {Dialog} from 'primereact/dialog';
 
 const joyRideSteps = [
   {
@@ -41,14 +44,14 @@ const joyRideSteps = [
     content: 'در این بخش پاسخ سوالات پرتکرار و رایج را می‌بینید. اگر سوال شما در بین این موارد نبود، می‌توانید از طریق ثبت تیکت در بخش پشتیبانی، سوال خود را مطرح کنید و پاسخ بگیرید.'
   }
 ];
-const free7FilesTourJoyRideSteps = [
+const freeFilesTourJoyRideSteps = [
   {
     target: '.search-button',
-    content: '7 فایل رایگان:یکی از تفاوت های اصلی ما با سایر پلتفرم های آگهی دهنده معرفی مالکین بدون حضور واسطه هاست که در نهایت بدون پرداخت کمیسیون معاملتون انجام میشه.در جهت اثبات این موضوع پس از اولین ثبت نام،چنانچه مایل باشید درخواست 7 عدد فایل رایگان را کلیک کنید،و با انتخاب حداکثر 7 فایل رایگان و 7 فایل جایگزین،درخواست شما بلا فاصله به اپراتور منتقل و سپس اپراتور به لحظه،با مالک تماس گرفته و موجودیت فایل احراز میگردد،و پس از آن برای شما ارسال میگردد.در ادامه چنانچه مایل بودید میتوانید از خرید فایل های استعلامی یا اشتراک ماهانه بهره مند شوید.همراهتان هستیم تا انتقال قراردادتان در سامانه رسمی(ثبت قرارداد برای شما رایگان میباشد)'
+    content: '3 فایل رایگان:یکی از تفاوت های اصلی ما با سایر پلتفرم های آگهی دهنده معرفی مالکین بدون حضور واسطه هاست که در نهایت بدون پرداخت کمیسیون معاملتون انجام میشه.در جهت اثبات این موضوع پس از اولین ثبت نام،چنانچه مایل باشید درخواست 3 عدد فایل رایگان را کلیک کنید،و با انتخاب حداکثر 3 فایل رایگان و 3 فایل جایگزین،درخواست شما بلا فاصله به اپراتور منتقل و سپس اپراتور به لحظه،با مالک تماس گرفته و موجودیت فایل احراز میگردد،و پس از آن برای شما ارسال میگردد.در ادامه چنانچه مایل بودید میتوانید از خرید فایل های استعلامی یا اشتراک ماهانه بهره مند شوید.همراهتان هستیم تا انتقال قراردادتان در سامانه رسمی(ثبت قرارداد برای شما رایگان میباشد)'
   },
   {
     target: '.search-button',
-    content: 'تک فایل استعلامی:پس از دریافت 7 فایل رایگان خود میتوانید با انتخاب موارد درخواستی به همراه جایگزین توسط اپراتور ما استعلام موجودیت به لحظه انجام شده و سپس برایتان ارسال میگردد.یکی از ارزش های فایل موجودیت به لحظه میباشد،و باز این تفاوت ماست با سایر پلتفرم ها،همراهتان هستیم تا پایان قرارداد رسمی.'
+    content: 'تک فایل استعلامی:پس از دریافت 3 فایل رایگان خود میتوانید با انتخاب موارد درخواستی به همراه جایگزین توسط اپراتور ما استعلام موجودیت به لحظه انجام شده و سپس برایتان ارسال میگردد.یکی از ارزش های فایل موجودیت به لحظه میباشد،و باز این تفاوت ماست با سایر پلتفرم ها،همراهتان هستیم تا پایان قرارداد رسمی.'
   },
 ];
 const singleInquiryTourJoyRideSteps = [];
@@ -56,7 +59,7 @@ const LandingPage = () => {
   const [isHidden, setIsHidden] = useState(false);
   const [showTour, setShowTour] = useState(false);
   const [fullyLoaded, setFullyLoaded] = useState(false);
-  const [showFree7FilesTour, setShowFree7FilesTour] = useState(false);
+  const [showFreeFilesTour, setShowFreeFilesTour] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
   const [activeAccordionIndex, setActiveAccordionIndex] = useState<number | number[] | null | undefined>(null);
   const [showSingleInquiryTourJoyRideSteps, setShowSingleInquiryTourJoyRideSteps] = useState(false);
@@ -77,6 +80,7 @@ const LandingPage = () => {
   const loadingIsFinished = () => {
     setFullyLoaded(true);
   };
+  const router = useRouter();
   useEffect(() => {
     if (!fullyLoaded) {
       return;
@@ -88,7 +92,7 @@ const LandingPage = () => {
     }
   }, [fullyLoaded]);
   useEffect(() => {
-    if (showFree7FilesTour) {
+    if (showFreeFilesTour) {
       openAccordion();
       setActiveAccordionIndex(0);
       setTimeout(() => {
@@ -98,24 +102,24 @@ const LandingPage = () => {
         });
       }, 1000);
     }
-  }, [openAccordion, setActiveAccordionIndex,  showFree7FilesTour]);
+  }, [openAccordion, setActiveAccordionIndex, showFreeFilesTour]);
 
   const onTabChange = (event: AccordionTabChangeEvent) => {
     console.log(event.index)
   }
 
-  const preview7FreeFiles: () => void = () => {
-    setShowFree7FilesTour(true);
+  const previewFreeFiles: () => void = () => {
+    setShowFreeFilesTour(true);
   }
 
-  const handleFree7FilesTourJoyRideCallback = (data: any) => {
-    const { status } = data;
+  const handleFreeFilesTourJoyRideCallback = (data: any) => {
+    const {status} = data;
     if (status === 'finished' || status === 'skipped') {
-      setShowFree7FilesTour(false); // Stop the tour when finished or skipped
+      setShowFreeFilesTour(false); // Stop the tour when finished or skipped
     }
   }
 
-  const [oldFormData, ] = useLocalStorage(null, 'filterForm');
+  const [oldFormData,] = useLocalStorage(null, 'filterForm');
   const [oldForm, setOldForm] = useState(null);
 
   useEffect(() => {
@@ -124,12 +128,28 @@ const LandingPage = () => {
     }
   }, [oldFormData]);
 
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const openContractRegisterModal = () => {
+    setIsVisible(true);
+  }
+
+  const contractRegisterHandler = () => {
+    setIsVisible(false);
+    router.push('/contact');
+  }
+
+  const onCancel = () => {
+    setIsVisible(false);
+  }
+
   return (
     <div className="flex flex-column justify-content-center body" style={{backgroundColor: '#fcfcff'}}>
       <div id="home" className="landing-wrapper">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid mx-0 over-flow-x-hidden flex-nowrap align-items-center justify-content-start px-3 mt-0" style={{backgroundColor: '#111'}}>
+        <div className="grid mx-0 over-flow-x-hidden flex-nowrap align-items-center justify-content-start px-3 mt-0"
+             style={{backgroundColor: '#111'}}>
           <div className="col-auto">
             <StaticTime/>
           </div>
@@ -150,7 +170,8 @@ const LandingPage = () => {
             {/*<h5 className='hide_in_mobile'>‎</h5>*/}
             <div className="pt-0 md:pt-2 h-full">
               {/*<Accordion activeIndex={activeAccordionIndex} onTabChange={(e) => setActiveAccordionIndex(pre => Number(e.index) == Number(pre) ? null : e.index)}>*/}
-              <Button className="search-btn w-full mb-2">
+              <Button className="search-btn w-full mb-2"
+                      onClick={openContractRegisterModal}>
                 درخواست ثبت قرارداد
               </Button>
               <div className="sticky-filters">
@@ -178,17 +199,17 @@ const LandingPage = () => {
                 <div className="grid justify-content-center">
                   <div className="col py-0">
                     <Button raised type="button"
-                            id="free7Files"
+                            id="freeFiles"
                             className="guide-btn justify-content-center w-full"
-                            onClick={preview7FreeFiles}>
-                      7 فایل رایگان
+                            onClick={previewFreeFiles}>
+                      3 فایل رایگان
                     </Button>
                   </div>
                   <div className="col py-0">
                     <Button raised type="button"
-                            className="guide-btn justify-content-center w-full"
-                            onClick={preview7FreeFiles}>
-                      تک فایل استعلامی
+                            className="guide-btn justify-content-center w-full fs-9px lh-14px"
+                            onClick={previewFreeFiles}>
+                      تک فایل استعلامی/غیر استعلامی
                     </Button>
                   </div>
                   <div className="col py-0">
@@ -229,7 +250,8 @@ const LandingPage = () => {
                       مورد 3
                     </Button>
                   </div>*/}
-                  <Button className="novin-btn justify-content-center w-full">خدمات جدید، <span className="text-danger d-inline-block align-middle mx-1">به‌زودی</span>...</Button>
+                  <Button className="novin-btn justify-content-center w-full">خدمات جدید، <span
+                    className="text-danger d-inline-block align-middle mx-1">به‌زودی</span>...</Button>
                 </div>
                 {/*<div className='flex flex-row-reverse w-full mt-1'>*/}
                 {/*<div className='flex flex-row-reverse w-full'>*/}
@@ -253,7 +275,7 @@ const LandingPage = () => {
         {/* style={{ backgroundColor: '#5a9e19' }} */}
         {/* style={{ backgroundColor: '#083b19' }} */}
         <Joyride
-          steps={free7FilesTourJoyRideSteps}
+          steps={freeFilesTourJoyRideSteps}
           showSkipButton={true}
           continuous
           styles={{
@@ -269,8 +291,8 @@ const LandingPage = () => {
             skip: 'نمی‌خواهم',
             close: 'بستن'
           }}
-          run={showFree7FilesTour && activeAccordionIndex === 0}
-          callback={handleFree7FilesTourJoyRideCallback}
+          run={showFreeFilesTour && activeAccordionIndex === 0}
+          callback={handleFreeFilesTourJoyRideCallback}
         />
         <Joyride
           steps={joyRideSteps}
@@ -296,6 +318,32 @@ const LandingPage = () => {
           <AppCopyRight/>
         </div>
       </div>
+
+      <Dialog header={<h2>ثبت قرارداد</h2>}
+              onHide={onCancel}
+              closable={true}
+              visible={isVisible}>
+        <div className={styles.dialog_wrapper}>
+          <p>
+            کاربرگرامی،از آنجایی که عده زیادی از کاربران آشانایی با نحوه ثبت قرارداد در سامانه رسمی(مصوب قانون
+            1404/04/03)را ندارند و ممکن است به این موضوع فکر کنند که فرضا از طریق این پلتفرم ملک دلخواه خود را پیدا
+            کرده،و حال چه کنم؟تیم بی واسط بران شد،کاربران این پلتفرم را آسوده خاطر سازد و به صورت رایگان جهت رفاه حال
+            شما عزیزان (کاربران پلتفرم بی واسط)نسبت به ثبت قرارداد(صرفا فایل های پلتفرم)اقدام نماید.لازم به ذکر است
+            کاربرانی که ملک دلخواه خود را خارج از پلتفرم انتخاب کرده باشند این خدمت مشمول هزینه یک میلیون تومانی میباشد.
+          </p>
+          <div className="flex justify-content-end w-full mt-auto gap-2">
+            <Button onClick={onCancel} severity="secondary">
+              انصراف
+            </Button>
+            <Button
+              onClick={contractRegisterHandler}
+            >
+              تایید
+            </Button>
+          </div>
+
+        </div>
+      </Dialog>
     </div>
   );
 };

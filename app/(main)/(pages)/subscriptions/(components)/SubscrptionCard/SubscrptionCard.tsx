@@ -116,7 +116,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
 
           <span className={styles.blue_line}/>
           <Button className="w-full align-items-center justify-content-center" onClick={onButtonClick}>
-            {isFreePlan ? 'انتخاب 7 فایل رایگان من' : 'خرید اشتراک'}
+            {isFreePlan ? 'انتخاب 3 فایل رایگان من' : 'خرید اشتراک'}
           </Button>
         </div>
       </div>

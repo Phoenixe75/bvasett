@@ -53,7 +53,7 @@ const FilterResultPage: React.FC = () => {
   const router = useRouter();
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const {user} = useUserContext();
-  const firstBuyer = user?.orders === 0
+  const firstBuyer = user?.orders === 0;
   const doesGetInitialData = useRef(false);
   const [loadedAddIndexes, setLoadedAddIndexes] = useState<Array<number>>([]);
   const [goTopTopIndex, setGoToTopIndex] = useState<number>(-1);

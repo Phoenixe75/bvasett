@@ -19,7 +19,7 @@ import SubscrptionCard from './(components)/SubscrptionCard/SubscrptionCard';
 const initialData:SubscriptionPlanItem = {
 active:true,
 created: '',
-description: ['قابل استفاده برای کاربران جدید', 'قابلیت مشاهده 7 فایل انتخابی به صورت رایگان', 'فعال بر روی تمامی معاملات خرید و فروش / رهن / اجاره'],
+description: ['قابل استفاده برای کاربران جدید', 'قابلیت مشاهده 3 فایل انتخابی به صورت رایگان', 'فعال بر روی تمامی معاملات خرید و فروش / رهن / اجاره'],
 duration_days: 0,
 id: 0,
 name: 'معمولی',
@@ -64,7 +64,7 @@ const SubscriptonsPage = () => {
             <div style={{minHeight:'80dvh'}} className={classNames(styles.wrapper,"flex justify-content-center aling-items-center")}>
               <InfoDetail />
               <div className='flex-1 flex flex-column align-items-center justify-content-center p-5'>
-                 <h1>با <span>بی واسط</span> ، به مالک وصل شو، نه به واسطه!</h1>
+                 <h1>با <span>بی‌واسط</span> ، به مالک وصل شو، نه به واسطه!</h1>
                  <h4>
                  بدون حضور واسطه‌ها، با امکان ثبت مستقیم ملک توسط مالکین.
                  </h4>
