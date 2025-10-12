@@ -209,7 +209,7 @@ const LandingPage = () => {
                     <Button raised type="button"
                             className="guide-btn justify-content-center w-full fs-12px px-0 lh-14px"
                             onClick={previewFreeFiles}>
-                      فایل استعلامی/ غیر استعلامی
+                      فایل استعلامی / غیر استعلامی
                     </Button>
                   </div>
                   <div className="col py-0">

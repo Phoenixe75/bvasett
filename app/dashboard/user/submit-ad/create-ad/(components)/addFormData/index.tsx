@@ -99,6 +99,15 @@ const SubmitAdForm = ({ params }: { params: { id: number } }) => {
 
     return (
         <div className="card detailsData w-full">
+          <div className="guide-box mt-3">
+            <p className="font-bold mb-1 rtl">
+              در این پلتفرم (سایت و اپ) صرفا آگهی ملک مالکین دارای سند رسمی ثبت میگردد بدین منظور به جهت احراز مالکیت آگهی گذار ثبت اطلاعات ذیل الزامیست
+            </p>
+            <p className="font-bold mb-0 rtl">
+              <i className="pi pi-info-circle fs-md ml-2" style={{display: "inline-block", verticalAlign: "middle", fontSize: "20px"}}></i>
+              توجه : این اطلاعات در پلتفرم قابل ذخیره نیست و صرفا از طریق سامانه رسمی ثبت من استعلام مالکیت أخذ میگردد. لازم به ذکر است نام مالک و کد ملی که در سند قید می‌باشد قابلیت احراز مالکیت دارد.
+            </p>
+          </div>
             <h5>ثبت آگهی</h5>
             <hr />
             <form onSubmit={submitForm} className="grid p-fluid mt-6" encType="multipart/form-data">
