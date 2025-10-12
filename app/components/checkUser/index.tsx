@@ -5,6 +5,7 @@ import { InputText } from 'primereact/inputtext';
 import { toast } from 'react-toastify';
 import { authenticateStage1 } from '../../api/api';
 import { ICheckUser } from '../../(main)/auth/login/(models)/login';
+import {useRouter} from 'next/navigation';
 
 const MOBILE_REGEX = /^.{8,20}$/;
 
@@ -19,6 +20,7 @@ const CheckUser = ({ setFormState, userData, setUserData }: IProps) => {
     const [mobile, setMobile] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [isValidUn, setIsValidUn] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         mobileRef.current?.focus();
@@ -72,6 +74,12 @@ const CheckUser = ({ setFormState, userData, setUserData }: IProps) => {
                     <InputText ref={mobileRef} value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="09" className="w-full mb-5 text-left" style={{ padding: '1rem' }} required />
                     <Button raised type="submit" disabled={mobile.length !== 11} className="w-full p-3 text-xl text-center" label="ورود" loading={loading} />
                 </div>
+              <div className="w-full mt-3">
+                ثبت نام در این پلتفرم به منزله پذیرش <Button type="button"
+                                                             text
+                                                             onClick={() => router.push('/rules_and_regulations')}
+                                                             color="primary" className="mx-1 px-1 py-0 d-inline-block">قوانین و مقررات</Button> میباشد
+              </div>
             </div>
         </form>
     );

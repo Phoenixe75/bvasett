@@ -22,7 +22,7 @@ const PackageItem = ({selectedPackage, setSelectedPackage, tourTarget, firstBuye
       name: firstBuyer ? "هفت تایی رایگان" : `بدون استعلام ${formatMoneyToPersianUnit(price?.[WITHOUT_INQUIRY])}`,
       value: WITHOUT_INQUIRY,
       // disabled: !firstBuyer
-      disabled: !!user
+      // disabled: !user
     },
   ]
   useEffect(() => {
