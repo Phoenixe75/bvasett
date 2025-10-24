@@ -51,6 +51,21 @@ export default function Faq() {
         سامانه های ذکر شده ثبت شده باشد می بایست حتما پس از آن به دفاتر اسناد رسمی مراجعه نمایید
       </p>
     </Panel>
+    <Panel header="چگونه میتوان اپلیکیشن بی واسط تهیه کرد؟"
+           className="text-lg red m-2">
+      <p className="m-2">
+        کاربران میتوانند جهت نصب اپلیکیشن به صورت دانلود مستقیم یا از فروشگاه گوگل اپ و برای گوشی های ios از وب اپ
+        استفاده نمایید.
+      </p>
+    </Panel>
+    <Panel header="خدمات دهی در بی واسط؟"
+           className="text-lg red m-2">
+      <p className="m-2">
+        برای آشنایی و اطمینان بیشتر از خدمات بی‌واسط، هر کاربر پس از ثبت‌نام، امکان دسترسی رایگان به اطلاعات کامل و
+        شماره تماس مالکان 3 فایل را دارد.
+        پس از آن، برای مشاهده شماره تماس و نشانی سایر فایل‌ها، از گزینه های استعلامی و غیراستعلامی استفاده نمایید.
+      </p>
+    </Panel>
     <Link href={'/'} className="flex align-content-center justify-content-end mt-3">
       <Button raised type="submit" label="بازگشت" className="bg-gray-300 text-color border-0 w-1"/>
     </Link>

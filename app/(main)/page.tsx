@@ -178,7 +178,11 @@ const LandingPage = () => {
                 <Accordion activeIndex={activeAccordionIndex} onTabChange={e => {
                   setActiveAccordionIndex(pre => e.index == pre ? null : e.index);
                 }} onTabClose={closeAccordion} onTabOpen={openAccordion}>
-                  <AccordionTab headerClassName="search-btn-wrapper" header="جستجو">
+                  <AccordionTab headerClassName="search-btn-wrapper" header="جستجو"
+                                contentStyle={{
+                                  maxHeight: "calc(100vh - 220px)",
+                                  overflowY: 'auto'
+                                }}>
                     <FilterItem oldForm={oldForm}/>
                   </AccordionTab>
                 </Accordion>
