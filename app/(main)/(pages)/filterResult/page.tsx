@@ -38,7 +38,7 @@ const FilterResultPage: React.FC = () => {
   const [nextPageBtnLoading, setNextPageBtnLoading] = useState<boolean>(true);
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const [showInquiryModal, setShowInquiryModal] = useState(false);
-  const [hasShownInquryModal, setHasShownInquryModal] = useState(false);
+  const [hasShownInquiryModal, setHasShownInquiryModal] = useState(false);
   const [prices, setPrices] = useState<any>(null);
   const [orderInfo, setOrderInfo] = useState<IOrderBuyResponse | null>(null)
   const [count, setCount] = useState(0);
@@ -159,8 +159,8 @@ const FilterResultPage: React.FC = () => {
   };
 
   const back = (): void => {
-    if (hasShownInquryModal) {
-      setHasShownInquryModal(false);
+    if (hasShownInquiryModal) {
+      setHasShownInquiryModal(false);
       setExtraSelectedRows([]);
       setSelectedRows([])
       return;
@@ -182,21 +182,21 @@ const FilterResultPage: React.FC = () => {
 
   const maxCount = useMemo(() => {
     if (firstBuyer) {
-      return 7
+      return 3
     }
     if (!selectedPackage) {
       return 0
     }
-    if (hasShownInquryModal) {
+    if (hasShownInquiryModal) {
       return selectedRows.length
     }
     return Infinity
-  }, [selectedPackage, hasShownInquryModal, selectedRows, firstBuyer]);
+  }, [selectedPackage, hasShownInquiryModal, selectedRows, firstBuyer]);
   const handleSelectionChange = (e: any) => {
     if (e.length > maxCount) {
       return
     }
-    if (hasShownInquryModal) {
+    if (hasShownInquiryModal) {
       setExtraSelectedRows(e); // به سادگی مقدار e.value را تنظیم کنید
       return;
     }
@@ -208,7 +208,7 @@ const FilterResultPage: React.FC = () => {
       top: 0,
       behavior: "smooth"
     })
-    if (selectedPackage === WITH_INQUIRY && !firstBuyer && !hasShownInquryModal) {
+    if (selectedPackage === WITH_INQUIRY && !firstBuyer && !hasShownInquiryModal) {
       setShowInquiryModal(true);
       return;
     }
@@ -307,14 +307,14 @@ const FilterResultPage: React.FC = () => {
   };
   const onChoseExtraClick = () => {
     setShowInquiryModal(false);
-    setHasShownInquryModal(true);
+    setHasShownInquiryModal(true);
   };
   const cardsData = useMemo(() => {
-    if (hasShownInquryModal) {
+    if (hasShownInquiryModal) {
       return formData.filter((item) => !selectedRows.some((x) => x.id === item.id));
     }
     return formData;
-  }, [hasShownInquryModal, formData]);
+  }, [hasShownInquiryModal, formData]);
   if (loading) return <ProgressSpinner style={{width: '50px', height: '50px'}}/>;
   return (
     <>
@@ -324,15 +324,16 @@ const FilterResultPage: React.FC = () => {
       <div className="card p-fluid">
         <div className="packagess">
           <PackageItem prices={prices} firstBuyer={firstBuyer} selectedPackage={selectedPackage}
-                       setSelectedPackage={setSelectedPackage} tourTarget=".packagess"/>
+                       setSelectedPackage={setSelectedPackage}
+                       hasShownInquiryModal={hasShownInquiryModal} tourTarget=".packagess"/>
         </div>
         <hr/>
         <div className='flex align-items-center justify-content-between w-full'>
-          {hasShownInquryModal ? <h5 className='m-2'>لیست آگهی‌های جایگزین</h5> :
+          {hasShownInquiryModal ? <h5 className='m-2'>لیست آگهی‌های جایگزین</h5> :
             <h5 className='m-2'>لیست آگهی‌های یافت شده</h5>}
-          {hasShownInquryModal ?
+          {hasShownInquiryModal ?
             <h5 className='m-2'>{`تعداد آگهی جایگزین انتخابی:${extraSelectedRows.length}`}</h5> : null}
-          {!hasShownInquryModal ? <h5 className='m-2'>{`تعداد آگهی انتخابی:${selectedRows.length}`}</h5> : null}
+          {!hasShownInquiryModal ? <h5 className='m-2'>{`تعداد آگهی انتخابی:${selectedRows.length}`}</h5> : null}
           <h5 className='m-2'>{`تعداد: ${count}`}</h5>
         </div>
         <div>
@@ -341,7 +342,7 @@ const FilterResultPage: React.FC = () => {
         </div>
         <hr/>
         <div className="filess">
-          <ItemCards key={hasShownInquryModal.toString()} data={cardsData} selectable={!!selectedPackage}
+          <ItemCards key={hasShownInquiryModal.toString()} data={cardsData} selectable={!!selectedPackage}
                      selectedPackage={selectedPackage || undefined} onSelectionChange={handleSelectionChange}
                      maxCount={maxCount} onShowDetails={showDetails}/>
         </div>

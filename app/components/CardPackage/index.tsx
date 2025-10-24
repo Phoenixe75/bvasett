@@ -8,7 +8,7 @@ import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {useUserContext} from '@/layout/context/usercontext';
 import Joyride from 'react-joyride';
 
-const PackageItem = ({selectedPackage, setSelectedPackage, tourTarget, firstBuyer, prices}: any) => {
+const PackageItem = ({selectedPackage, setSelectedPackage, tourTarget, firstBuyer, prices, hasShownInquiryModal}: any) => {
   const [packages, setPackages] = useState<IPackages[]>([]);
   const [showFreeFilesTour, setShowFreeFilesTour] = useState<boolean>(false);
   const price = prices ? Array.from(prices.values())[0] as any : null;
@@ -24,12 +24,12 @@ const PackageItem = ({selectedPackage, setSelectedPackage, tourTarget, firstBuye
       name: `بدون استعلام ${formatMoneyToPersianUnit(price?.[WITHOUT_INQUIRY])}`,
       value: WITHOUT_INQUIRY,
       // disabled: !firstBuyer
-      // disabled: !user
+      disabled: hasShownInquiryModal
     },
     {
       name: "سه تایی رایگان",
       value: FREE,
-      disabled: user == null ? false : !firstBuyer
+      disabled: user == null ? hasShownInquiryModal : (!firstBuyer || hasShownInquiryModal)
     },
   ];
   const freeFilesSteps = [
@@ -63,7 +63,8 @@ const PackageItem = ({selectedPackage, setSelectedPackage, tourTarget, firstBuye
     }
   }, [tourTarget]);
 
-  const selectPackageHandler = useCallback((inquiry: Inquiry) => {
+  const selectPackageHandler = (inquiry: Inquiry) => {
+    setShowFreeFilesTour(true);
     switch (inquiry) {
       case WITH_INQUIRY:
         setSelectedPackage(WITH_INQUIRY);
@@ -76,12 +77,11 @@ const PackageItem = ({selectedPackage, setSelectedPackage, tourTarget, firstBuye
         setSelectedPackage(WITHOUT_INQUIRY);
         break;
     }
-    const hasSeenFreeFilesTour = localStorage.getItem('hasSeenFreeFilesTour');
-    if (!hasSeenFreeFilesTour) {
-      setShowFreeFilesTour(true);
-      localStorage.setItem('hasSeenFreeFilesTour', 'true'); // Set a flag to not show tour again
-    }
-  }, [selectedPackage, setSelectedPackage]);
+    // const hasSeenFreeFilesTour = localStorage.getItem('hasSeenFreeFilesTour');
+    // if (!hasSeenFreeFilesTour) {
+    //   localStorage.setItem('hasSeenFreeFilesTour', 'true'); // Set a flag to not show tour again
+    // }
+  };
 
 
   if (!packages.length) return <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8"
