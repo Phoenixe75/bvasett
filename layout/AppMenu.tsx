@@ -34,6 +34,8 @@ const AppMenu = () => {
                   { label: 'پنل کاربری', icon: 'pi pi-fw pi-microsoft ml-2', to: '/dashboard/admin/admin-panel' },
                   { label: 'کلمه عبور', icon: 'pi pi-fw pi-key ml-2', to: '/dashboard/user/my-password' },
                   { label: 'مدیریت کاربران', icon: 'pi pi-fw pi-users ml-2', to: '/dashboard/admin/users' },
+                  { label: 'ارسال پیامک', icon: 'pi pi-fw pi-send ml-2', to: '/dashboard/admin/send-sms' },
+                  { label: 'مدیریت نواقص', icon: 'pi pi-fw pi-file ml-2', to: '/dashboard/admin/defect-management' },
                   { label: 'مدیریت آگهی‌ها', icon: 'pi pi-fw pi-box ml-2', to: '/dashboard/admin/ads' },
                   { label: 'تیکت‌های کاربران', icon: 'pi pi-fw pi-envelope ml-2', to: '/dashboard/admin/users-tickets' },
                   { label: 'سوالات کاربران', icon: 'pi pi-fw pi-question ml-2', to: '/dashboard/admin/users-questions' },
@@ -41,7 +43,7 @@ const AppMenu = () => {
                   { label: 'مدیریت اشتراک ها', icon: 'pi pi-box ml-2', to: '/dashboard/admin/subscription-plan-manager' },
                   { label: 'اشتراک ها', icon: 'pi pi-box ml-2', to: '/dashboard/admin/subscriptions' },
                   { label: 'لیست تخیفات', icon: 'pi pi-fw pi-gift ml-2', to: '/dashboard/admin/discounts' },
-                  { label: 'لیست خریدها', icon: 'pi pi-shopping-bag ml-2', to: '/dashboard/admin/list-payments' },
+                  { label: 'لیست سفارشات', icon: 'pi pi-shopping-bag ml-2', to: '/dashboard/admin/list-payments' },
                   { label: 'لیست مقالات', icon: 'pi pi-fw pi-book ml-2', to: '/dashboard/admin/articles' },
                   { label: 'اسلایدر', icon: 'pi pi-fw pi-images ml-2', to: '/dashboard/admin/sliders' },
                   { label: 'تنظیمات سایت', icon: 'pi pi-fw pi-cog ml-2', to: '/dashboard/admin/setting' },
@@ -52,9 +54,12 @@ const AppMenu = () => {
             ? [
                   { label: 'کلمه عبور', icon: 'pi pi-fw pi-key ml-2', to: '/dashboard/admin/password' },
                   { label: 'مدیریت کاربران', icon: 'pi pi-fw pi-users ml-2', to: '/dashboard/admin/users' },
+                  { label: 'ارسال پیامک', icon: 'pi pi-fw pi-send ml-2', to: '/dashboard/admin/send-sms' },
+                  { label: 'مدیریت نواقص', icon: 'pi pi-fw pi-file ml-2', to: '/dashboard/admin/defect-management' },
                   { label: 'مدیریت آگهی‌ها', icon: 'pi pi-fw pi-box ml-2', to: '/dashboard/admin/ads' },
                   { label: 'تیکت‌های کاربران', icon: 'pi pi-fw pi-envelope ml-2', to: '/dashboard/admin/users-tickets' },
                   { label: 'سوالات کاربران', icon: 'pi pi-fw pi-question ml-2', to: '/dashboard/admin/users-questions' },
+                  { label: 'لیست سفارشات', icon: 'pi pi-shopping-bag ml-2', to: '/dashboard/admin/list-payments' },
                   { label: 'لیست مقالات', icon: 'pi pi-fw pi-book ml-2', to: '/dashboard/admin/articles' },
                   { label: 'علاقه‌مندی ها', icon: 'pi pi-fw pi-home ml-2', to: '/dashboard/admin/my-favorites' }
               ]
@@ -63,7 +68,7 @@ const AppMenu = () => {
                   { label: 'کلمه عبور', icon: 'pi pi-fw pi-key ml-2', to: '/dashboard/user/my-password' },
                   { label: 'تیکت‌های من', icon: 'pi pi-fw pi-envelope ml-2', to: '/dashboard/user/my-tickets' },
                   { label: 'سوالات', icon: 'pi pi-fw pi-question ml-2', to: '/dashboard/user/my-questions' },
-                  { label: 'لیست خریدها', icon: 'pi pi-fw pi-shopping-cart ml-2', to: '/dashboard/user/my-payments' },
+                  { label: 'لیست سفارشات', icon: 'pi pi-fw pi-shopping-cart ml-2', to: '/dashboard/user/my-payments' },
                   { label: 'لیست اشتراک‌ها', icon: 'pi pi-fw pi-shopping-cart ml-2', to: '/dashboard/user/my-subscriptions' },
                   { label: 'لیست درخواست آگهی‌ها', icon: 'pi pi-fw pi-home ml-2', to: '/dashboard/user/submit-ad' },
                   { label: 'علاقه‌مندی ها', icon: 'pi pi-fw pi-home ml-2', to: '/dashboard/user/my-favorites' }
