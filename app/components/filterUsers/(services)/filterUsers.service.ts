@@ -27,3 +27,27 @@ export const filterUsers = async (formData: IFilterUsers, page: number): Promise
         throw error;
     }
 };
+
+export const filterUsersByKeyword = async (keyword: string, page: number): Promise<any> => {
+    try {
+        let url = `${baseUrl}/api/users/search/?page=${page}`;
+        if (keyword) {
+          url += `&mobile__icontains=${keyword}`;
+          url += `&national_id__icontains=${keyword}`;
+          url += `&first_name__icontains=${keyword}`;
+          url += `&last_name__icontains=${keyword}`;
+        } else {
+          url = `${baseUrl}/api/users/?page=${page}`;
+        }
+
+        const response: AxiosResponse<IAdsResponse> = await axiosApi.get(url, {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching ads:', error);
+        throw error;
+    }
+};

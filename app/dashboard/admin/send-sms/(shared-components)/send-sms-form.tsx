@@ -1,30 +1,40 @@
 'use client';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IUsers} from '@/app/dashboard/admin/users/(models)/users';
 import {getUsers} from '@/app/dashboard/admin/users/(services)/users.service';
 import {toast} from 'react-toastify';
 import {Button} from 'primereact/button';
-import {ISendSms} from '@/app/dashboard/admin/send-sms/(models)/types';
-import {sendSmsToUsersByIds} from '@/app/dashboard/admin/send-sms/(services)/send-sms.service';
-import {MultiSelect} from 'primereact/multiselect';
+import {ISmsTemplateInterface, SendSmsDTO} from '@/app/dashboard/admin/send-sms/(models)/types';
+import {getSmsTemplates, sendPreformattedSmsToUser} from '@/app/dashboard/admin/send-sms/(services)/send-sms.service';
+import {Dropdown} from 'primereact/dropdown';
+import {validateTemplateWithPlaceholders} from '@/app/dashboard/admin/send-sms/(models)/sms-template-util';
+import {filterUsers, filterUsersByKeyword} from '@/app/components/filterUsers/(services)/filterUsers.service';
 
 const SendSmsForm = () => {
   const [users, setUsers] = useState<IUsers[]>([]);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState<ISendSms>({
-    users: [],
+  const [formData, setFormData] = useState<SendSmsDTO>({
+    receiver: '',
+    template: '',
+    values: {}
   });
   const [formLoading, setFormLoading] = useState(false);
+  const [templates, setTemplates] = useState<Array<ISmsTemplateInterface>>([]);
+  const [selectedSmsTemplate, setSelectedSmsTemplate] = useState<ISmsTemplateInterface | null>(null);
+  const [selectedUser, setSelectedUser] = useState<IUsers | null>(null);
+  const [keyword, setKeyword] = useState<string>('');
+  const [templateContent, setTemplateContent] = useState<string>('');
 
   useEffect(() => {
-    fetchData();
+    fetchUsers();
+    fetchTemplates();
   }, []);
 
-  const fetchData = async () => {
+  const fetchUsers = async (keyword: string = '') => {
     try {
       setLoading(true);
       let data;
-      data = await getUsers(1);
+      data = await filterUsersByKeyword(keyword, 1);
       setUsers(data.results);
       setLoading(false);
     } catch (error) {
@@ -34,12 +44,75 @@ const SendSmsForm = () => {
     }
   };
 
+  const fetchTemplates = async () => {
+    try {
+      setLoading(true);
+      let data;
+      // data = await getUsers(1);
+      data = await getSmsTemplates();
+      setTemplates(data ?? []);
+      const latestTemplate = data?.length ? data[data.length - 1] : null;
+      if (latestTemplate != null) {
+        if (!validateTemplateWithPlaceholders(latestTemplate)) {
+          toast.error("خطا در مقادیر تمپلیت پیام");
+          return;
+        }
+        const placeholders: Array<string> = latestTemplate.placeholders;
+        const values: any = {};
+        placeholders?.forEach(placeholder => {
+          values[placeholder] = '';
+        })
+        setFormData({
+          ...formData,
+          template: latestTemplate.template,
+          values
+        })
+      }
+      setLoading(false);
+    } catch (error) {
+      toast.error('خطایی در بارگزاری داده‌ها رخ داد');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleTemplateSelect = (e: any) => {
+    const selectedTemplateId = e.value?.id;
+    if (selectedTemplateId != null) {
+      setSelectedSmsTemplate(templates.find(template => `${template.id}` == `${selectedTemplateId}`) ?? null);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedSmsTemplate != null) {
+      const values: any = {};
+      selectedSmsTemplate?.placeholders?.forEach(placeholder => {
+        values[placeholder] = '';
+      });
+      setFormData({
+        ...(formData ?? {}),
+        template: selectedSmsTemplate?.id,
+        values
+      });
+    }
+  }, [selectedSmsTemplate]);
 
   const handleUsersSelect = (e: any) => {
+    setSelectedUser(e.value ?? null);
     setFormData({
-      users: e.value ?? []
+      ...(formData ?? {}),
+      receiver: e.value?.mobile,
     })
   };
+
+  const filterUsersHandler = (event: any) => {
+    const filter = event?.filter ?? '';
+    setKeyword(filter);
+  }
+
+  useEffect(() => {
+    console.log(keyword);
+  }, [keyword]);
 
   // const setValue = useCallback((fieldName: string, fieldValue: any) => {
   //   setFormData((prevState) => ({
@@ -51,8 +124,8 @@ const SendSmsForm = () => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!formData.users.length) {
-      toast.error('کاربران را انتخاب کنید');
+    if (!formData.receiver) {
+      toast.error('کاربر مورد نظر را انتخاب کنید');
       return;
     }
     try {
@@ -64,7 +137,14 @@ const SendSmsForm = () => {
         // };
 
         // const filteredData: Partial<ISendSms> = filterNullValues(formData);
-        const result = await sendSmsToUsersByIds(formData);
+        const result = await sendPreformattedSmsToUser(formData);
+        setFormData({
+          template: '',
+          receiver: '',
+          values: {}
+        });
+        setSelectedUser(null);
+        setSelectedSmsTemplate(null);
         toast.success('با موفقیت ارسال شد');
       }
     } catch (error) {
@@ -73,51 +153,112 @@ const SendSmsForm = () => {
     } finally {
       setTimeout(() => {
         setFormLoading(false);
-      }, 5000);
+      }, 3000);
     }
   };
+
+  const selectedUserTemplate = (user: IUsers | null, props: any) => {
+    if (user != null) {
+      return (
+        <div className="flex align-items-center">
+          <span>{user?.first_name} {user?.last_name} ({user?.mobile})</span>
+        </div>
+      );
+    }
+
+    return <span>{props?.placeholder}</span>;
+  };
+
+  const userOptionTemplate = (user: IUsers) =>
+    (<span>{user?.first_name} {user?.last_name} ({user?.mobile})</span>)
+
+  useEffect(() => {
+    if (selectedUser?.id && selectedSmsTemplate?.id) {
+      const values: any = formData.values ?? {};
+      selectedSmsTemplate.placeholders.forEach((placeholder: string) => {
+        values[placeholder] = ((selectedUser as any)[placeholder] ?? '')
+      });
+      setFormData({
+        ...formData,
+        values
+      })
+      setTemplateContent((content: string) => {
+        selectedSmsTemplate.placeholders.forEach((placeholder: string) => {
+          content = selectedSmsTemplate.template.replaceAll(`\${${placeholder}}`, ((selectedUser as any)[placeholder] ?? ''))
+        });
+        return content;
+      })
+    }
+  }, [selectedUser, selectedSmsTemplate, setFormData ,setTemplateContent]);
+
 
   return (
     <div className="card p-fluid">
       <h5>ارسال پیامک</h5>
       <hr/>
 
+      {
+        templateContent && (
+          <div className="p-card">
+            <div className="p-card-body">
+              {templateContent}
+            </div>
+          </div>
+        )
+      }
+
       <form onSubmit={submitForm} className="grid p-fluid mt-6">
 
         <div className="field col-12 md:col-6 lg:col-5 xl:col-4">
+          <label htmlFor="template">
+            تمپلیت پیامک <span className="text-red-500">*</span>
+          </label>
           <span className="p-float-label">
-            <MultiSelect name="user_ids"
-                         id="user_ids"
-                         value={formData.users}
-                         onChange={handleUsersSelect}
-                         options={users}
-                         placeholder="انتخاب کنید"
-                         itemTemplate={(user) => (<span>{user.first_name} {user.last_name} ({user.mobile})</span>)}
-                         selectedItemTemplate={(user) => (<span className="ml-3">{user?.mobile}</span>)}
-                         required/>
-              <label htmlFor="user_ids">
-                  کاربران <span className="text-red-500">*</span>
-              </label>
+            <Dropdown id="template"
+                      name="template"
+                      type="text"
+                      required
+                      value={templates?.find(template => `${template?.id}` == `${formData.template}`) || null}
+                      options={templates}
+                      optionLabel="name"
+                      placeholder="انتخاب کنید"
+                      onChange={handleTemplateSelect}
+            />
           </span>
         </div>
 
-        {
-          formData?.users?.length > 0 && (<div className="col-12">
-            {
-              formData?.users?.map((user, index) => (<span key={index}
-                                                           className="p-badge p-badge-info d-inline-block px-2 py-1 mx-2 mb-2"
-                                                           style={{
-                                                             borderRadius: '16px',
-                                                             verticalAlign: 'middle',
-                                                             height: 'auto',
-                                                             lineHeight: 'auto'
-                                                           }}>
-                <span className="d-inline-block">{user.first_name} {user.last_name}</span>
-                <span className="d-inline-block mx-1">({user.mobile})</span>
-              </span>))
-            }
-          </div>)
-        }
+        <div className="field col-12 md:col-6 lg:col-5 xl:col-4">
+          <label htmlFor="receiver">
+            کاربر <span className="text-red-500">*</span>
+          </label>
+          <span className="p-float-label">
+            <Dropdown id="receiver"
+                      name="receiver"
+                      required
+                      filter
+                      onFilter={filterUsersHandler}
+                      value={users?.find(user => user?.mobile === formData.receiver) || null}
+                      options={users}
+                      optionLabel="mobile"
+                      placeholder="انتخاب کنید"
+                      onChange={e => handleUsersSelect(e)}
+                      itemTemplate={userOptionTemplate}
+                      valueTemplate={selectedUserTemplate}
+            />
+            {/*<MultiSelect name="user_ids"*/}
+            {/*             id="user_ids"*/}
+            {/*             value={[formData.users]}*/}
+            {/*             onChange={handleUsersSelect}*/}
+            {/*             options={users}*/}
+            {/*             onEndedCapture={handleUsersScroll}*/}
+            {/*             virtualScrollerOptions={{itemSize: 25}}*/}
+            {/*             placeholder="انتخاب کنید"*/}
+            {/*             multiple={false}*/}
+            {/*             itemTemplate={(user) => (<span>{user.first_name} {user.last_name} ({user.mobile})</span>)}*/}
+            {/*             selectedItemTemplate={(user) => (<span className="ml-3">{user?.mobile}</span>)}*/}
+            {/*             required/>*/}
+          </span>
+        </div>
 
         <div className="col-12">
           <div className="field flex col-12 md:col-2 ">
