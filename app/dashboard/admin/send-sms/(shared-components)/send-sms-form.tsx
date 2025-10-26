@@ -145,6 +145,7 @@ const SendSmsForm = () => {
         });
         setSelectedUser(null);
         setSelectedSmsTemplate(null);
+        setTemplateContent('');
         toast.success('با موفقیت ارسال شد');
       }
     } catch (error) {
