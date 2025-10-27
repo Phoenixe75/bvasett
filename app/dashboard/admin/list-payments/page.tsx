@@ -9,13 +9,14 @@ const ListPayments = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [totalCount, setTotalCount] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [perPage, setPerPage] = useState<number>(25);
 
-    const fetchData = async (page: number) => {
+    const fetchData = async (page: number, perPage: number = 15) => {
         try {
             setLoading(true);
-            const response = await getAllOrders(page);
-            setData(response.results);
-            setTotalCount(response.count);
+            const response = await getAllOrders(page, perPage);
+            setData(response.results ?? []);
+            setTotalCount(response.count ?? 0);
         } catch (error) {
             console.error('Error retrieving Orders:', error);
             setLoading(false);
@@ -25,17 +26,27 @@ const ListPayments = () => {
     };
 
     useEffect(() => {
-        fetchData(currentPage);
-    }, [currentPage]);
+        fetchData(currentPage, perPage);
+    }, [currentPage, perPage]);
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
 
+    const handlePerPageChange = (perPage: number) => {
+        setPerPage(perPage);
+    };
+
     const refreshData = async () => {
         await fetchData(currentPage);
     };
-    return <OrderList data={data} loading={loading} totalCount={totalCount} currentPage={currentPage} onPageChange={handlePageChange} refreshData={refreshData} />;
+    return <OrderList data={data}
+                      loading={loading}
+                      totalCount={totalCount}
+                      currentPage={currentPage}
+                      perPage={perPage}
+                      onPageChange={handlePageChange}
+                      refreshData={refreshData} />;
 };
 
 export default ListPayments;
