@@ -1,7 +1,6 @@
 'use client';
 import React, {useEffect, useState} from 'react';
 import {IUsers} from '@/app/dashboard/admin/users/(models)/users';
-import {getUsers} from '@/app/dashboard/admin/users/(services)/users.service';
 import {toast} from 'react-toastify';
 import {Button} from 'primereact/button';
 import {ISmsTemplateInterface, SendSmsDTO} from '@/app/dashboard/admin/send-sms/(models)/types';
@@ -14,7 +13,8 @@ import {convertToEnglishNumbers} from '@/utils/commonFormUtils';
 
 const SendSmsForm = () => {
   const [users, setUsers] = useState<IUsers[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [loadingTemplates, setLoadingTemplates] = useState(false);
   const [formData, setFormData] = useState<SendSmsDTO>({
     receiver: '',
     template: '',
@@ -35,21 +35,21 @@ const SendSmsForm = () => {
 
   const fetchUsers = async (keyword: string = '') => {
     try {
-      setLoading(true);
+      setLoadingUsers(true);
       let data;
       data = await filterUsersByKeyword(keyword, 1);
       setUsers(data.results);
-      setLoading(false);
+      setLoadingUsers(false);
     } catch (error) {
       toast.error('خطایی در بارگزاری داده‌ها رخ داد');
     } finally {
-      setLoading(false);
+      setLoadingUsers(false);
     }
   };
 
   const fetchTemplates = async () => {
     try {
-      setLoading(true);
+      setLoadingTemplates(true);
       let data;
       // data = await getUsers(1);
       data = await getSmsTemplates();
@@ -71,11 +71,11 @@ const SendSmsForm = () => {
           values
         })
       }
-      setLoading(false);
+      setLoadingTemplates(false);
     } catch (error) {
       toast.error('خطایی در بارگزاری داده‌ها رخ داد');
     } finally {
-      setLoading(false);
+      setLoadingTemplates(false);
     }
   };
 
@@ -124,7 +124,8 @@ const SendSmsForm = () => {
   }
 
   useEffect(() => {
-    console.log(keyword);
+    const timeOutId = setTimeout(() => fetchUsers(keyword), 700);
+    return () => clearTimeout(timeOutId);
   }, [keyword]);
 
   // const setValue = useCallback((fieldName: string, fieldValue: any) => {
@@ -204,7 +205,7 @@ const SendSmsForm = () => {
         return content;
       })
     }
-  }, [selectedUser, selectedSmsTemplate, setFormData ,setTemplateContent]);
+  }, [selectedUser, selectedSmsTemplate, setFormData, setTemplateContent]);
 
 
   return (
@@ -253,6 +254,7 @@ const SendSmsForm = () => {
                       onFilter={filterUsersHandler}
                       value={users?.find(user => user?.mobile === formData.receiver) || null}
                       options={users}
+                      optionDisabled={() => loadingUsers}
                       optionLabel="mobile"
                       placeholder="انتخاب کنید"
                       onChange={e => handleUsersSelect(e)}
@@ -270,7 +272,7 @@ const SendSmsForm = () => {
                      type="text"
                      dir="ltr"
                      value={mobileNumber}
-                     onChange={mobileChangeHandler} />
+                     onChange={mobileChangeHandler}/>
         </div>
 
         <div className="col-12">
