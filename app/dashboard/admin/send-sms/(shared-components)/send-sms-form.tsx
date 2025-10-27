@@ -9,6 +9,8 @@ import {getSmsTemplates, sendPreformattedSmsToUser} from '@/app/dashboard/admin/
 import {Dropdown} from 'primereact/dropdown';
 import {validateTemplateWithPlaceholders} from '@/app/dashboard/admin/send-sms/(models)/sms-template-util';
 import {filterUsers, filterUsersByKeyword} from '@/app/components/filterUsers/(services)/filterUsers.service';
+import {InputText} from 'primereact/inputtext';
+import {convertToEnglishNumbers} from '@/utils/commonFormUtils';
 
 const SendSmsForm = () => {
   const [users, setUsers] = useState<IUsers[]>([]);
@@ -24,6 +26,7 @@ const SendSmsForm = () => {
   const [selectedUser, setSelectedUser] = useState<IUsers | null>(null);
   const [keyword, setKeyword] = useState<string>('');
   const [templateContent, setTemplateContent] = useState<string>('');
+  const [mobileNumber, setMobileNumber] = useState<string>('');
 
   useEffect(() => {
     fetchUsers();
@@ -97,12 +100,22 @@ const SendSmsForm = () => {
     }
   }, [selectedSmsTemplate]);
 
+  const mobileChangeHandler = (e: any) => {
+    const enNumber: string = convertToEnglishNumbers(e?.target?.value ?? '');
+    setMobileNumber(enNumber);
+    setFormData({
+      ...formData,
+      receiver: enNumber
+    })
+  }
+
   const handleUsersSelect = (e: any) => {
     setSelectedUser(e.value ?? null);
     setFormData({
       ...(formData ?? {}),
       receiver: e.value?.mobile,
-    })
+    });
+    setMobileNumber(e.value?.mobile);
   };
 
   const filterUsersHandler = (event: any) => {
@@ -146,6 +159,7 @@ const SendSmsForm = () => {
         setSelectedUser(null);
         setSelectedSmsTemplate(null);
         setTemplateContent('');
+        setMobileNumber('');
         toast.success('با موفقیت ارسال شد');
       }
     } catch (error) {
@@ -230,12 +244,11 @@ const SendSmsForm = () => {
 
         <div className="field col-12 md:col-6 lg:col-5 xl:col-4">
           <label htmlFor="receiver">
-            کاربر <span className="text-red-500">*</span>
+            کاربر
           </label>
           <span className="p-float-label">
             <Dropdown id="receiver"
                       name="receiver"
-                      required
                       filter
                       onFilter={filterUsersHandler}
                       value={users?.find(user => user?.mobile === formData.receiver) || null}
@@ -246,19 +259,18 @@ const SendSmsForm = () => {
                       itemTemplate={userOptionTemplate}
                       valueTemplate={selectedUserTemplate}
             />
-            {/*<MultiSelect name="user_ids"*/}
-            {/*             id="user_ids"*/}
-            {/*             value={[formData.users]}*/}
-            {/*             onChange={handleUsersSelect}*/}
-            {/*             options={users}*/}
-            {/*             onEndedCapture={handleUsersScroll}*/}
-            {/*             virtualScrollerOptions={{itemSize: 25}}*/}
-            {/*             placeholder="انتخاب کنید"*/}
-            {/*             multiple={false}*/}
-            {/*             itemTemplate={(user) => (<span>{user.first_name} {user.last_name} ({user.mobile})</span>)}*/}
-            {/*             selectedItemTemplate={(user) => (<span className="ml-3">{user?.mobile}</span>)}*/}
-            {/*             required/>*/}
           </span>
+        </div>
+
+        <div className="field col-12 md:col-6 lg:col-5 xl:col-4">
+          <label htmlFor="receiver">
+            شماره موبایل <span className="text-red-500">*</span>
+          </label>
+          <InputText id="receiver"
+                     type="text"
+                     dir="ltr"
+                     value={mobileNumber}
+                     onChange={mobileChangeHandler} />
         </div>
 
         <div className="col-12">
