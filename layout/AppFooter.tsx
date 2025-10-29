@@ -51,7 +51,7 @@ const AppFooter = () => {
                         <a className="line-height-3 text-md block cursor-pointer mb-2 text-900">جستجوی ملک</a>
                         <a className="line-height-3 text-md block cursor-pointer mb-2 text-900">ارسال تیکت</a>
                         <a href={'/faq'} className="line-height-3 text-md block cursor-pointer mb-2 text-900">سوالات متداول</a>
-                        <a className="line-height-3 text-md block cursor-pointer text-900">املاک سپرده شده</a>
+                        {/*<a className="line-height-3 text-md block cursor-pointer text-900">املاک سپرده شده</a>*/}
                     </div>
 
                     {/* About Us Section */}

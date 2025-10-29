@@ -1,5 +1,10 @@
 import {images as staticImages} from "@/app/(main)/(pages)/filterResult/(contants)/images";
-import {getLocationLabel, getPurposeLabelwithColor} from "@/app/dashboard/admin/ads/constant/converter";
+import {
+  getLocationLabel,
+  getPurposeLabelwithColor,
+  getRooms,
+  getTypeLabel
+} from "@/app/dashboard/admin/ads/constant/converter";
 import {Button} from "primereact/button";
 import {Dialog} from "primereact/dialog"
 import {InputNumber} from "primereact/inputnumber";
@@ -8,6 +13,7 @@ import Image from "next/image";
 import {useMemo} from "react";
 import styles from "./propertyDialoge.module.scss"
 import Favorite from "../ItemCards/components/ItemCard/favorite/favorite";
+import {formatDate} from '@/app/utils/dateUtils';
 
 interface PropertyDialogProps {
   visible: boolean;
@@ -22,7 +28,11 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
   }, []);
 
   return (
-    <Dialog header="جزئیات آگهی" visible={visible} onHide={onHide} className="w-12 md:w-6" dismissableMask={true}>
+    <Dialog header="جزئیات آگهی" visible={visible}
+            onHide={onHide}
+            draggable={false}
+            className="w-12 md:w-6"
+            dismissableMask={true}>
       <hr/>
       <div className="grid p-fluid gap-3 mt-6">
 
@@ -34,7 +44,8 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
             <div className="formgrid grid">
               <div className="field col-12 md:col-4">
                 <label htmlFor="title">عنوان</label>
-                <InputText id="title" value={selectedRowData.title ?? null} readOnly/>
+                {/*<InputText id="title" value={selectedRowData.title ?? null} readOnly/>*/}
+                <InputText id="title" value={getTypeLabel(selectedRowData?.type) + ' ' + getRooms(selectedRowData?.rooms)} readOnly/>
               </div>
               {selectedRowData.owner_name ? <div className="field col-12 md:col-4">
                 <label htmlFor="title">نام مالک</label>
@@ -92,7 +103,9 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
               </div>
               <div className="field col-12 md:col-4">
                 <label htmlFor="age">سال ساخت </label>
-                <InputNumber id="age" value={selectedRowData.age ?? null} readOnly/>
+                {/*<InputText id="age" value={selectedRowData.age ?? null} readOnly/>*/}
+                {/*<InputText id="age" value={formatDate(selectedRowData.created) ?? '-'} readOnly/>*/}
+                <InputText id="age" value={''} readOnly/>
               </div>
               <div className="field col-12 md:col-4">
                 <label htmlFor="parking">پارکینگ </label>

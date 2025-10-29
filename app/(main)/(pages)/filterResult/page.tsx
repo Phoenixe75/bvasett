@@ -25,7 +25,7 @@ import {useUserContext} from '@/layout/context/usercontext';
 import {TRANSLATIONS} from './translation';
 import PropertyDialog from '@/app/components/PropertyDialog';
 import LoginModal from '@/app/components/LoginModal';
-import {Inquiry, WITH_INQUIRY, WITHOUT_INQUIRY} from '@/app/components/CardPackage/(models)/package';
+import {Inquiry, InquiryLabel, WITH_INQUIRY, WITHOUT_INQUIRY} from '@/app/components/CardPackage/(models)/package';
 import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {Checkbox} from 'primereact/checkbox';
 
@@ -384,7 +384,7 @@ const FilterResultPage: React.FC = () => {
           run={showTour}
         />
         <LoginModal onHide={onHide} visible={openLoginForm}/>
-        <Dialog header="جزئیات خرید" visible={showModal} onHide={() => setShowModal(false)} className="lg:w-6 md:w-50">
+        <Dialog header={'جزئیات خرید' + (selectedPackage ? ' (' + InquiryLabel[selectedPackage] + ')' : '')} visible={showModal} onHide={() => setShowModal(false)} className="lg:w-6 md:w-50">
           <form onSubmit={submitForm}>
             <hr/>
             <div>
@@ -486,4 +486,4 @@ const FilterResultPage: React.FC = () => {
   );
 };
 
-export default FilterResultPage;
+export default FilterResultPage

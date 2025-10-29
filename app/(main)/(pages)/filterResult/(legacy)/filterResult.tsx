@@ -39,7 +39,7 @@ interface IPackage {
     price: string;
 }
 
-const FilterResultPage: React.FC = () => {
+const LegacyFilterResultPage: React.FC = () => {
     const [formData, setFormData] = useState<any[]>([]);
     const [selectedPackage, setSelectedPackage] = useState<IPackage | null>(null);
     const [selectedRows, setSelectedRows] = useState<any[]>([]);
@@ -313,4 +313,4 @@ const FilterResultPage: React.FC = () => {
     );
 };
 
-export default FilterResultPage;
+export default LegacyFilterResultPage;
