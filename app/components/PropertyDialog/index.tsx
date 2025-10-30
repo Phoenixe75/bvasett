@@ -10,10 +10,9 @@ import {Dialog} from "primereact/dialog"
 import {InputNumber} from "primereact/inputnumber";
 import {InputText} from "primereact/inputtext";
 import Image from "next/image";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import styles from "./propertyDialoge.module.scss"
 import Favorite from "../ItemCards/components/ItemCard/favorite/favorite";
-import {formatDate} from '@/app/utils/dateUtils';
 
 interface PropertyDialogProps {
   visible: boolean;
@@ -26,6 +25,12 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
   const images = useMemo(() => {
     return staticImages
   }, []);
+
+  const [previewImageIndex, setPreviewImageIndex] = useState<number>(-1);
+
+  const selectImageHandler = (index?: number) => {
+    setPreviewImageIndex(index ?? -1);
+  }
 
   return (
     <Dialog header="جزئیات آگهی" visible={visible}
@@ -45,7 +50,9 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
               <div className="field col-12 md:col-4">
                 <label htmlFor="title">عنوان</label>
                 {/*<InputText id="title" value={selectedRowData.title ?? null} readOnly/>*/}
-                <InputText id="title" value={getTypeLabel(selectedRowData?.type) + ' ' + getRooms(selectedRowData?.rooms)} readOnly/>
+                <InputText id="title"
+                           value={getTypeLabel(selectedRowData?.type) + ' ' + getRooms(selectedRowData?.rooms)}
+                           readOnly/>
               </div>
               {selectedRowData.owner_name ? <div className="field col-12 md:col-4">
                 <label htmlFor="title">نام مالک</label>
@@ -129,7 +136,8 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
               canShowExtraDescription && (
                 <div className="guide-box mt-3">
                   <p className="font-bold mb-0 rtl">
-                    <i className="pi pi-info-circle fs-md ml-2" style={{display: "inline-block", verticalAlign: "middle", fontSize: "20px"}}></i>
+                    <i className="pi pi-info-circle fs-md ml-2"
+                       style={{display: "inline-block", verticalAlign: "middle", fontSize: "20px"}}></i>
                     کاربر گرامی، جهت اخذ و نمایش اطلاعات کامل این فایل و مشاهده بقیه موارد مشابه، فیلتر های مورد نظر را
                     انتخاب و به صفحه‌ی جستجو مراجعه نمایید.</p>
                 </div>
@@ -140,7 +148,7 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
         <div className="field col-3">
           <div style={{minHeight: "80%"}} className="col-12 relative">
             <img
-              src={selectedRowData ? selectedRowData.neighborhood_image : images[0].src}
+              src={previewImageIndex > -1 ? images[previewImageIndex].src : (selectedRowData ? selectedRowData.neighborhood_image : images[0].src)}
               alt="images"
               style={{
                 width: '100%', // Ensures it goes full width
@@ -153,10 +161,18 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
               loading="lazy"
             />
           </div>
-          <div className="field flex col-12 mt-4 justify-content-between align-content-center">
-            {images.slice(0)?.map((image) => (
-              <div key={image.id} className="field col-12 md:col-3" style={{display: 'flex', justifyContent: 'center'}}>
-                <Image src={image.src} alt={image.alt} width={50} height={50} style={{objectFit: 'cover'}}/>
+          <div className="field flex col-12 mt-4 justify-content-between align-content-center"
+               style={{overflowX: 'auto'}}>
+            {images.slice(0)?.map((image, index) => (
+              <div key={image.id}
+                   className="mx-1"
+                   style={{display: 'flex', justifyContent: 'center'}}>
+                <Image src={image.src}
+                       alt={image.alt}
+                       width={50}
+                       height={50}
+                       onClick={() => selectImageHandler(index)}
+                       style={{objectFit: 'cover'}}/>
               </div>
             ))}
           </div>
