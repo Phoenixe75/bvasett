@@ -86,15 +86,15 @@ const FilterResultPage: React.FC = () => {
       return window.scrollTo({top: 0, behavior: 'smooth'});
     }
   }), [goTopTopIndex, loadedAddIndexes, setGoToTopIndex]);
-  useEffect(() => {
-    if (!user) {
-      return
-    }
-    if (firstBuyer) {
-      setSelectedPackage(WITHOUT_INQUIRY)
-    }
-    setSelectedPackage(WITH_INQUIRY)
-  }, [user])
+  // useEffect(() => {
+  //   if (!user) {
+  //     return
+  //   }
+    // if (firstBuyer) {
+    //   setSelectedPackage(WITHOUT_INQUIRY)
+    // }
+    // setSelectedPackage(WITH_INQUIRY)
+  // }, [user])
   const fetchPrices = async () => {
     try {
       const response = await getPrices();

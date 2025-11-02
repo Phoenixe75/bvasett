@@ -108,12 +108,12 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                 <label htmlFor="district">منطقه </label>
                 <InputNumber id="district" value={selectedRowData.district ?? null} readOnly/>
               </div>
-              <div className="field col-12 md:col-4">
-                <label htmlFor="age">سال ساخت </label>
-                {/*<InputText id="age" value={selectedRowData.age ?? null} readOnly/>*/}
-                {/*<InputText id="age" value={formatDate(selectedRowData.created) ?? '-'} readOnly/>*/}
-                <InputText id="age" value={''} readOnly/>
-              </div>
+              {/*<div className="field col-12 md:col-4">*/}
+              {/*  <label htmlFor="age">سال ساخت </label>*/}
+              {/*  /!*<InputText id="age" value={selectedRowData.age ?? null} readOnly/>*!/*/}
+              {/*  /!*<InputText id="age" value={formatDate(selectedRowData.created) ?? '-'} readOnly/>*!/*/}
+              {/*  <InputText id="age" value={''} readOnly/>*/}
+              {/*</div>*/}
               <div className="field col-12 md:col-4">
                 <label htmlFor="parking">پارکینگ </label>
                 <InputNumber id="parking" value={selectedRowData.parking ?? null} readOnly/>
