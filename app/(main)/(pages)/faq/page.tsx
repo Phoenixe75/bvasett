@@ -7,17 +7,30 @@ import React from 'react';
 import {Panel} from 'primereact/panel';
 
 export default function Faq() {
+
+  const panelHeaderTemplate = ({ className, titleClassName, props }: any) => {
+    const classNames = `${className} justify-content-space-between`;
+    return <div className={classNames}>
+      <h2 className={`${titleClassName}` + ' text-lg m-0'}
+          style={{
+            color: "inherit!important",
+            lineHeight: 1,
+            fontWeight: 700,
+          }}>{props.header}</h2>
+    </div>
+  }
+
   return (<div className="card p-fluid">
-    <h3 className="text-center">سوالات متداول</h3>
+    <h1 className="h3 text-center">سوالات متداول بی‌واسط</h1>
     <hr/>
-    <Panel header="در صورت موجود نبودن فایل انتخابی،چه اقداماتی باید انجام داد؟" className="text-lg red m-2">
+    <Panel headerTemplate={panelHeaderTemplate} header="در صورت موجود نبودن فایل انتخابی،چه اقداماتی باید انجام داد؟" className="text-lg red m-2">
       <p className="m-2">
         پیش از ارسال شماره تماس، وضعیت فایل‌های انتخابی شما به‌صورت لحظه‌ای استعلام می‌شود.
         در صورتی که فایل اصلی مورد نظر شما قبلاً واگذار شده باشد، فایل‌های رزرو شده شما جایگزین آن شده و برای شما ارسال
         خواهد شد.
       </p>
     </Panel>
-    <Panel header="چگونه میتوان فایل های مورد نظر را انتخاب کرد؟" className="text-lg red m-2">
+    <Panel headerTemplate={panelHeaderTemplate} header="چگونه میتوان فایل های مورد نظر را انتخاب کرد؟" className="text-lg red m-2">
       <p className="m-2">
         پس از استفاده از دسترسی اولیه و مشاهده اطلاعات تماس 3 فایل رایگان، کاربران می‌توانند فایل‌های مورد نظر خود را از
         میان آگهی‌ها انتخاب کنند.
@@ -25,14 +38,14 @@ export default function Faq() {
         خواهد شد.
       </p>
     </Panel>
-    <Panel header="چگونه میتوان آگهی ثبت کرد؟" className="text-lg red m-2">
+    <Panel headerTemplate={panelHeaderTemplate} header="چگونه میتوان آگهی ثبت کرد؟" className="text-lg red m-2">
       <p className="m-2">
         برای ثبت آگهی، ابتدا وارد حساب کاربری خود شوید و از طریق بخش پروفایل، گزینه‌ی ثبت آگهی را انتخاب نمایید.
         سپس با وارد کردن اطلاعات ملک، آگهی شما پس از احراز مالکیت در پلتفرم بی‌واسط منتشر خواهد شد.خواهشمند است چنانچه
         موارد آگهی شده فروش یا اجاره رفته،نسبت به اطلاع رسانی به پلتفرم تحت قالب تیکت اعلام نمایید.
       </p>
     </Panel>
-    <Panel header="در صورت عدم دریافت پکیج پس از پرداخت،چه باید کرد؟" className="text-lg red m-2">
+    <Panel headerTemplate={panelHeaderTemplate} header="در صورت عدم دریافت پکیج پس از پرداخت،چه باید کرد؟" className="text-lg red m-2">
       <p className="m-2">
         در صورت بروز هرگونه مشکل در دریافت فایل‌های خریداری‌شده، می‌توانید از طریق تماس با پشتیبانی یا ثبت تیکت در حساب
         کاربری، موضوع را پیگیری نمایید.
@@ -41,7 +54,7 @@ export default function Faq() {
         درخواستی داشتید در صف انتظار باقی مانده و پس از ساعات اعلامی به قید فوریت خرید شما ارسال خواهد شد.
       </p>
     </Panel>
-    <Panel header="آیا در صورت خرید فایل جهت انعقاد قرارداد نیازی به مراجعه به املاک میباشد؟"
+    <Panel headerTemplate={panelHeaderTemplate} header="آیا در صورت خرید فایل جهت انعقاد قرارداد نیازی به مراجعه به املاک میباشد؟"
            className="text-lg red m-2">
       <p className="m-2">
         خیر نیاز نیست،مگر مایل به پرداخت کمیسیون باشید.میتوانید بدون پرداخت کمیسیون یا هرگونه مراجعه به سایت های رسمی
@@ -51,14 +64,14 @@ export default function Faq() {
         سامانه های ذکر شده ثبت شده باشد می بایست حتما پس از آن به دفاتر اسناد رسمی مراجعه نمایید
       </p>
     </Panel>
-    <Panel header="چگونه میتوان اپلیکیشن بی واسط تهیه کرد؟"
+    <Panel headerTemplate={panelHeaderTemplate} header="چگونه میتوان اپلیکیشن بی واسط تهیه کرد؟"
            className="text-lg red m-2">
       <p className="m-2">
         کاربران میتوانند جهت نصب اپلیکیشن به صورت دانلود مستقیم یا از فروشگاه گوگل اپ و برای گوشی های ios از وب اپ
         استفاده نمایید.
       </p>
     </Panel>
-    <Panel header="خدمات دهی در بی واسط؟"
+    <Panel headerTemplate={panelHeaderTemplate} header="خدمات دهی در بی واسط؟"
            className="text-lg red m-2">
       <p className="m-2">
         برای آشنایی و اطمینان بیشتر از خدمات بی‌واسط، هر کاربر پس از ثبت‌نام، امکان دسترسی رایگان به اطلاعات کامل و
