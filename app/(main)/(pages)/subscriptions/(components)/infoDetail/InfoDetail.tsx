@@ -18,7 +18,7 @@ export default function InfoDetail() {
     <div className={styles.wrapper}>
       <div className='flex align-items-center gap-3'>
       <i className="pi pi-info-circle" style={{ fontSize: '32px' }}></i>
-      <h3>مزایای استفاده از اشتراک ماهیانه</h3>
+      <h2 className="h3">مزایای اشتراک بی‌واسط</h2>
       </div>
       <ul className='flex-1'>
         {benefits.map((item,index) => <li className='mb-6' key={index}><h5>{item}</h5></li>)}
