@@ -1,76 +1,99 @@
 'use client';
 import React from 'react';
-import { Panel } from 'primereact/panel';
+import {Panel} from 'primereact/panel';
 import Link from 'next/link';
-import { Button } from 'primereact/button';
+import {Button} from 'primereact/button';
 
 export default function Rules() {
-    return (
-        <div className="card p-fluid">
-            <h3 className="text-center"> قوانین و مقررات استفاده از پلتفرم بی‌واسط</h3>
-            <hr />
-          <Panel header="پذیرش شرایط" className="text-lg red m-2">
-            <p className="m-2">
-              ورود کاربران به وب‌سایت و اپلیکیشن بی‌واسط و استفاده از خدمات آن به معنای آگاهی و پذیرش کامل قوانین و مقررات زیر است. این شرایط ممکن است در هر زمان تغییر کند و ادامه استفاده از خدمات سایت به منزله پذیرش تغییرات خواهد بود.
-            </p>
-          </Panel>
-          <Panel header="ماهیت خدمات" className="text-lg red m-2">
-            <p className="m-2">
-              پلتفرم بی‌واسط صرفاً بستری برای درج و مشاهده آگهی‌ها در زمینه املاک و خدمات ساختمانی است و هیچ‌گونه دخالتی در محتوای آگهی‌ها، صحت اطلاعات، کیفیت خدمات یا انجام معاملات ندارد.
-            </p>
-          </Panel>
-          <Panel header="مسئولیت آگهی‌گذاران" className="text-lg red m-2">
-            <div className="m-2">
-              <ul>
-                <li><p>کلیه اطلاعات مندرج در آگهی‌ها (از جمله قیمت، شرایط معامله، مشخصات ملک یا کالا و خدمات) توسط آگهی‌گذار درج می‌شود.</p></li>
-                <li><p>صحت و اعتبار اطلاعات منتشرشده، تماماً بر عهده آگهی‌گذار است.</p></li>
-                <li><p>آگهی‌گذار متعهد می‌شود از درج اطلاعات نادرست، گمراه‌کننده یا خلاف قوانین کشور خودداری کند.</p></li>
-              </ul>
-            </div>
-          </Panel>
-          <Panel header="مسئولیت کاربران" className="text-lg red m-2">
-            <div className="m-2">
-              <ul>
-                <li><p>کاربران موظفند پیش از هرگونه معامله، نسبت به بررسی کامل صحت اطلاعات آگهی اقدام نمایند.</p></li>
-                <li><p>هرگونه توافق یا معامله بین کاربر و آگهی‌گذار مستقل از بی‌واسط بوده و سایت هیچ‌گونه مسئولیتی در قبال نتایج آن نخواهد داشت.</p></li>
-              </ul>
-            </div>
-          </Panel>
-          <Panel header="سلب مسئولیت قیمت‌ها" className="text-lg red m-2">
-            <div className="m-2">
-              <ul>
-                <li><p>قیمت‌های درج‌شده صرفاً توسط آگهی‌گذاران اعلام می‌شود.</p></li>
-                <li><p>پلتفرم بی‌واسط هیچ‌گونه مسئولیتی در قبال درستی، دقت یا تغییر قیمت‌ها بر عهده ندارد.</p></li>
-                <li><p>مسئولیت اختلافات ناشی از قیمت یا سایر شرایط معامله صرفاً متوجه آگهی‌گذار و کاربر است.</p></li>
-              </ul>
-            </div>
-          </Panel>
-          <Panel header="محتوای ممنوعه" className="text-lg red m-2">
-            <p className="m-2">
-              انتشار آگهی‌هایی با محتوای غیرقانونی، توهین‌آمیز، مغایر با قوانین و شئونات اجتماعی یا ناقض حقوق اشخاص، اکیداً ممنوع است. در صورت مشاهده، آگهی بدون اطلاع قبلی حذف خواهد شد.
-            </p>
-          </Panel>
-          <Panel header="مالکیت معنوی" className="text-lg red m-2">
-            <p className="m-2">
-              کلیه حقوق مادی و معنوی طراحی سایت، نرم‌افزار، لوگو و محتوای اختصاصی متعلق به بی‌واسط است و هرگونه کپی‌برداری یا استفاده غیرمجاز پیگرد قانونی دارد.
-            </p>
-          </Panel>
-          <Panel header="تغییر یا توقف خدمات" className="text-lg red m-2">
-            <p className="m-2">
-              پلتفرم بی‌واسط این حق را دارد که در هر زمان، بدون اطلاع قبلی، بخشی یا تمامی خدمات خود را تغییر داده یا متوقف نماید.
-            </p>
-          </Panel>
-          <Panel header="حریم خصوصی" className="text-lg red m-2">
-            <p className="m-2">
-              اطلاعات کاربران طبق سیاست حفظ حریم خصوصی سایت جمع‌آوری و نگهداری می‌شود و جز در موارد الزامی قانونی یا با رضایت کاربر، در اختیار اشخاص ثالث قرار نخواهد گرفت.
-            </p>
-          </Panel>
-          <Panel header="قانون حاکم" className="text-lg red m-2">
-            <p className="m-2">
-              کلیه قوانین و مقررات سایت مطابق با قوانین و مقررات جمهوری اسلامی ایران تفسیر و اجرا می‌گردد و هرگونه اختلاف از طریق مراجع ذی‌صلاح قانونی رسیدگی خواهد شد
-            </p>
-          </Panel>
-            {/*<Panel header="در خصوص مالکین" className="text-lg red m-2">
+
+  const panelHeaderTemplate = ({ className, titleClassName, props }: any) => {
+    const classNames = `${className} justify-content-space-between`;
+    return <div className={classNames}>
+      <h2 className={`${titleClassName}` + ' text-lg m-0'}
+          style={{
+            color: "inherit!important",
+            lineHeight: 1,
+            fontWeight: 700,
+      }}>{props.header}</h2>
+    </div>
+  }
+
+  return (
+    <div className="card p-fluid">
+      <h1 className="h3 text-center"> قوانین و مقررات بی‌واسط برای استفاده از خدمات املاک بدون واسطه</h1>
+      <hr/>
+      <Panel header="پذیرش شرایط" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          ورود کاربران به وب‌سایت و اپلیکیشن بی‌واسط و استفاده از خدمات آن به معنای آگاهی و پذیرش کامل قوانین و مقررات
+          زیر است. این شرایط ممکن است در هر زمان تغییر کند و ادامه استفاده از خدمات سایت به منزله پذیرش تغییرات خواهد
+          بود.
+        </p>
+      </Panel>
+      <Panel header="ماهیت خدمات" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          پلتفرم بی‌واسط صرفاً بستری برای درج و مشاهده آگهی‌ها در زمینه املاک و خدمات ساختمانی است و هیچ‌گونه دخالتی در
+          محتوای آگهی‌ها، صحت اطلاعات، کیفیت خدمات یا انجام معاملات ندارد.
+        </p>
+      </Panel>
+      <Panel header="مسئولیت آگهی‌گذاران" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <div className="m-2">
+          <ul>
+            <li><p>کلیه اطلاعات مندرج در آگهی‌ها (از جمله قیمت، شرایط معامله، مشخصات ملک یا کالا و خدمات) توسط آگهی‌گذار
+              درج می‌شود.</p></li>
+            <li><p>صحت و اعتبار اطلاعات منتشرشده، تماماً بر عهده آگهی‌گذار است.</p></li>
+            <li><p>آگهی‌گذار متعهد می‌شود از درج اطلاعات نادرست، گمراه‌کننده یا خلاف قوانین کشور خودداری کند.</p></li>
+          </ul>
+        </div>
+      </Panel>
+      <Panel header="مسئولیت کاربران" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <div className="m-2">
+          <ul>
+            <li><p>کاربران موظفند پیش از هرگونه معامله، نسبت به بررسی کامل صحت اطلاعات آگهی اقدام نمایند.</p></li>
+            <li><p>هرگونه توافق یا معامله بین کاربر و آگهی‌گذار مستقل از بی‌واسط بوده و سایت هیچ‌گونه مسئولیتی در قبال
+              نتایج آن نخواهد داشت.</p></li>
+          </ul>
+        </div>
+      </Panel>
+      <Panel header="سلب مسئولیت قیمت‌ها" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <div className="m-2">
+          <ul>
+            <li><p>قیمت‌های درج‌شده صرفاً توسط آگهی‌گذاران اعلام می‌شود.</p></li>
+            <li><p>پلتفرم بی‌واسط هیچ‌گونه مسئولیتی در قبال درستی، دقت یا تغییر قیمت‌ها بر عهده ندارد.</p></li>
+            <li><p>مسئولیت اختلافات ناشی از قیمت یا سایر شرایط معامله صرفاً متوجه آگهی‌گذار و کاربر است.</p></li>
+          </ul>
+        </div>
+      </Panel>
+      <Panel header="محتوای ممنوعه" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          انتشار آگهی‌هایی با محتوای غیرقانونی، توهین‌آمیز، مغایر با قوانین و شئونات اجتماعی یا ناقض حقوق اشخاص، اکیداً
+          ممنوع است. در صورت مشاهده، آگهی بدون اطلاع قبلی حذف خواهد شد.
+        </p>
+      </Panel>
+      <Panel header="مالکیت معنوی" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          کلیه حقوق مادی و معنوی طراحی سایت، نرم‌افزار، لوگو و محتوای اختصاصی متعلق به بی‌واسط است و هرگونه کپی‌برداری
+          یا استفاده غیرمجاز پیگرد قانونی دارد.
+        </p>
+      </Panel>
+      <Panel header="تغییر یا توقف خدمات" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          پلتفرم بی‌واسط این حق را دارد که در هر زمان، بدون اطلاع قبلی، بخشی یا تمامی خدمات خود را تغییر داده یا متوقف
+          نماید.
+        </p>
+      </Panel>
+      <Panel header="حریم خصوصی" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          اطلاعات کاربران طبق سیاست حفظ حریم خصوصی سایت جمع‌آوری و نگهداری می‌شود و جز در موارد الزامی قانونی یا با
+          رضایت کاربر، در اختیار اشخاص ثالث قرار نخواهد گرفت.
+        </p>
+      </Panel>
+      <Panel header="قانون حاکم" headerTemplate={panelHeaderTemplate} className="text-lg red m-2">
+        <p className="m-2">
+          کلیه قوانین و مقررات سایت مطابق با قوانین و مقررات جمهوری اسلامی ایران تفسیر و اجرا می‌گردد و هرگونه اختلاف از
+          طریق مراجع ذی‌صلاح قانونی رسیدگی خواهد شد
+        </p>
+      </Panel>
+      {/*<Panel header="در خصوص مالکین" className="text-lg red m-2">
                 <p className="m-2">
                     1-در راستای سیاست گذاری تیم بی‌واسط ، که محوریت عملکرد این تیم ، بر پایه حذف واسطه ها و ارتباط مستقیم مالکین و مصرف کنندگان میباشد ، در جهت راستی آزمایی عملکرد بهتر ، کلیه مالکین پس از بارگذاری اطلاعات ملک خود توسط تیم بی‌واسط
                     احراز مالکیت شده(سایت ثبت من) شده ، توسط این بستر مالک شناخته میشود و اطلاعات به صورت رایگان <span className="text-red-500">آگهی</span> شده و در جهت مصرف کننده قرار میگیرد.
@@ -121,9 +144,9 @@ export default function Rules() {
                     تیم بی‌واسط در جهت اعتماد و اطمینان خریداران محترم ، به هر شماره موبایل 7 اطلاعات ملک درخواستی به صورت رایگان(تا زمان اعلامی به مدت محدود)اهدا میگردد و در صورت تمایل میتوانید نسبت به خرید موارد انتخابی اقدام نمایید.
                 </p>
             </Panel>*/}
-            <Link href={'/'} className="flex align-content-center justify-content-end mt-3">
-                <Button raised type="submit" label="بازگشت" className="bg-gray-300 text-color border-0 w-1" />
-            </Link>
-        </div>
-    );
+      <Link href={'/'} className="flex align-content-center justify-content-end mt-3">
+        <Button raised type="submit" label="بازگشت" className="bg-gray-300 text-color border-0 w-1"/>
+      </Link>
+    </div>
+  );
 }
