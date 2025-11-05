@@ -83,7 +83,7 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                 <label htmlFor="floor"> طبقه</label>
                 <InputText id="floor" value={selectedRowData?.floor ?? null} readOnly/>
               </div> : null}
-              {selectedRowData?.unit_price ? <div className="field col-12 md:col-4">
+              {selectedRowData?.unit_price && selectedRowData?.purpose == 1 ? <div className="field col-12 md:col-4">
                 <label htmlFor="unit_price"> قیمت متری</label>
                 <InputNumber id="unit_price" value={selectedRowData?.unit_price ?? null} readOnly/>
               </div> : null}
@@ -92,7 +92,7 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                   <label htmlFor="total_price">رهن </label>
                   <InputNumber id="total_price" value={selectedRowData.rent_pre_paid_amount ?? null} readOnly/>
                 </div>
-                {!!selectedRowData.rent_pre_paid_amount && <div className="field col-12 md:col-4">
+                {!!selectedRowData.rent_pre_paid_amount && selectedRowData?.purpose != 4  && <div className="field col-12 md:col-4">
                   <label htmlFor="rent_price">اجاره </label>
                   <InputNumber id="rent_price" value={selectedRowData.rent_price ?? null} readOnly/>
                 </div>}

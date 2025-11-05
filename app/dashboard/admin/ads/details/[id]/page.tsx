@@ -233,7 +233,13 @@ const AdsDetailsPage: FC<PageParams> = ({ params }: any) => {
                 <div className={`field col-12 md:col-4 ${ads?.purpose === 2 || ads?.purpose === 3 || ads?.purpose === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" name="unit_price" value={formatNumber(ads?.unit_price) + ' تومان '} readOnly />
-                        <label htmlFor="unit_price">قیمت</label>
+                        <label htmlFor="unit_price">قیمت متری</label>
+                    </span>
+                </div>
+                <div className={`field col-12 md:col-4 ${ads?.purpose === 2 || ads?.purpose === 3 || ads?.purpose === 4 ? `hidden` : `block`}`}>
+                    <span className="p-float-label">
+                        <InputText type="text" name="total_price" value={formatNumber(ads?.total_price) + ' تومان '} readOnly />
+                        <label htmlFor="total_price">قیمت کل</label>
                     </span>
                 </div>
                 <div className="field col-12 md:col-4">
