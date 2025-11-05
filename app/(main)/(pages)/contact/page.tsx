@@ -68,8 +68,8 @@ const Contact = () => {
                                 </form>
                             )}
 
-                            <div className="p-mt-4 p-text-lg">یا می‌توانید با ما از طریق شماره تماس زیر در ارتباط باشید:</div>
-                            <div className="p-mt-2 p-text-lg">شماره تماس: <a href="tel:+982122644855"><b style={{fontSize: '18px'}}>02122644855</b></a></div>
+                            <div className="p-mt-4 p-text-lg mt-4"><b>تماس با پشتیبانی</b> (30 خط ثابت)</div>
+                            <div className="p-mt-2 p-text-lg mt-3"><a href="tel:+982122644855"><b style={{fontSize: '18px'}}>02122644855</b></a></div>
                             {/*<div className="p-text-lg">آدرس: خیابان شریعتی، نبش مترو شریعتی، ساختمان 100، طبقه ۲، واحد 4</div>*/}
                         </main>
                     </div>
