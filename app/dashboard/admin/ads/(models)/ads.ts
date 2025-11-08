@@ -183,3 +183,7 @@ export interface INeighborhoods {
   slug: string;
   ordering: number;
 }
+
+export interface INeighborhoodWithBlocks extends INeighborhoods{
+  blocks: Array<string>;
+}

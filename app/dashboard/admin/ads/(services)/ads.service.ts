@@ -1,6 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import { IAdsBase, IAdsResponse, ICity, IDistricts, INeighborhoods, IState } from '../(models)/ads';
+import {
+  IAdsBase,
+  IAdsResponse,
+  ICity,
+  IDistricts,
+  INeighborhoods,
+  INeighborhoodWithBlocks,
+  IState
+} from '../(models)/ads';
 import { axiosApi } from '@/app/api/api';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -144,6 +152,16 @@ export const getDistrict = async (id: number): Promise<IDistricts[]> => {
 export const getNeighborhoods = async (): Promise<INeighborhoods[]> => {
     try {
         const response = await axios.get(`${baseUrl}/api/address/neighborhoods/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching cities:', error);
+        throw error;
+    }
+};
+
+export const searchNeighborhoods = async (): Promise<INeighborhoodWithBlocks[]> => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/address/neighborhoods/search/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching cities:', error);

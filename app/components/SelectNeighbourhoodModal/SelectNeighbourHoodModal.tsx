@@ -1,5 +1,5 @@
-import {INeighborhoods} from '@/app/dashboard/admin/ads/(models)/ads';
-import {getNeighborhoods} from '@/app/dashboard/admin/ads/(services)/ads.service';
+import {INeighborhoods, INeighborhoodWithBlocks} from '@/app/dashboard/admin/ads/(models)/ads';
+import {searchNeighborhoods} from '@/app/dashboard/admin/ads/(services)/ads.service';
 import {Dialog} from 'primereact/dialog';
 import {MultiSelect, MultiSelectChangeEvent} from 'primereact/multiselect';
 import React, {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
@@ -38,13 +38,16 @@ export default function SelectNeighbourHoodModal({
                                                  }: SelectNeighbourHoodModalProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [btnLoading, setBtnLoading] = useState(false);
-  const [neighborhoodsState, setNeighborhoodsState] = useState<INeighborhoods[]>([]);
-  const [selectedNeighbourhoods, setSelectedNeighbourhoods] = useState<INeighborhoods[]>([]);
+  // const [neighborhoodsState, setNeighborhoodsState] = useState<INeighborhoods[]>([]);
+  const [neighborhoodsState, setNeighborhoodsState] = useState<INeighborhoodWithBlocks[]>([]);
+  // const [selectedNeighbourhoods, setSelectedNeighbourhoods] = useState<INeighborhoods[]>([]);
+  const [selectedNeighbourhoods, setSelectedNeighbourhoods] = useState<INeighborhoodWithBlocks[]>([]);
   const router = useRouter();
   const beenSetted = useRef(false);
   const context = useMySubcriptionsContext();
   const doesHaveContext = context?.neighbourhoods?.length && context?.neighbourhoods?.length > 0;
-  const convertToNewNeighbours = (data: INeighborhoods[]) => {
+  // const convertToNewNeighbours = (data: INeighborhoods[]) => {
+  const convertToNewNeighbours = (data: INeighborhoodWithBlocks[]) => {
     if (beenSetted.current) {
       return
     }
@@ -65,7 +68,7 @@ export default function SelectNeighbourHoodModal({
   const fetchNeighborhoods = useCallback(async () => {
     setLoading(true);
     try {
-      const fetchedNeighborhoods = await getNeighborhoods();
+      const fetchedNeighborhoods = await searchNeighborhoods();
       convertToNewNeighbours(fetchedNeighborhoods)
     } catch (error) {
       console.error('Failed to fetch Neighborhoods:', error);
@@ -102,6 +105,21 @@ export default function SelectNeighbourHoodModal({
     await onOk?.(selectedNeighbourhoods);
     setBtnLoading(false)
   }
+
+  const neighbourWithBlocksTemplate = ({name, blocks}: any) => {
+    return <div>
+      <div className=""><b>{name}</b></div>
+      <div className="" style={{whiteSpace: 'wrap'}}>
+        {
+          blocks
+            .map((block: any, index: number) =>
+              (<>
+                <span>{block}</span>
+                {index + 1 != blocks.length ? <span>، </span> : <></>}
+              </>))}
+      </div>
+    </div>
+  }
   return (
     <Dialog header={header ? header : <h2> انتخاب محله‌ها</h2>} onHide={onCancel} closable={closable}
             visible={isVisible}>
@@ -113,14 +131,17 @@ export default function SelectNeighbourHoodModal({
                            key={item.id} onRemove={() => onRemoveItem(index)}/>;
             })}
           </div>
-          <div className="field col-12 ">
+          <div className="field col-12">
             <label htmlFor="neighbourhood">محله</label>
             <MultiSelect
               value={selectedNeighbourhoods}
               onChange={onMutliSelectChange}
               options={neighborhoodsState}
               optionLabel="name"
+              itemTemplate={neighbourWithBlocksTemplate}
               filter
+              panelStyle={{maxWidth: '400px', whiteSpace: 'wrap'}}
+              filterBy={'name,blocks'}
               placeholder="انتخاب کنید"
               max={maxSelection}
               maxSelectedLabels={5}
