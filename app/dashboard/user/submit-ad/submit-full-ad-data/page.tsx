@@ -51,6 +51,7 @@ const NewAds = () => {
         rent_pre_paid_amount: '',
         rent_price: '',
         unit_price: '',
+        total_price: '',
         sold: false,
         type: 0,
         state: 0,
