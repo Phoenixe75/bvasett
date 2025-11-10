@@ -60,9 +60,9 @@ const ItemCard = ({
         <h2 className={classNames(styles.title, {})}>
           {getTypeLabel(data.type)} {getRooms(data.rooms)}
         </h2>
-        <div className={styles.description}>
-          <b>{formatDate(data.created)}</b>
-        </div>
+        {/*<div className={styles.description}>*/}
+        {/*  <b>{formatDate(data.created)}</b>*/}
+        {/*</div>*/}
         <div className={styles.description}>
           {Math.round(+data.area!)} متر {data?.neighborhood_name}
         </div>
