@@ -1,7 +1,7 @@
 'use client';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { PageParams } from '@/types/layout';
-import { useRouter } from 'next/navigation';
+import {useParams, useRouter, useSearchParams} from 'next/navigation';
 
 // models
 import { IAdsBase, ICity, INeighborhoods } from '../../(models)/ads';
@@ -87,7 +87,7 @@ const AdsDetailsPage: FC<PageParams> = ({ params }: any) => {
     }, [ads?.state, ads?.district]);
 
     const back = (): void => {
-        router.push('../');
+        router.push('../?page=' + params.page);
     };
 
     const formatNumber = (value: any) => {

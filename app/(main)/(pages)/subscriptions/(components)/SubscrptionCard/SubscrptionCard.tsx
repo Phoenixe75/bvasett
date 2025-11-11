@@ -106,7 +106,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
                   <div className={styles.red_line}/>
                   <h5>{`${formatCurrency(550000)} تومان`}</h5> </> : null}
               </div>
-              <h2>{isFreePlan ? price : `${formatCurrency(price)} تومان`}</h2>
+              <h2>{isFreePlan ? price : `${formatCurrency(price * 10)} تومان`}</h2>
             </div>
             <div>
               <p

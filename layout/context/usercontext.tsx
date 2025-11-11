@@ -8,7 +8,7 @@ export const UserContext = createContext<UserContextProps | undefined>(undefined
 
 export const UserProvider = ({ children }: ChildContainerProps) => {
     const [user, setUser] = useState<IUserProps | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchUserData = async () => {

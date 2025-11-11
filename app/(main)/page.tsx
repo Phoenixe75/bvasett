@@ -180,7 +180,7 @@ const LandingPage = () => {
                 }} onTabClose={closeAccordion} onTabOpen={openAccordion}>
                   <AccordionTab headerClassName="search-btn-wrapper" header="جستجو"
                                 contentStyle={{
-                                  maxHeight: "calc(100vh - 220px)",
+                                  maxHeight: "calc(100vh - 250px)",
                                   overflowY: 'auto'
                                 }}>
                     <FilterItem oldForm={oldForm}/>

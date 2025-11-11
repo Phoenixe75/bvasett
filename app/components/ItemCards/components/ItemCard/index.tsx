@@ -99,7 +99,7 @@ const ItemCard = ({
           </div>
         </div>
       </div>
-      <div className={styles.card_thumbnail}><Image src={imgSource} alt="img" width={130} height={130}/></div>
+      <div className={styles.card_thumbnail}><Image src={imgSource} alt="img" width={130} height={130} loading="lazy" /></div>
     </article>
   );
 };
