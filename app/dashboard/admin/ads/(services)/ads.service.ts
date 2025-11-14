@@ -72,7 +72,7 @@ export const updateAds = async (id: number, formData: any): Promise<any> => {
 };
 
 export const getAdsDetails = async (id: number): Promise<IAdsBase> => {
-    const response = await axios.get<IAdsBase>(`${baseUrl}/api/ads/${id}/`, {
+    const response = await axiosApi.get<IAdsBase>(`${baseUrl}/api/ads/${id}/`, {
         headers: {
             Authorization: `Token ${token}`
         }
