@@ -1,5 +1,7 @@
 export interface IAdsBase {
   id?: number | null;
+  registered_date?: string;
+  checked_at?: string;
   purpose_label?: string;
   location_label?: string | null;
   type_label?: string | null;
