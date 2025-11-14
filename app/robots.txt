@@ -1,3 +1,6 @@
 user-agent: *
 
+Disallow: /dashboard/*
+Disallow: /auth/*
+
 Sitemap: https://bvasett.ir/sitemap.xml
