@@ -8,7 +8,13 @@ import {Button} from 'primereact/button';
 import {Dialog} from 'primereact/dialog';
 import {filterAds, getPrices} from '@/app/components/FilterItem/(services)/filter.service';
 import PackageItem from '@/app/components/CardPackage';
-import {formatNumber, getLocationLabel, truncateText} from '@/app/dashboard/admin/ads/constant/converter';
+import {
+  formatNumber,
+  getLocationLabel,
+  getRooms,
+  getTypeLabel,
+  truncateText
+} from '@/app/dashboard/admin/ads/constant/converter';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -28,6 +34,7 @@ import LoginModal from '@/app/components/LoginModal';
 import {Inquiry, InquiryLabel, WITH_INQUIRY, WITHOUT_INQUIRY} from '@/app/components/CardPackage/(models)/package';
 import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {Checkbox} from 'primereact/checkbox';
+import {IAds} from '@/app/dashboard/admin/ads/(models)/ads';
 
 const FilterResultPage: React.FC = () => {
   const [formData, setFormData] = useState<any[]>([]);
@@ -315,6 +322,9 @@ const FilterResultPage: React.FC = () => {
     }
     return formData;
   }, [hasShownInquiryModal, formData]);
+  const titleColumnTemplate = (ad: IAds) => {
+    return <>{getTypeLabel(ad?.type)} {getRooms(ad?.rooms)}</>
+  }
   if (loading) return <ProgressSpinner style={{width: '50px', height: '50px'}}/>;
   return (
     <>
@@ -405,7 +415,7 @@ const FilterResultPage: React.FC = () => {
             <hr/>
             <div style={{overflowY: 'auto', maxHeight: '220px'}}>
               <DataTable value={selectedRows} stripedRows>
-                <Column field="title" header="عنوان"></Column>
+                <Column header="عنوان" body={titleColumnTemplate}></Column>
                 <Column field="rooms" header="تعداد اتاق"></Column>
                 <Column field="location_label" header="موقعیت"
                         body={(rowData) => getLocationLabel(rowData.location)}></Column>

@@ -2,7 +2,7 @@ import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {DirectionEnum, LocationEnum, PurposeEnum} from '../(models)/ads';
 import {OrderPaymentEnum, OrderStatusEnum} from '../../list-payments/(models)/payment';
 
-export const getTypeLabel = (type: number | null): string => {
+export const getTypeLabel = (type: number | null | undefined): string => {
   switch (type) {
     case 1:
       return 'آپارتمان';

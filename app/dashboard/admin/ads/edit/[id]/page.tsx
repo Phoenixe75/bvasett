@@ -294,12 +294,12 @@ const AdsEditPage: FC<PageParams> = ({ params }: any) => {
             <h5>ویرایش آگهی</h5>
             <hr />
             <form onSubmit={submitForm} className="grid p-fluid mt-6">
-                <div className="field col-12 md:col-4">
-                    <span className="p-float-label">
-                        <InputText type="text" ref={inputRef} name="title" id="title" autoComplete="off" value={formData.title} onChange={(e) => setValue('title', e.target.value)} />
-                        <label htmlFor="title">عنوان</label>
-                    </span>
-                </div>
+                {/*<div className="field col-12 md:col-4">*/}
+                {/*    <span className="p-float-label">*/}
+                {/*        <InputText type="text" ref={inputRef} name="title" id="title" autoComplete="off" value={formData.title} onChange={(e) => setValue('title', e.target.value)} />*/}
+                {/*        <label htmlFor="title">عنوان</label>*/}
+                {/*    </span>*/}
+                {/*</div>*/}
                 <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
@@ -526,7 +526,24 @@ const AdsEditPage: FC<PageParams> = ({ params }: any) => {
                             }}
                         />
                         <label htmlFor="unit_price">
-                            قیمت <span className="text-red-500">*</span>
+                            قیمت متری <span className="text-red-500">*</span>
+                        </label>
+                    </span>
+                </div>
+                <div className={`field col-12 md:col-4 ${formData.purpose === 2 || formData.purpose === 3 || formData.purpose === 4 ? `hidden` : `block`}`}>
+                    <span className="p-float-label">
+                        <InputText
+                            type="text"
+                            autoComplete="off"
+                            id="total_price"
+                            value={formatNumber(formData.total_price)}
+                            onChange={(e) => {
+                                handleCheckRentAndBarterChange();
+                                setValue('total_price', parseNumber(e.target.value));
+                            }}
+                        />
+                        <label htmlFor="total_price">
+                            قیمت کل <span className="text-red-500">*</span>
                         </label>
                     </span>
                 </div>
