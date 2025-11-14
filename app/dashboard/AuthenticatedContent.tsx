@@ -10,13 +10,6 @@ const AuthenticatedContent = ({children}: { children: React.ReactNode }) => {
   const {user, loading} = useUserContext();
   const router = useRouter();
 
-  useEffect(() => {
-    const token = Cookies.get('authToken');
-    if (token) {
-      console.log(token);
-    }
-  }, [Cookies]);
-
   if (loading) {
     return <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)"
                             animationDuration=".5s"/>;
