@@ -315,21 +315,21 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
         {/*        <label htmlFor="title">عنوان</label>*/}
         {/*    </span>*/}
         {/*</div>*/}
-        <div className="field col-12 md:col-4">
-                    <span className="p-float-label">
-                      <InputText type="text" autoComplete="off" value={formData.slug}
-                                 onChange={(e) => handleSelect('slug', e.target.value)}/>
-                        {/*<Calendar value={formData.registered_date} onChange={(e) => setDate(e.value)} locale="es" />*/}
-                      <label htmlFor="slug">کد یکتا</label>
-                    </span>
-        </div>
-        <div className="field col-12 md:col-4">
-                    <span className="p-float-label">
-                        <InputText type="text" autoComplete="off" value={formData.slug}
-                                   onChange={(e) => handleSelect('slug', e.target.value)}/>
-                        <label htmlFor="slug">کد یکتا</label>
-                    </span>
-        </div>
+        {/*<div className="field col-12 md:col-4">*/}
+        {/*            <span className="p-float-label">*/}
+        {/*              <InputText type="text" autoComplete="off" value={formData.slug}*/}
+        {/*                         onChange={(e) => handleSelect('slug', e.target.value)}/>*/}
+        {/*                /!*<Calendar value={formData.registered_date} onChange={(e) => setDate(e.value)} locale="es" />*!/*/}
+        {/*              <label htmlFor="slug">کد یکتا</label>*/}
+        {/*            </span>*/}
+        {/*</div>*/}
+        {/*<div className="field col-12 md:col-4">*/}
+        {/*            <span className="p-float-label">*/}
+        {/*                <InputText type="text" autoComplete="off" value={formData.slug}*/}
+        {/*                           onChange={(e) => handleSelect('slug', e.target.value)}/>*/}
+        {/*                <label htmlFor="slug">کد یکتا</label>*/}
+        {/*            </span>*/}
+        {/*</div>*/}
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
