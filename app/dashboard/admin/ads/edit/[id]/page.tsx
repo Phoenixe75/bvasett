@@ -1,5 +1,5 @@
 'use client';
-import {FC, useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {PageParams} from '@/types/layout';
 import {useRouter} from 'next/navigation';
 import {InputText} from 'primereact/inputtext';
@@ -26,6 +26,7 @@ import {
 } from '../../constant/converter';
 import {ProgressSpinner} from 'primereact/progressspinner';
 import {MultiSelect, MultiSelectChangeEvent} from 'primereact/multiselect';
+import moment from 'jalali-moment';
 
 const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const [directionsState, setDirectionsState] = useState<IDirection[]>([]);
@@ -271,6 +272,23 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     return String(value.replace(/,/g, ''));
   };
 
+  const convertDateTime = (dateString: string | null | undefined) => {
+    if (!dateString) {
+      return {date: 'Invalid Date', time: 'Invalid Time'};
+    }
+
+    const jalaaliDate = moment(dateString);
+    const date = jalaaliDate.format('jYYYY/jM/jD');
+    const time = jalaaliDate.format('HH:mm');
+    return {date, time};
+  };
+
+
+  const convertDateTimeToString = (dateString: string) => {
+    const {date, time} = convertDateTime(dateString);
+    return `${date} ${time}`;
+  }
+
   useEffect(() => {
     const checkAndResetFields = () => {
       handleCheckPurposeAndPartChange();
@@ -315,21 +333,24 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
         {/*        <label htmlFor="title">عنوان</label>*/}
         {/*    </span>*/}
         {/*</div>*/}
-        {/*<div className="field col-12 md:col-4">*/}
-        {/*            <span className="p-float-label">*/}
-        {/*              <InputText type="text" autoComplete="off" value={formData.slug}*/}
-        {/*                         onChange={(e) => handleSelect('slug', e.target.value)}/>*/}
-        {/*                /!*<Calendar value={formData.registered_date} onChange={(e) => setDate(e.value)} locale="es" />*!/*/}
-        {/*              <label htmlFor="slug">کد یکتا</label>*/}
-        {/*            </span>*/}
-        {/*</div>*/}
-        {/*<div className="field col-12 md:col-4">*/}
-        {/*            <span className="p-float-label">*/}
-        {/*                <InputText type="text" autoComplete="off" value={formData.slug}*/}
-        {/*                           onChange={(e) => handleSelect('slug', e.target.value)}/>*/}
-        {/*                <label htmlFor="slug">کد یکتا</label>*/}
-        {/*            </span>*/}
-        {/*</div>*/}
+        <div className="field col-12 md:col-4">
+                    <span className="p-float-label">
+                        <InputText type="text" name="registered_date"
+                                   dir="ltr"
+                                   disabled
+                                   value={formData?.registered_date || ''} readOnly/>
+                        <label htmlFor="registered_date">تاریخ ایجاد</label>
+                    </span>
+        </div>
+        <div className="field col-12 md:col-4">
+                    <span className="p-float-label">
+                        <InputText type="text" name="checked_at"
+                                   dir="ltr"
+                                   disabled
+                                   value={convertDateTimeToString(formData?.checked_at || '')} readOnly/>
+                        <label htmlFor="checked_at">آخرین تاریخ آپدیت آگهی</label>
+                    </span>
+        </div>
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
