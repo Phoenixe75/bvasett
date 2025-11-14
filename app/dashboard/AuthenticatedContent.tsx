@@ -1,10 +1,9 @@
 'use client';
 
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useUserContext} from '@/layout/context/usercontext';
 import {useRouter} from 'next/navigation';
 import {ProgressSpinner} from 'primereact/progressspinner';
-import Cookies from 'js-cookie';
 
 const AuthenticatedContent = ({children}: { children: React.ReactNode }) => {
   const {user, loading} = useUserContext();

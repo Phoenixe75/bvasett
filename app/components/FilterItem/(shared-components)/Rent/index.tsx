@@ -16,8 +16,8 @@ const Rent = ({oldForm}: { oldForm: IFilter | null }) => {
     purpose: 2,
     prePaidLte: oldForm?.prePaidLte ?? null,
     prePaidGte: oldForm?.prePaidGte ?? null,
-    priceLte: oldForm?.priceLte ?? null,
-    priceGte: oldForm?.priceGte ?? null,
+    rentLte: oldForm?.rentLte ?? null,
+    rentGte: oldForm?.rentGte ?? null,
     areaLte: oldForm?.areaLte ?? null,
     areaGte: oldForm?.areaGte ?? null,
     roomLte: oldForm?.roomLte ?? null,
@@ -54,7 +54,13 @@ const Rent = ({oldForm}: { oldForm: IFilter | null }) => {
       ...prevState,
       [fieldName]: fieldValue
     }));
-  }, []);
+  }, [setFormData]);
+
+  useEffect(() => {
+    if (formData) {
+      localStorage.setItem('filterForm', JSON.stringify(formData));
+    }
+  }, [formData]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
