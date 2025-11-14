@@ -366,7 +366,7 @@ const FilterResultPage: React.FC = () => {
           </div>
         ) : null}
         <PropertyDialog visible={displayDialog} onHide={hideDialog} selectedRowData={selectedRowData}/>
-        <div className="field flex col-12 md:col-2 gap-2">
+        <div className="field flex col-12 md:col-3 gap-2">
           <Button raised severity='success' type="submit" label="خرید" onClick={handleBuyClick}
                   disabled={!selectedPackage} loading={btnLoading}/>
           <Button raised severity='secondary' label="بازگشت" type="button" onClick={back}/>

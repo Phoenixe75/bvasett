@@ -638,7 +638,7 @@ const AdsEditPage: FC<PageParams> = ({ params }: any) => {
                     </span>
                 </div>
                 <div className="col-12">
-                    <div className="field flex col-12 md:col-2">
+                    <div className="field flex col-auto md:col-3">
                         <Button raised type="submit" label="بروز‌رسانی" className="bg-green-500 text-white border-0 mt-2 ml-2" disabled={loading.current} loading={loading.current} />
                         <Button raised label="بازگشت" type="button" className="bg-gray-300 text-color border-0 mt-2" onClick={back} />
                     </div>
