@@ -17,17 +17,20 @@ import FilterAds from '@/app/components/filterAds';
 import {ProgressSpinner} from 'primereact/progressspinner';
 import {filterAdsAdmin} from '@/app/components/filterAds/(services)/filterAds.service';
 import {IAdsBase} from '../(models)/ads';
+import {useAdsContext} from '@/app/dashboard/admin/ads/context/ads.context';
 
 const AdsTable = () => {
   const [ads, setAds] = useState<IAdsBase[]>([]);
   const [count, setCount] = useState(0);
-  const [page, setPage] = useState(0);
   const [rows, setRows] = useState(25);
   const [loading, setLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<{ title: string; slug: string }>({title: '', slug: ''});
   const [selectedAdId, setSelectedAdId] = useState<number | null>(null);
   const [displayConfirmDialog, setDisplayConfirmDialog] = useState<boolean>(false);
+  const {page, setPage} = useAdsContext();
   const router = useRouter();
+  // const [page, setPage] = useState(searchParams.get('currentPage') ?
+  //   (Number(searchParams.get('currentPage'))) - 1 : 0);
   const menu = useRef<(Menu | null)[]>([]);
 
   useEffect(() => {
@@ -59,6 +62,7 @@ const AdsTable = () => {
   const onPageChange = (event: any) => {
     setPage(event.page);
     setRows(event.rows);
+    router.push(`/dashboard/admin/ads?currentPage=${event.page + 1}`);
   };
 
   const getItems = (rowData: IAdsBase): MenuItem[] => [

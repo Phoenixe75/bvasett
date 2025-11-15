@@ -27,6 +27,7 @@ import {
 import {ProgressSpinner} from 'primereact/progressspinner';
 import {MultiSelect, MultiSelectChangeEvent} from 'primereact/multiselect';
 import moment from 'jalali-moment';
+import {useAdsContext} from '@/app/dashboard/admin/ads/context/ads.context';
 
 const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const [directionsState, setDirectionsState] = useState<IDirection[]>([]);
@@ -75,6 +76,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const loading = useRef(false);
   const router = useRouter();
+  const {page} = useAdsContext();
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
@@ -198,7 +200,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
   };
 
   const back = () => {
-    router.push('../');
+    router.push(`../?currentPage=${page ? (page + 1) : 1}`);
   };
 
   const handleLocationChange = (e: any) => {

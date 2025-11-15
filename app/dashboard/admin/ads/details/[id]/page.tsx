@@ -26,6 +26,7 @@ import {
 import {directionsOption, getLocationLabel, getPurposeLabel, getTypeLabel} from '../../constant/converter';
 import {InputTextarea} from 'primereact/inputtextarea';
 import moment from 'jalali-moment';
+import {useAdsContext} from '@/app/dashboard/admin/ads/context/ads.context';
 
 const AdsDetailsPage: FC<PageParams> = ({params}: any) => {
   const [ads, setAds] = useState<IAdsBase | null>(null);
@@ -35,6 +36,7 @@ const AdsDetailsPage: FC<PageParams> = ({params}: any) => {
   const [districtName, setDistrictName] = useState<string>('');
   const [neighborhoods, setNeighborhoods] = useState<INeighborhoods[]>([]);
   const router = useRouter();
+  const {page} = useAdsContext();
   const convertDateTime = (dateString: string | null | undefined) => {
     if (!dateString) {
       return {date: 'Invalid Date', time: 'Invalid Time'};
@@ -109,7 +111,7 @@ const AdsDetailsPage: FC<PageParams> = ({params}: any) => {
   }, [ads?.state, ads?.district]);
 
   const back = (): void => {
-    router.push('../?page=' + params.page);
+    router.push(`../?currentPage=${page ? (page + 1) : 1}`);
   };
 
   const formatNumber = (value: any) => {
