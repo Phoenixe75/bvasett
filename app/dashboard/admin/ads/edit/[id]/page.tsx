@@ -329,12 +329,12 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
       <h5>ویرایش آگهی</h5>
       <hr/>
       <form onSubmit={submitForm} className="grid p-fluid mt-6">
-        {/*<div className="field col-12 md:col-4">*/}
-        {/*    <span className="p-float-label">*/}
-        {/*        <InputText type="text" ref={inputRef} name="title" id="title" autoComplete="off" value={formData.title} onChange={(e) => setValue('title', e.target.value)} />*/}
-        {/*        <label htmlFor="title">عنوان</label>*/}
-        {/*    </span>*/}
-        {/*</div>*/}
+        <div className="field col-12 md:col-4">
+            <span className="p-float-label">
+                <InputText type="text" ref={inputRef} name="title" id="title" autoComplete="off" value={formData.title} onChange={(e) => setValue('title', e.target.value)} />
+                <label htmlFor="title">عنوان</label>
+            </span>
+        </div>
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="registered_date"

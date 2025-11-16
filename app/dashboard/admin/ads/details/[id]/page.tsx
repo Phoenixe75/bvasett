@@ -129,12 +129,12 @@ const AdsDetailsPage: FC<PageParams> = ({params}: any) => {
       <h5>مشاهده آگهی {ads?.title || ''}</h5>
       <hr/>
       <div className="grid p-fluid mt-6">
-        {/*<div className="field col-12 md:col-4">*/}
-        {/*    <span className="p-float-label">*/}
-        {/*        <InputText type="text" name="title" value={ads?.title || ''} readOnly />*/}
-        {/*        <label htmlFor="title">عنوان</label>*/}
-        {/*    </span>*/}
-        {/*</div>*/}
+        <div className="field col-12 md:col-4">
+            <span className="p-float-label">
+                <InputText type="text" name="title" value={ads?.title || ''} readOnly />
+                <label htmlFor="title">عنوان</label>
+            </span>
+        </div>
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="purpose_label" value={ads?.purpose_label || ''} readOnly/>
