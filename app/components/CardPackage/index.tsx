@@ -25,12 +25,12 @@ const PackageItem = ({
 
   const items: PackagesType = [
     {
-      name: `با استعلام ${formatMoneyToPersianUnit(price?.[WITH_INQUIRY])}`,
+      name: `با استعلام ${formatMoneyToPersianUnit(price?.[WITH_INQUIRY])} تومان`,
       value: WITH_INQUIRY,
       disabled: firstBuyer
     },
     {
-      name: `بدون استعلام ${formatMoneyToPersianUnit(price?.[WITHOUT_INQUIRY])}`,
+      name: `بدون استعلام ${formatMoneyToPersianUnit(price?.[WITHOUT_INQUIRY])} تومان`,
       value: WITHOUT_INQUIRY,
       // disabled: !firstBuyer
       disabled: hasShownInquiryModal
