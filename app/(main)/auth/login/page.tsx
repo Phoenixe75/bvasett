@@ -5,6 +5,8 @@ import CheckUser from '@/app/components/checkUser';
 import CheckOTP from '@/app/components/CheckOTP';
 import CheckPassword from '@/app/components/CheckPassword';
 import { LayoutContext } from '@/layout/context/layoutcontext';
+import authLogo from '../../../../public/images/logo-new.png';
+import Image from 'next/image';
 const Login = ({onlyForm}:any) => {
     const [formState, setFormState] = useState(1);
     const [userData, setUserData] = useState(null);
@@ -16,7 +18,8 @@ const Login = ({onlyForm}:any) => {
     return (
         <div className={containerClassName}>
             <div className="flex flex-column align-items-center justify-content-center">
-                <img src={`/images/logo-new.png`} alt="Sakai logo" className="mb-5 w-6rem flex-shrink-0" />
+              <Image src={authLogo} alt="Bvasett logo" className="mt-3 mb-5 w-6rem flex-shrink-0" />
+                {/*<img src={authLogo} alt="Sakai logo" className="mb-5 w-6rem flex-shrink-0" />*/}
                 <div
                     style={{
                         borderRadius: '14px',
