@@ -34,10 +34,10 @@ const DeflectList: React.FC<IAdCompleteStatusListProps> = ({
   const getItems = (rowData: IAds): MenuItem[] => {
     return [
       {
-        label: 'مشاهده آگهی',
+        label: 'ویرایش آگهی',
         icon: 'pi pi-eye text-yellow-500 ml-2',
         command: () => {
-          window.open(`/dashboard/admin/ads/details/${rowData.id}`, '_blank');
+          window.open(`/dashboard/admin/ads/edit/${rowData.id}`, '_blank');
         }
       },
       {
