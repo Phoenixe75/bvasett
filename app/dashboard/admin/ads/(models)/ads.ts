@@ -1,3 +1,5 @@
+import {AdCompleteStatusEnumType} from '@/app/dashboard/admin/defect-management/(models)/types';
+
 export interface IAdsBase {
   id?: number | null;
   registered_date?: string;
@@ -70,6 +72,7 @@ export interface IAds {
   sold?: boolean;
   state?: number | null;
   city?: number | null;
+  complete?: AdCompleteStatusEnumType;
 }
 
 export interface IBuyAds extends IAds {
@@ -114,6 +117,7 @@ export interface IPartAds extends IBuyAds {
 export interface IAdsResponse {
   results: any[];
   count: number;
+  active_count?: number;
   next: string | null;
   previous: string | null;
 }

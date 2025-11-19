@@ -45,7 +45,7 @@ export const getAllAds = async (page: number = 1): Promise<IAdsResponse> => {
 
 export const createAds = async (formData: any): Promise<any> => {
     try {
-        const response = await axios.post<any>(`${baseUrl}/api/ads/`, formData, {
+        const response = await axiosApi.post<any>(`${baseUrl}/api/ads/`, formData, {
             headers: {
                 Authorization: `Token ${token}`
             }
@@ -82,7 +82,7 @@ export const getAdsDetails = async (id: number): Promise<IAdsBase> => {
 
 export const getStates = async (): Promise<IState[]> => {
     try {
-        const response = await axios.get(`${baseUrl}/api/address/states/`);
+        const response = await axiosApi.get(`${baseUrl}/api/address/states/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching states:', error);
@@ -92,7 +92,7 @@ export const getStates = async (): Promise<IState[]> => {
 
 export const getCitiesByState = async (stateId: number): Promise<ICity[]> => {
     try {
-        const response = await axios.get(`${baseUrl}/api/address/states/${stateId}/cities/`);
+        const response = await axiosApi.get(`${baseUrl}/api/address/states/${stateId}/cities/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching cities:', error);
@@ -102,7 +102,7 @@ export const getCitiesByState = async (stateId: number): Promise<ICity[]> => {
 
 export const getDistricts = async (): Promise<IDistricts[]> => {
     try {
-        const response = await axios.get(`${baseUrl}/api/address/districts/`);
+        const response = await axiosApi.get(`${baseUrl}/api/address/districts/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching districts:', error);
@@ -112,7 +112,7 @@ export const getDistricts = async (): Promise<IDistricts[]> => {
 
 export const getNeighborhoodsByDistrict = async (districtId: number): Promise<INeighborhoods[]> => {
     try {
-        const response = await axios.get(`${baseUrl}/api/address/districts/${districtId}/neighborhoods/`);
+        const response = await axiosApi.get(`${baseUrl}/api/address/districts/${districtId}/neighborhoods/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching cities:', error);
