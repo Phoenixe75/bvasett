@@ -28,6 +28,15 @@ import {ProgressSpinner} from 'primereact/progressspinner';
 import {MultiSelect, MultiSelectChangeEvent} from 'primereact/multiselect';
 import moment from 'jalali-moment';
 import {useAdsContext} from '@/app/dashboard/admin/ads/context/ads.context';
+import {AdCompleteStatusEnum} from '@/app/dashboard/admin/defect-management/(models)/ad-complete-status.enum';
+import {acceptDeflectFile} from '@/app/dashboard/admin/defect-management/(services)/deflect-management.service';
+import {ConfirmDialog} from 'primereact/confirmdialog';
+import {Message} from 'primereact/message';
+import {DeflectManagementTranslations} from '@/app/dashboard/admin/defect-management/Translations';
+import {AdCompleteStatusEnumType} from '@/app/dashboard/admin/defect-management/(models)/types';
+import {InputTextarea} from 'primereact/inputtextarea';
+import {Dialog} from 'primereact/dialog';
+import {DialogContent} from 'next/dist/client/components/react-dev-overlay/internal/components/Dialog';
 
 const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const [directionsState, setDirectionsState] = useState<IDirection[]>([]);
@@ -51,6 +60,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     sitting_toilets: null,
     address: '',
     complete: '',
+    notes: '',
     owner_name: '',
     plate_number: null,
     owner_phone: '',
@@ -75,6 +85,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const [neighborhoodStates, setNeighborhoodStates] = useState<INeighborhoods[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const loading = useRef(false);
+  const saveAdminNoteLoading = useRef(false);
   const router = useRouter();
   const {page} = useAdsContext();
 
@@ -89,52 +100,58 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     }));
   }, []);
 
-  useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        loading.current = true;
-        const fetchedStates = await getStates();
-        setStates(fetchedStates);
-        const fetchedDistricts = await getDistricts();
-        setDistrictStates(fetchedDistricts);
+  const fetchInitialData = useCallback(async () => {
+    try {
+      loading.current = true;
+      const fetchedStates = await getStates();
+      setStates(fetchedStates);
+      const fetchedDistricts = await getDistricts();
+      setDistrictStates(fetchedDistricts);
 
-        if (params.id != null) {
-          const data = await getAdsDetails(+params.id);
-          setFormData(data);
+      if (params.id != null) {
+        const data = await getAdsDetails(+params.id);
+        setFormData(data);
 
-          if (data?.directions) {
-            const directionValue = data?.directions?.map((dir: string) => ({
-              name: directionsOption.find((option) => option.code === dir)?.name || '',
-              code: dir
-            }));
-            setDirectionsState(directionValue);
-          }
-
-          if (data.state !== null) {
-            const fetchedCities = await getCitiesByState(data.state);
-            setCities(fetchedCities);
-          } else {
-            console.warn('State is null');
-            setCities([]);
-          }
-
-          if (data.district !== null) {
-            const fetchedNeighborhoods = await getNeighborhoodsByDistrict(data.district);
-            setNeighborhoodStates(fetchedNeighborhoods);
-          } else {
-            console.warn('Neighborhoods  is null');
-            setNeighborhoodStates([]);
-          }
-        } else {
-          console.warn('Ad ID is undefined or null');
+        if (data?.directions) {
+          const directionValue = data?.directions?.map((dir: string) => ({
+            name: directionsOption.find((option) => option.code === dir)?.name || '',
+            code: dir
+          }));
+          setDirectionsState(directionValue);
         }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        toast.error('Error fetching data');
-      } finally {
-        loading.current = false;
+
+        if (data.state !== null) {
+          const fetchedCities = await getCitiesByState(data.state);
+          setCities(fetchedCities);
+        } else {
+          console.warn('State is null');
+          setCities([]);
+        }
+
+        if (data.district !== null) {
+          const fetchedNeighborhoods = await getNeighborhoodsByDistrict(data.district);
+          setNeighborhoodStates(fetchedNeighborhoods);
+        } else {
+          console.warn('Neighborhoods  is null');
+          setNeighborhoodStates([]);
+        }
+      } else {
+        console.warn('Ad ID is undefined or null');
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error('Error fetching data');
+    } finally {
+      loading.current = false;
+    }
+  }, [
+    setStates,
+    setDistrictStates,
+    setCities,
+    setNeighborhoodStates,
+  ]);
+
+  useEffect(() => {
 
     fetchInitialData();
   }, [params.id]);
@@ -198,6 +215,29 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
       loading.current = false;
     }
   };
+
+  const submitAdminNoteForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      saveAdminNoteLoading.current = true;
+      const filterNullValues = (data: IAdsBase) => {
+        return Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== ''));
+      };
+
+      const filteredData = filterNullValues(formData);
+      filteredData.complete = AdCompleteStatusEnum.rejected;
+      await updateAds(+params.id, filteredData);
+      toast.success("آگهی با موفقیت 'رد تکمیل' شد");
+      setShowRejectConfirmDialog(false);
+      setTimeout(async () => {
+        await fetchInitialData();
+      }, 1000);
+    } catch (error) {
+      toast.error('ثبت توضیحات با خطا روبرو شد: ');
+    } finally {
+      saveAdminNoteLoading.current = false;
+    }
+  }
 
   const back = () => {
     router.push(`../?currentPage=${page ? (page + 1) : 1}`);
@@ -319,14 +359,79 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     }
   };
 
+  const [showAcceptConfirmDialog, setShowAcceptConfirmDialog] = useState<boolean>(false);
+  const [showRejectConfirmDialog, setShowRejectConfirmDialog] = useState<boolean>(false);
+
+  const acceptFile = useCallback(async () => {
+    if (formData != null && formData.id) {
+      const result = await acceptDeflectFile(formData.id, formData!);
+      setShowAcceptConfirmDialog(false);
+      toast.success("با موفقیت تایید شد");
+      back();
+    } else {
+      toast.error('خطا رخ داد');
+    }
+  }, [formData]);
+
+  const rejectFile = () => {
+
+  }
+
+
+
   if (loading.current) {
     return <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)"
                             animationDuration=".5s"/>;
   }
 
   return (
-    <div className="card detailsData">
-      <h5>ویرایش آگهی</h5>
+    <>
+      <div className="card detailsData">
+        <div className="flex align-items-center justify-content-between">
+          <h5>ویرایش آگهی</h5>
+          {formData?.complete == AdCompleteStatusEnum.incomplete && (<div className="">
+            <div className="text-left">
+              <Button raised
+                      severity="success"
+                      className="ml-3"
+                      onClick={() => setShowAcceptConfirmDialog(true)}>
+                <span className="pi pi-check-circle ml-2"></span>
+                <span>تایید تکمیل ناقصی آگهی</span>
+              </Button>
+              <Button raised
+                      severity="danger"
+                      onClick={() => setShowRejectConfirmDialog(true)}>
+                <span className="pi pi-check-circle ml-2"></span>
+                <span>رد تکمیل ناقصی آگهی</span>
+              </Button>
+            </div>
+          </div>)}
+        </div>
+        {formData?.complete == AdCompleteStatusEnum.incomplete && (<Message
+          style={{
+            border: 'solid #cc8925',
+            color: '#cc8925'
+          }}
+          className="border-warning mt-2 w-full justify-content-start"
+          severity="warn"
+          content={'این فایل ناقص است، پس از تکمیل نواقص و ذخیره آگهی می‌توانید آنرا تایید یا رد کنید'}
+        />)}
+        {formData?.complete == AdCompleteStatusEnum.rejected && (<>
+          <Message
+            style={{
+              border: 'solid #ff5757',
+              color: '#ff5757'
+            }}
+            className="border-danger mt-2 w-full justify-content-start"
+            severity="error"
+            content={<div>این آگهی ناقص پس از بررسی، <b>رد تکمیل</b> شده است</div>}
+          />
+          <Message
+            className="mt-2 w-full justify-content-start"
+            severity="info"
+            content={<div><span style={{display: 'inline-block'}}><b>توضیحات ادمین:</b></span> {formData.notes}</div>}
+          />
+        </>)}
       <hr/>
       <form onSubmit={submitForm} className="grid p-fluid mt-6">
         <div className="field col-12 md:col-4">
@@ -343,6 +448,16 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                                    value={formData?.registered_date || ''} readOnly/>
                         <label htmlFor="registered_date">تاریخ ایجاد</label>
                     </span>
+        </div>
+        <div className="field col-12 md:col-4">
+            <span className="p-float-label">
+                <InputText type="text" name="complete"
+                           dir="ltr"
+                           disabled
+                           value={formData?.complete ?
+                             DeflectManagementTranslations[formData?.complete as keyof typeof AdCompleteStatusEnum] : ''} readOnly/>
+                <label htmlFor="complete">وضعیت ناقصی فایل</label>
+            </span>
         </div>
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
@@ -725,6 +840,40 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
         </div>
       </form>
     </div>
+      <ConfirmDialog
+        visible={showAcceptConfirmDialog}
+        onHide={() => setShowAcceptConfirmDialog(false)}
+        message="این فایل ناقص را مورد تایید است؟"
+        header="تایید فایل ناقص"
+        icon="pi pi-exclamation-triangle ml-2 text-red-500"
+        accept={acceptFile}
+        reject={() => setShowAcceptConfirmDialog(true)}
+        acceptLabel="تایید"
+        rejectLabel="انصراف"
+      />
+      <Dialog header="توضیحات ادمین جهت رد آگهی" visible={showRejectConfirmDialog}
+              onHide={() => setShowRejectConfirmDialog(false)}
+              draggable={false}
+              className="w-12 md:w-6"
+              dismissableMask={true}>
+        <hr/>
+        <DialogContent>
+          <form onSubmit={submitAdminNoteForm} className="grid p-fluid gap-3 mt-3">
+            <div className="field col-12">
+              <InputTextarea rows={5} cols={40}
+                             onChange={e => setValue('notes', e.target.value ?? '')}
+                             value={formData?.notes ?? ''}></InputTextarea>
+            </div>
+            <div className="text-end">
+              <Button raised type="submit" label="ثبت توضیحات و رد کردن تکمیل آگهی"
+                      className="bg-green-500 text-white border-0 mt-2 ml-2"
+                      disabled={saveAdminNoteLoading.current && !formData?.notes}
+                      loading={saveAdminNoteLoading.current}/>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

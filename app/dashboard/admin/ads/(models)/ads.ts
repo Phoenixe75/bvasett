@@ -9,6 +9,7 @@ export interface IAdsBase {
   type_label?: string | null;
   active: boolean | null;
   complete: string | null;
+  notes: string | null;
   ordering: number | null;
   title: string;
   slug: string;
@@ -73,6 +74,7 @@ export interface IAds {
   state?: number | null;
   city?: number | null;
   complete?: AdCompleteStatusEnumType;
+  notes?: string | null;
 }
 
 export interface IBuyAds extends IAds {

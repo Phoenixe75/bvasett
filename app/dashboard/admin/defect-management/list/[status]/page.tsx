@@ -6,7 +6,7 @@ import {AdCompleteStatusEnumType} from '@/app/dashboard/admin/defect-management/
 import {IAds} from '@/app/dashboard/admin/ads/(models)/ads';
 import {getAdsByCompleteStatus} from '@/app/dashboard/admin/defect-management/(services)/deflect-management.service';
 import {AdCompleteStatusEnum} from '@/app/dashboard/admin/defect-management/(models)/ad-complete-status.enum';
-import DeflectList from '@/app/dashboard/admin/defect-management/(shared-components)/deflectList';
+import DeflectListComponent from '@/app/dashboard/admin/defect-management/(shared-components)/deflectListComponent';
 import {ProgressSpinner} from 'primereact/progressspinner';
 
 const DeflectListPage: FC<PageParams> = ({params}: any) => {
@@ -59,12 +59,12 @@ const DeflectListPage: FC<PageParams> = ({params}: any) => {
                         strokeWidth="8"
                         fill="var(--surface-ground)"
                         animationDuration=".5s" />) :
-      (<DeflectList deflectStatus={currentStatus}
-                    data={ads}
-                    loading={loading}
-                    totalCount={totalCount}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange} refreshData={refreshData}/>)
+      (<DeflectListComponent deflectStatus={currentStatus}
+                             data={ads}
+                             loading={loading}
+                             totalCount={totalCount}
+                             currentPage={currentPage}
+                             onPageChange={handlePageChange} refreshData={refreshData}/>)
     }
   </>;
 }
