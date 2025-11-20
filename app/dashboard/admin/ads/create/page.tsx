@@ -38,6 +38,7 @@ const NewAds = () => {
   const [formData, setFormData] = useState<IAdsBase>({
     active: null,
     complete: null,
+    notes: null,
     ordering: 1,
     title: '',
     slug: '',
