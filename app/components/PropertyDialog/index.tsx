@@ -28,9 +28,28 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
 
   const [previewImageIndex, setPreviewImageIndex] = useState<number>(-1);
 
+  const [ad, setAd] = useState(selectedRowData);
+  const [loading, setLoading] = useState(true);
+
   const selectImageHandler = (index?: number) => {
     setPreviewImageIndex(index ?? -1);
   }
+
+  // useEffect(() => {
+  //   if (selectedRowData?.id) {
+  //     const loadAdById = async (adId: number) => {
+  //       try {
+  //         setLoading(true);
+  //         // const result: IAdsBase = await getAdsDetails(adId);
+  //         const result: IAdsBase = await getAdsDetailsNotSecured(adId);
+  //         setAd(result);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     }
+  //     loadAdById(selectedRowData.id!);
+  //   }
+  // }, [selectedRowData?.id, setAd])
 
   return (
     <Dialog header="جزئیات آگهی" visible={visible}
@@ -41,10 +60,10 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
       <hr/>
       <div className="grid p-fluid gap-3 mt-6">
 
-        {selectedRowData && (
+        {ad && (
           <div className="grid p-fluid relative col-9 relative">
             <div className={styles.heart_container}>
-              <Favorite data={selectedRowData}/>
+              <Favorite data={ad}/>
             </div>
             <div className="formgrid grid">
               <div className="field col-12 md:col-4">
@@ -79,9 +98,9 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                 <InputText id="location" value={getPurposeLabelwithColor(selectedRowData.purpose)?.label ?? null}
                            readOnly/>
               </div>
-              {selectedRowData?.floor ? <div className="field col-12 md:col-4">
-                <label htmlFor="floor"> طبقه</label>
-                <InputText id="floor" value={selectedRowData?.floor ?? null} readOnly/>
+              {selectedRowData?.floors ? <div className="field col-12 md:col-4">
+                <label htmlFor="floors"> طبقه</label>
+                <InputText id="floors" value={selectedRowData?.floors ?? null} readOnly/>
               </div> : null}
               {selectedRowData?.unit_price && selectedRowData?.purpose == 1 ? <div className="field col-12 md:col-4">
                 <label htmlFor="unit_price"> قیمت متری</label>
@@ -92,10 +111,11 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                   <label htmlFor="total_price">رهن </label>
                   <InputNumber id="total_price" value={selectedRowData.rent_pre_paid_amount ?? null} readOnly/>
                 </div>
-                {!!selectedRowData.rent_pre_paid_amount && selectedRowData?.purpose != 4  && <div className="field col-12 md:col-4">
-                  <label htmlFor="rent_price">اجاره </label>
-                  <InputNumber id="rent_price" value={selectedRowData.rent_price ?? null} readOnly/>
-                </div>}
+                {!!selectedRowData.rent_pre_paid_amount && selectedRowData?.purpose != 4 &&
+                  <div className="field col-12 md:col-4">
+                    <label htmlFor="rent_price">اجاره </label>
+                    <InputNumber id="rent_price" value={selectedRowData.rent_price ?? null} readOnly/>
+                  </div>}
               </> : <div className="field col-12 md:col-4">
                 <label htmlFor="total_price">قیمت </label>
                 <InputNumber id="total_price" value={selectedRowData.total_price ?? null} readOnly/>
@@ -148,7 +168,7 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
         <div className="field col-3">
           <div style={{minHeight: "80%"}} className="col-12 relative">
             <img
-              src={previewImageIndex > -1 ? images[previewImageIndex].src : (selectedRowData ? selectedRowData.neighborhood_image : images[0].src)}
+              src={previewImageIndex > -1 ? images[previewImageIndex].src : (ad ? selectedRowData.neighborhood_image : images[0].src)}
               alt="images"
               style={{
                 width: '100%', // Ensures it goes full width

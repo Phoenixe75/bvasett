@@ -149,18 +149,24 @@ export const getPurposeLabelwithColor = (purpose: PurposeEnum | null): {
 export const getPrice = (data: any) => {
   switch (data.purpose) {
     case PurposeEnum.Buy:
-      return {total: formatMoneyToPersianUnit(data.total_price)};
+      // return {total: formatMoneyToPersianUnit(data.total_price)};
+      return {total: data.total_price_humanized};
     case PurposeEnum.Rent:
       return {
-        total: formatMoneyToPersianUnit(data.rent_pre_paid_amount),
-        rent: formatMoneyToPersianUnit(data.rent_price)
+        // total: formatMoneyToPersianUnit(data.rent_pre_paid_amount),
+        // rent: formatMoneyToPersianUnit(data.rent_price)
+        total: data.rent_pre_paid_amount_humanized,
+        rent: data.rent_price_humanized
       };
     case PurposeEnum.Barter:
-      return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
+      // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
+      return {total: data.rent_pre_paid_amount_humanized};
     case PurposeEnum.MORTGAGE:
-      return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
+      // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
+      return {total: data.rent_pre_paid_amount_humanized};
     case PurposeEnum.PARTNERSHIP:
-      return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
+      // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
+      return {total: data.rent_pre_paid_amount_humanized};
     default:
       return {total: '', rent: ''};
   }

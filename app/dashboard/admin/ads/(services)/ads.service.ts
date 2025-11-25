@@ -80,6 +80,15 @@ export const getAdsDetails = async (id: number): Promise<IAdsBase> => {
     return response.data;
 };
 
+export const getAdsDetailsNotSecured = async (id: number): Promise<IAdsBase> => {
+    const response = await axios.get<IAdsBase>(`${baseUrl}/api/ads/${id}/`, {
+        // headers: {
+        //     Authorization: `Token ${token}`
+        // }
+    });
+    return response.data;
+};
+
 export const getStates = async (): Promise<IState[]> => {
     try {
         const response = await axiosApi.get(`${baseUrl}/api/address/states/`);

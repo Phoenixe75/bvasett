@@ -35,9 +35,13 @@ export interface IAdsBase {
   description: string | null;
   purpose: PurposeEnum | null;
   rent_pre_paid_amount: string;
+  rent_pre_paid_amount_humanized: string;
   rent_price: string;
+  rent_price_humanized: string;
   unit_price: string;
+  unit_price_humanized: string;
   total_price: string;
+  total_price_humanized: string;
   type: number | null;
   sold: boolean;
   state: number | null;
@@ -79,6 +83,7 @@ export interface IAds {
 
 export interface IBuyAds extends IAds {
   unit_price: string; // required
+  unit_price_humanized?: string; // required
 }
 
 export interface IApartmentAds extends IBuyAds {
@@ -97,7 +102,9 @@ export interface IApartmentAds extends IBuyAds {
 
 export interface IRentAds extends IAds {
   rent_pre_paid_amount: string; // required
+  rent_pre_paid_amount_humanized?: string; // required
   rent_price: string; // required
+  rent_price_humanized?: string;
 }
 
 export interface IRentBarterAds extends IRentAds {
