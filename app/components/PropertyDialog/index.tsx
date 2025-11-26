@@ -60,10 +60,10 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
       <hr/>
       <div className="grid p-fluid gap-3 mt-6">
 
-        {ad && (
+        {selectedRowData && (
           <div className="grid p-fluid relative col-9 relative">
             <div className={styles.heart_container}>
-              <Favorite data={ad}/>
+              <Favorite data={selectedRowData}/>
             </div>
             <div className="formgrid grid">
               <div className="field col-12 md:col-4">
@@ -168,7 +168,7 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
         <div className="field col-3">
           <div style={{minHeight: "80%"}} className="col-12 relative">
             <img
-              src={previewImageIndex > -1 ? images[previewImageIndex].src : (ad ? selectedRowData.neighborhood_image : images[0].src)}
+              src={previewImageIndex > -1 ? images[previewImageIndex].src : (selectedRowData ? selectedRowData.neighborhood_image : images[0].src)}
               alt="images"
               style={{
                 width: '100%', // Ensures it goes full width
