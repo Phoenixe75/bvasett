@@ -150,23 +150,23 @@ export const getPrice = (data: any) => {
   switch (data.purpose) {
     case PurposeEnum.Buy:
       // return {total: formatMoneyToPersianUnit(data.total_price)};
-      return {total: data.total_price_humanized};
+      return {total: data.total_price_rounded};
     case PurposeEnum.Rent:
       return {
         // total: formatMoneyToPersianUnit(data.rent_pre_paid_amount),
         // rent: formatMoneyToPersianUnit(data.rent_price)
-        total: data.rent_pre_paid_amount_humanized,
-        rent: data.rent_price_humanized
+        total: data.rent_pre_paid_amount_rounded,
+        rent: data.rent_price_rounded
       };
     case PurposeEnum.Barter:
       // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
-      return {total: data.rent_pre_paid_amount_humanized};
+      return {total: data.rent_pre_paid_amount_rounded};
     case PurposeEnum.MORTGAGE:
       // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
-      return {total: data.rent_pre_paid_amount_humanized};
+      return {total: data.rent_pre_paid_amount_rounded};
     case PurposeEnum.PARTNERSHIP:
       // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
-      return {total: data.rent_pre_paid_amount_humanized};
+      return {total: data.rent_pre_paid_amount_rounded};
     default:
       return {total: '', rent: ''};
   }
