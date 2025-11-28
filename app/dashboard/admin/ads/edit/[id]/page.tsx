@@ -33,7 +33,6 @@ import {acceptDeflectFile} from '@/app/dashboard/admin/defect-management/(servic
 import {ConfirmDialog} from 'primereact/confirmdialog';
 import {Message} from 'primereact/message';
 import {DeflectManagementTranslations} from '@/app/dashboard/admin/defect-management/Translations';
-import {AdCompleteStatusEnumType} from '@/app/dashboard/admin/defect-management/(models)/types';
 import {InputTextarea} from 'primereact/inputtextarea';
 import {Dialog} from 'primereact/dialog';
 import {DialogContent} from 'next/dist/client/components/react-dev-overlay/internal/components/Dialog';
@@ -88,7 +87,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const [districtStates, setDistrictStates] = useState<IDistricts[]>([]);
   const [neighborhoodStates, setNeighborhoodStates] = useState<INeighborhoods[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const loading = useRef(false);
+  const [loading, setLoading] = useState(false);
   const saveAdminNoteLoading = useRef(false);
   const router = useRouter();
   const {page} = useAdsContext();
@@ -106,7 +105,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
 
   const fetchInitialData = useCallback(async () => {
     try {
-      loading.current = true;
+      setLoading(true);
       const fetchedStates = await getStates();
       setStates(fetchedStates);
       const fetchedDistricts = await getDistricts();
@@ -146,7 +145,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
       console.error('Error fetching data:', error);
       toast.error('Error fetching data');
     } finally {
-      loading.current = false;
+      setLoading(false);
     }
   }, [
     setStates,
@@ -171,11 +170,11 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     setFormData((prev) => ({...prev, [field]: value}));
   };
 
-  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = async (e: any) => {
     e.preventDefault();
 
     try {
-      loading.current = true;
+      setLoading(true);
       const filterNullValues = (data: IAdsBase) => {
         return Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== ''));
       };
@@ -186,11 +185,11 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
         if (filteredData.type === 1 || filteredData.type === 2 || filteredData.type === 3 || filteredData.type === 5) {
           await updateAds(+params.id, filteredData);
           toast.success('بروز‌رسانی شد');
-          router.push('../');
+          // router.push('../');
         } else if (filteredData.type === 4) {
           await updateAds(+params.id, filteredData);
           toast.success('بروز‌رسانی شد');
-          router.push('../');
+          // router.push('../');
         }
       } else if (filteredData.purpose === 2 || filteredData.purpose === 3) {
         if (filteredData.type === 1 || filteredData.type === 2 || filteredData.type === 3 || filteredData.type === 5) {
@@ -200,7 +199,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
         } else if (filteredData.type === 4) {
           await updateAds(+params.id, filteredData);
           toast.success('بروز‌رسانی شد');
-          router.push('../');
+          // router.push('../');
         }
       } else if (filteredData.purpose === 4) {
         if (filteredData.type === 1 || filteredData.type === 2 || filteredData.type === 3 || filteredData.type === 5) {
@@ -210,13 +209,13 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
         } else if (filteredData.type === 4) {
           await updateAds(+params.id, filteredData);
           toast.success('بروز‌رسانی شد');
-          router.push('../');
+          // router.push('../');
         }
       }
     } catch (error) {
       toast.error('بروز‌رسانی با خطا روبرو شد: ');
     } finally {
-      loading.current = false;
+      setLoading(false);
     }
   };
 
@@ -377,13 +376,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     }
   }, [formData]);
 
-  const rejectFile = () => {
 
-  }
-
-
-
-  if (loading.current) {
+  if (loading) {
     return <ProgressSpinner style={{width: '50px', height: '50px'}} strokeWidth="8" fill="var(--surface-ground)"
                             animationDuration=".5s"/>;
   }
@@ -436,15 +430,16 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
             content={<div><span style={{display: 'inline-block'}}><b>توضیحات ادمین:</b></span> {formData.notes}</div>}
           />
         </>)}
-      <hr/>
-      <form onSubmit={submitForm} className="grid p-fluid mt-6">
-        <div className="field col-12 md:col-4">
+        <hr/>
+        <form onSubmit={submitForm} className="grid p-fluid mt-6">
+          <div className="field col-12 md:col-4">
             <span className="p-float-label">
-                <InputText type="text" ref={inputRef} name="title" id="title" autoComplete="off" value={formData.title} onChange={(e) => setValue('title', e.target.value)} />
+                <InputText type="text" ref={inputRef} name="title" id="title" autoComplete="off" value={formData.title}
+                           onChange={(e) => setValue('title', e.target.value)}/>
                 <label htmlFor="title">عنوان</label>
             </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="registered_date"
                                    dir="ltr"
@@ -452,18 +447,19 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                                    value={formData?.registered_date || ''} readOnly/>
                         <label htmlFor="registered_date">تاریخ ایجاد</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
             <span className="p-float-label">
                 <InputText type="text" name="complete"
                            dir="ltr"
                            disabled
                            value={formData?.complete ?
-                             DeflectManagementTranslations[formData?.complete as keyof typeof AdCompleteStatusEnum] : ''} readOnly/>
+                             DeflectManagementTranslations[formData?.complete as keyof typeof AdCompleteStatusEnum] : ''}
+                           readOnly/>
                 <label htmlFor="complete">وضعیت ناقصی فایل</label>
             </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="checked_at"
                                    dir="ltr"
@@ -471,8 +467,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                                    value={convertDateTimeToString(formData?.checked_at || '')} readOnly/>
                         <label htmlFor="checked_at">آخرین تاریخ آپدیت آگهی</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -490,8 +486,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             نوع معامله <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown type="text" name="type" id="type"
                                   value={TypeOption.find((option) => option.code === formData.type)}
@@ -499,8 +495,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                                   placeholder="انتخاب کنید" required/>
                         <label htmlFor="type">نوع ملک</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -514,23 +510,23 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                         />
                         <label htmlFor="location">موقعیت ملک</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <MultiSelect name="directions" id="directions" value={directionsState}
                                      onChange={handleDirectionsChange} options={directionsOption} optionLabel="name"
                                      placeholder="انتخاب کنید" required/>{' '}
                       <label htmlFor="directions">جهت ملک</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" autoComplete="off" value={formData.slug}
                                    onChange={(e) => handleSelect('slug', e.target.value)}/>
                         <label htmlFor="slug">کد یکتا</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" id="area" autoComplete="off" value={formData.area}
                                    onChange={(e) => setValue('area', e.target.value)} required/>
@@ -538,8 +534,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             متراژ (متر) <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="floors" value={formData.floors}
                                      onChange={(e) => setValue('floors', e.value)}/>
@@ -547,8 +543,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد طبقات <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="units_per_floor" value={formData.units_per_floor}
                                      onChange={(e) => setValue('units_per_floor', e.value)}/>
@@ -556,8 +552,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد واحد در هر طبقه <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -575,8 +571,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             سن ملک <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="rooms" value={formData.rooms}
                                      onChange={(e) => setValue('rooms', e.value)}/>
@@ -584,8 +580,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد اتاق خواب <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="warehouses" value={formData.warehouses}
                                      onChange={(e) => setValue('warehouses', e.value)}/>
@@ -593,8 +589,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد انباری <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="parking" value={formData.parking}
                                      onChange={(e) => setValue('parking', e.value)}/>
@@ -602,8 +598,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد پارکینگ <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="elevators" value={formData.elevators}
                                      onChange={(e) => setValue('elevators', e.value)}/>
@@ -611,8 +607,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد آسانسور <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="squat_toilets" value={formData.squat_toilets}
                                      onChange={(e) => setValue('squat_toilets', e.value)}/>
@@ -620,8 +616,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد سرویس ایرانی <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="sitting_toilets" value={formData.sitting_toilets}
                                      onChange={(e) => setValue('sitting_toilets', e.value)}/>
@@ -630,8 +626,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             تعداد سرویس فرنگی <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" id="address" value={formData.address}
                                    onChange={(e) => setValue('address', e.target.value)} required/>
@@ -640,8 +636,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             آدرس <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputNumber type="text" id="plate_number" value={formData.plate_number}
                                      onChange={(e) => setValue('plate_number', e.value)} required/>
@@ -649,30 +645,30 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             شماره پلاک <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" id="owner_name" autoComplete="off" value={formData.owner_name}
                                    onChange={(e) => handleSelect('owner_name', e.target.value)} required/>
                         <label htmlFor="owner_name">نام مالک</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" id="owner_phone" autoComplete="off" value={formData.owner_phone}
                                    onChange={(e) => handleSelect('owner_phone', e.target.value)} required/>
                         <label htmlFor="owner_phone">شماره تماس</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" id="owner_phone2" autoComplete="off" value={formData.owner_phone2 || ''}
                                    onChange={(e) => handleSelect('owner_phone2', e.target.value)}/>
                         <label htmlFor="owner_phone2">شماره تماس</label>
                     </span>
-        </div>
-        <div
-          className={`field col-12 md:col-4 ${formData.purpose === 1 || formData.purpose === 5 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${formData.purpose === 1 || formData.purpose === 5 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText
                           type="text"
@@ -688,9 +684,9 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             ودیعه اجاره <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div
-          className={`field col-12 md:col-4 ${formData.purpose === 1 || formData.purpose === 4 || formData.purpose === 5 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${formData.purpose === 1 || formData.purpose === 4 || formData.purpose === 5 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText
                           type="text"
@@ -706,9 +702,9 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             مبلغ اجاره <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div
-          className={`field col-12 md:col-4 ${formData.purpose === 2 || formData.purpose === 3 || formData.purpose === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${formData.purpose === 2 || formData.purpose === 3 || formData.purpose === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText
                           type="text"
@@ -724,9 +720,9 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             قیمت متری <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
-        <div
-          className={`field col-12 md:col-4 ${formData.purpose === 2 || formData.purpose === 3 || formData.purpose === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${formData.purpose === 2 || formData.purpose === 3 || formData.purpose === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText
                           type="text"
@@ -742,9 +738,9 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                             قیمت کل <span className="text-red-500">*</span>
                         </label>
                     </span>
-        </div>
+          </div>
 
-        <div className="field col-12 md:col-4">
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -760,8 +756,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                         />
                         <label htmlFor="state">استان</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -777,8 +773,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                         />
                         <label htmlFor="city">شهر</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -793,8 +789,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                         />
                         <label htmlFor="district">منطقه شهرداری</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -810,8 +806,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                         />
                         <label htmlFor="neighborhood">محله</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -826,24 +822,26 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                         />
                         <label htmlFor="active">وضعیت آگهی</label>
                     </span>
-        </div>
-        <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" autoComplete="off" value={formData.description || ''}
                                    onChange={(e) => handleSelect('description', e.target.value)}/>
                         <label htmlFor="description">توضیحات</label>
                     </span>
-        </div>
-        <div className="col-12">
-          <div className="field flex col-auto md:col-3">
-            <Button raised type="submit" label="بروز‌رسانی" className="bg-green-500 text-white border-0 mt-2 ml-2"
-                    disabled={loading.current} loading={loading.current}/>
-            <Button raised label="بازگشت" type="button" className="bg-gray-300 text-color border-0 mt-2"
-                    onClick={back}/>
           </div>
-        </div>
-      </form>
-    </div>
+          <div className="col-12">
+            <div className="field flex col-auto md:col-3">
+              <Button raised type="button" label="بروز‌رسانی"
+                      className="bg-green-500 text-white border-0 mt-2 ml-2"
+                      onClick={(e) => submitForm(e)}
+                      disabled={loading} loading={loading}/>
+              <Button raised label="بازگشت" type="button" className="bg-gray-300 text-color border-0 mt-2"
+                      onClick={back}/>
+            </div>
+          </div>
+        </form>
+      </div>
       <ConfirmDialog
         visible={showAcceptConfirmDialog}
         onHide={() => setShowAcceptConfirmDialog(false)}

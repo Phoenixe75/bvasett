@@ -41,7 +41,7 @@ const DeflectListComponent: React.FC<IAdCompleteStatusListProps> = ({
         label: 'مشاهده توضیحات ادمین',
         icon: 'pi pi-comment text-yellow-500 ml-2',
         command: () => {
-          if (rowData.complete === AdCompleteStatusEnum.incomplete) {
+          if (rowData.complete === AdCompleteStatusEnum.rejected) {
             if (rowData.notes) {
               setSelectedDeflect(rowData);
               setShowAdminNoteDialog(true);

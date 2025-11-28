@@ -71,7 +71,7 @@ const CheckUser = ({ setFormState, userData, setUserData }: IProps) => {
                     <label htmlFor="phone-number" className="block text-900 text-md font-medium mb-2">
                         لطفا شماره موبایل خود را وارد کنید
                     </label>
-                    <InputText ref={mobileRef} value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="09" className="w-full mb-5 text-left" style={{ padding: '1rem' }} required />
+                    <InputText dir="ltr" ref={mobileRef} value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="09" className="w-full mb-5 text-left" style={{ padding: '1rem' }} required />
                     <Button raised type="submit" disabled={mobile.length !== 11} className="w-full p-3 text-xl text-center" label="ورود" loading={loading} />
                 </div>
               <div className="w-full mt-3">
