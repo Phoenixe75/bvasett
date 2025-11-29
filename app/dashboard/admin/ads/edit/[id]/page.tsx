@@ -17,7 +17,7 @@ import {
 import {DirectionEnum, IAdsBase, ICity, IDirection, IDistricts, INeighborhoods, IState} from '../../(models)/ads';
 import {InputNumber} from 'primereact/inputnumber';
 import {
-  activeOption,
+  activeOption, adCompleteStatusOption,
   ageOption,
   directionsOption,
   locationOption,
@@ -36,6 +36,7 @@ import {DeflectManagementTranslations} from '@/app/dashboard/admin/defect-manage
 import {InputTextarea} from 'primereact/inputtextarea';
 import {Dialog} from 'primereact/dialog';
 import {DialogContent} from 'next/dist/client/components/react-dev-overlay/internal/components/Dialog';
+import {AdCompleteStatusEnumType} from '@/app/dashboard/admin/defect-management/(models)/types';
 
 const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const [directionsState, setDirectionsState] = useState<IDirection[]>([]);
@@ -174,6 +175,11 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const submitForm = async (e: any) => {
     e.preventDefault();
 
+    if (formData?.complete === AdCompleteStatusEnum.rejected) {
+      setShowRejectConfirmDialog(true);
+      return;
+    }
+
     try {
       setLoading(true);
       const filterNullValues = (data: IAdsBase) => {
@@ -250,6 +256,11 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
   const handleLocationChange = (e: any) => {
     const selectedLocationCode = e.value ? e.value.code : null;
     setFormData({...formData, location: selectedLocationCode});
+  };
+
+  const handleCompleteChange = (e: any) => {
+    const selectedComplete = e.value ? (e.value.code as AdCompleteStatusEnumType) : null;
+    setFormData({...formData, complete: selectedComplete});
   };
 
   const handleDirectionsChange = (e: MultiSelectChangeEvent) => {
@@ -388,7 +399,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
       <div className="card detailsData">
         <div className="flex align-items-center justify-content-between">
           <h5>ویرایش آگهی</h5>
-          {formData?.complete == AdCompleteStatusEnum.incomplete && (<div className="">
+          {/*{formData?.complete == AdCompleteStatusEnum.incomplete && (<div className="">
             <div className="text-left">
               <Button raised
                       severity="success"
@@ -404,9 +415,9 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                 <span>رد تکمیل ناقصی آگهی</span>
               </Button>
             </div>
-          </div>)}
+          </div>)}*/}
         </div>
-        {formData?.complete == AdCompleteStatusEnum.incomplete && (<Message
+        {/*{formData?.complete == AdCompleteStatusEnum.incomplete && (<Message
           style={{
             border: 'solid #cc8925',
             color: '#cc8925'
@@ -430,7 +441,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
             severity="info"
             content={<div><span style={{display: 'inline-block'}}><b>توضیحات ادمین:</b></span> {formData.notes}</div>}
           />
-        </>)}
+        </>)}*/}
         <hr/>
         <form onSubmit={submitForm} className="grid p-fluid mt-6">
           <div className="field col-12 md:col-4">
@@ -451,14 +462,31 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
           </div>
           <div className="field col-12 md:col-4">
             <span className="p-float-label">
-                <InputText type="text" name="complete"
-                           dir="ltr"
-                           disabled
-                           value={formData?.complete ?
-                             DeflectManagementTranslations[formData?.complete as keyof typeof AdCompleteStatusEnum] : ''}
-                           readOnly/>
-                <label htmlFor="complete">وضعیت ناقصی فایل</label>
+              <Dropdown
+                type="text"
+                name="complete"
+                id="complete"
+                value={adCompleteStatusOption.find((option) => option.code === formData.complete) || null}
+                onChange={handleCompleteChange}
+                options={adCompleteStatusOption}
+                optionLabel="name"
+                placeholder="انتخاب کنید"
+                className="w-full"
+                required
+              />
+              <label htmlFor="complete">
+                  وضعیت ناقصی فایل <span className="text-red-500">*</span>
+              </label>
             </span>
+            {/*<span className="p-float-label">*/}
+            {/*    <InputText type="text" name="complete"*/}
+            {/*               dir="ltr"*/}
+            {/*               disabled*/}
+            {/*               value={formData?.complete ?*/}
+            {/*                 DeflectManagementTranslations[formData?.complete as keyof typeof AdCompleteStatusEnum] : ''}*/}
+            {/*               readOnly/>*/}
+            {/*    <label htmlFor="complete">وضعیت ناقصی فایل</label>*/}
+            {/*</span>*/}
           </div>
           <div className="field col-12 md:col-4">
                     <span className="p-float-label">

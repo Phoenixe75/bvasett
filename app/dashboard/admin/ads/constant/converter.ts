@@ -1,6 +1,9 @@
 import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {DirectionEnum, LocationEnum, PurposeEnum} from '../(models)/ads';
 import {OrderPaymentEnum, OrderStatusEnum} from '../../list-payments/(models)/payment';
+import {AdCompleteStatusEnum} from '@/app/dashboard/admin/defect-management/(models)/ad-complete-status.enum';
+import {DeflectManagementTranslations} from '@/app/dashboard/admin/defect-management/Translations';
+import {AdCompleteStatusEnumType} from '@/app/dashboard/admin/defect-management/(models)/types';
 
 export const getTypeLabel = (type: number | null | undefined): string => {
   switch (type) {
@@ -177,6 +180,14 @@ export const locationOption = [
   {name: 'مرکزی', code: 3},
   {name: 'شرقی', code: 2},
   {name: 'غربی', code: 5}
+];
+export const adCompleteStatusOption: Array<{
+  name: string;
+  code: AdCompleteStatusEnumType
+}> = [
+  {name: DeflectManagementTranslations.incomplete, code: AdCompleteStatusEnum.incomplete},
+  {name: DeflectManagementTranslations.rejected, code: AdCompleteStatusEnum.rejected},
+  {name: DeflectManagementTranslations.complete, code: AdCompleteStatusEnum.complete},
 ];
 
 export const directionsOption = [
