@@ -63,7 +63,7 @@ export interface PostSubscriptionPlan {
     area:                 string;
     floors:               number;
     units_per_floor:      number;
-    floor:                null;
+    floor:                number | null;
     age:                  string;
     rooms:                number;
     warehouses:           number;

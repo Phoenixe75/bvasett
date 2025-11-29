@@ -96,7 +96,7 @@ const QuestionEditPage: FC<PageParams> = ({ params }: any) => {
                 </div>
                 <div className="field col-12 md:col-4">
                     <span className="p-float-label">
-                        <InputText type="text" name="answer" id="floors" value={formData.answer || ''} onChange={(e) => setValue('answer', e.target.value)} />
+                        <InputText type="text" name="answer" id="answer" value={formData.answer || ''} onChange={(e) => setValue('answer', e.target.value)} />
                         <label htmlFor="answer">پاسخ</label>
                     </span>
                 </div>

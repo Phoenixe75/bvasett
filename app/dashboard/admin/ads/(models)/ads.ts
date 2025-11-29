@@ -16,6 +16,7 @@ export interface IAdsBase {
   location: LocationEnum | null;
   directions: string[] | null;
   area: string;
+  floor: number | null;
   floors: number | null;
   units_per_floor: number | null;
   age: string | null;
@@ -59,6 +60,7 @@ export interface IAds {
   slug?: string;
   location?: LocationEnum | null;
   area?: string; // optional
+  floor?: number | null; // optional
   floors?: number | null; // optional
   units_per_floor?: number | null; // optional
   age?: string | null; // optional
@@ -93,6 +95,7 @@ export interface IApartmentAds extends IBuyAds {
   sitting_toilets: number; // required
   squat_toilets: number; // required
   warehouses: number; // required
+  floor: number; // required
   floors: number; // required
   plate_number: number; // required
   age: string; // required

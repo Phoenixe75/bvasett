@@ -99,8 +99,12 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                            readOnly/>
               </div>
               {selectedRowData?.floors ? <div className="field col-12 md:col-4">
-                <label htmlFor="floors"> طبقه</label>
+                <label htmlFor="floors">تعداد طبقات</label>
                 <InputText id="floors" value={selectedRowData?.floors ?? null} readOnly/>
+              </div> : null}
+              {selectedRowData?.floor ? <div className="field col-12 md:col-4">
+                <label htmlFor="floor"> طبقه</label>
+                <InputText id="floor" value={selectedRowData?.floor ?? null} readOnly/>
               </div> : null}
               {selectedRowData?.unit_price && selectedRowData?.purpose == 1 ? <div className="field col-12 md:col-4">
                 <label htmlFor="unit_price"> قیمت متری</label>

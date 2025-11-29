@@ -48,6 +48,7 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     location: null,
     directions: [],
     area: '',
+    floor: null,
     floors: null,
     units_per_floor: null,
     age: null,
@@ -541,6 +542,15 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
                                      onChange={(e) => setValue('floors', e.value)}/>
                         <label htmlFor="floors">
                             تعداد طبقات <span className="text-red-500">*</span>
+                        </label>
+                    </span>
+          </div>
+          <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
+                    <span className="p-float-label">
+                        <InputNumber type="text" id="floor" value={formData.floor}
+                                     onChange={(e) => setValue('floor', e.value)}/>
+                        <label htmlFor="floor">
+                            طبقه<span className="text-red-500">*</span>
                         </label>
                     </span>
           </div>
