@@ -153,23 +153,23 @@ export const getPrice = (data: any) => {
   switch (data.purpose) {
     case PurposeEnum.Buy:
       // return {total: formatMoneyToPersianUnit(data.total_price)};
-      return {total: formatMoneyToPersianUnit(data.total_price_rounded)};
+      return {total: `${formatMoneyToPersianUnit(data.total_price_rounded)} تومان`};
     case PurposeEnum.Rent:
       return {
         // total: formatMoneyToPersianUnit(data.rent_pre_paid_amount),
         // rent: formatMoneyToPersianUnit(data.rent_price)
-        total: formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded),
-        rent: formatMoneyToPersianUnit(data.rent_price_rounded)
+        total: `${formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)} تومان`,
+        rent: `${formatMoneyToPersianUnit(data.rent_price_rounded)} تومان`
       };
     case PurposeEnum.Barter:
       // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
-      return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)};
+      return {total: `${formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)} تومان`};
     case PurposeEnum.MORTGAGE:
       // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
-      return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)};
+      return {total: `${formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)} تومان`};
     case PurposeEnum.PARTNERSHIP:
       // return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount)};
-      return {total: formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)};
+      return {total: `${formatMoneyToPersianUnit(data.rent_pre_paid_amount_rounded)} تومان`};
     default:
       return {total: '', rent: ''};
   }
