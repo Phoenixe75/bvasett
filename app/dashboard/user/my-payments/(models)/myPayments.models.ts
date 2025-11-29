@@ -53,7 +53,7 @@ export interface Ad {
   area:                 string;
   floors:               number;
   units_per_floor:      number;
-  floor:                number | null;
+  floor:                string | null;
   age:                  string;
   rooms:                number;
   warehouses:           number;

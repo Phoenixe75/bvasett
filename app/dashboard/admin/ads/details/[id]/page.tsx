@@ -190,7 +190,7 @@ const AdsDetailsPage: FC<PageParams> = ({params}: any) => {
           </div>
           <div className={`field col-12 md:col-4 ${ads?.type === 4 ? `hidden` : `block`}`}>
                       <span className="p-float-label">
-                          <InputNumber type="text" name="floor" value={ads?.floor || 0} readOnly/>
+                          <InputText type="text" name="floor" value={ads?.floor || ''} readOnly/>
                           <label htmlFor="floor">طبقه</label>
                       </span>
           </div>

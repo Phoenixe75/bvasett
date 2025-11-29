@@ -337,8 +337,8 @@ const NewAds = () => {
         </div>
         <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
-                        <InputNumber type="text" id="floor" value={formData.floor}
-                                     onChange={(e) => setValue('floor', e.value)} disabled={formData.type === 4}
+                        <InputText type="text" id="floor" value={formData.floor ?? ''}
+                                     onChange={(e) => setValue('floor', e.target.value)} disabled={formData.type === 4}
                                      required={formData.type !== 4}/>
                         <label htmlFor="floor">
                             طبقه<span className="text-red-500">*</span>

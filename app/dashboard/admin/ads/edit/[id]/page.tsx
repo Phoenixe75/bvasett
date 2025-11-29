@@ -547,8 +547,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
           </div>
           <div className={`field col-12 md:col-4 ${formData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
-                        <InputNumber type="text" id="floor" value={formData.floor}
-                                     onChange={(e) => setValue('floor', e.value)}/>
+                        <InputText type="text" id="floor" value={formData.floor ?? ''}
+                                     onChange={(e) => setValue('floor', e.target.value)}/>
                         <label htmlFor="floor">
                             طبقه<span className="text-red-500">*</span>
                         </label>
