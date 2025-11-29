@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {getPrice, getPurposeLabelwithColor, getRooms, getTypeLabel} from '@/app/dashboard/admin/ads/constant/converter';
 import {randomPic} from '@/app/(main)/(pages)/filterResult/(contants)/images';
 import {Button} from 'primereact/button';
-import {useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {Inquiry} from '@/app/components/CardPackage/(models)/package';
 import {formatDate} from '@/app/utils/dateUtils';
 import Favorite from './favorite/favorite';
@@ -35,7 +35,9 @@ const ItemCard = ({
                     showSelectable = true
                   }: ItemCard) => {
   const statusCond = getPurposeLabelwithColor(data.purpose);
-  const getItemPrice = getPrice(data);
+  const getItemPrice = useCallback(() => {
+    return getPrice(data);
+  }, [data]);
 
   const imgSource = useMemo(() => {
     if (data.neighborhood_image) {
@@ -67,10 +69,10 @@ const ItemCard = ({
           {Math.round(+data.area!)} متر {data?.neighborhood_name}
         </div>
         <div className={styles.description}>
-          {getItemPrice.rent ? 'رهن: ' : null}
-          {getItemPrice.total}
+          {getItemPrice().rent ? 'رهن: ' : null}
+          {getItemPrice().total}
         </div>
-        {getItemPrice.rent ? <div className={styles.description}>اجاره: {getItemPrice.rent}</div> : null}
+        {getItemPrice().rent ? <div className={styles.description}>اجاره: {getItemPrice().rent}</div> : null}
 
         <div className={styles.action_wrapper}>
           {showSelectable && (

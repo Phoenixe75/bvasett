@@ -126,7 +126,7 @@ const DeflectListComponent: React.FC<IAdCompleteStatusListProps> = ({
             <Column header="" body={detailsBodyTemplate}></Column>
           </DataTable>
           <Paginator dir="ltr"
-                     first={(currentPage - 1) * 25}
+                     first={currentPage * 25}
                      rows={25}
                      totalRecords={totalCount}
                      onPageChange={handlePageChange}/>
