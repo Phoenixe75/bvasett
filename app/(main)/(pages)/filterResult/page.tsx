@@ -406,7 +406,9 @@ const FilterResultPage: React.FC = () => {
                 {orderInfo?.discount ? <p
                   className="mr-2">{` تخفیف اعمال شده: ${formatMoneyToPersianUnit(Number(orderInfo?.discount), {returnZero: true})}`} </p> : null}
                 {orderInfo?.total ? <p
-                  className="mr-2">{`هزینه‌ی کل: ${formatMoneyToPersianUnit(Number(orderInfo?.total), {returnZero: true})}`}</p> : null}
+                  className="mr-2">{`هزینه‌ی کل: ${formatMoneyToPersianUnit(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10), {returnZero: true})}`}</p> : null}
+                {orderInfo?.total ? <p
+                  className="mr-2">{`مالیات بر ارزش افزوده: ${formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})}`}</p> : null}
                 <p/>
               </div>
             </div>
