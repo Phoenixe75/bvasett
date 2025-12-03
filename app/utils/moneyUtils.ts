@@ -41,6 +41,9 @@ export function formatMoneyToPersianUnit(amount:number , options?: {returnZero:b
   } else if (amount >= 1_000_000) {
     const million = formatDecimal((amount / 1_000_000).toFixed(2)); // one decimal
     return toPersianNumber(million) + ' میلیون';
+  } else if (amount >= 1_000) {
+    const thousands = formatDecimal((amount / 1_000).toFixed(2)); // one decimal
+    return toPersianNumber(thousands) + ' هزار'; // just show the number
   } else {
     return toPersianNumber(formatDecimal(amount.toString())); // just show the number
   }
