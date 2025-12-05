@@ -36,7 +36,7 @@ const PackageItem = ({
       disabled: hasShownInquiryModal
     },
     {
-      name: "سه تایی رایگان",
+      name: "سه فایل رایگان",
       value: FREE,
       disabled: user == null ? hasShownInquiryModal : (!firstBuyer || hasShownInquiryModal)
     },
