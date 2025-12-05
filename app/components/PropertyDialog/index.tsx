@@ -121,8 +121,8 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                     <InputNumber id="rent_price" value={selectedRowData.rent_price ?? null} readOnly/>
                   </div>}
               </> : <div className="field col-12 md:col-4">
-                <label htmlFor="total_price">قیمت </label>
-                <InputNumber id="total_price" value={selectedRowData.total_price ?? null} readOnly/>
+                <label htmlFor="total_price_rounded">قیمت </label>
+                <InputNumber id="total_price_rounded" value={selectedRowData.total_price_rounded ?? null} readOnly/>
               </div>}
               <div className="field col-12 md:col-4">
                 <label htmlFor="area"> متراژ </label>
@@ -150,6 +150,10 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                 <label htmlFor="elevators">آسانسور </label>
                 <InputNumber id="elevators" value={selectedRowData.elevators ?? null} readOnly/>
               </div>
+              {selectedRowData?.age ? <div className="field col-12 md:col-4">
+                <label htmlFor="age"> سن بنا</label>
+                <InputText id="age" value={selectedRowData?.age ?? null} readOnly/>
+              </div> : null}
               <div className="field col-12">
                 <label htmlFor="location"> آدرس</label>
                 <InputText id="location" value={selectedRowData.address ?? null} readOnly/>
