@@ -35,6 +35,7 @@ import {Inquiry, InquiryLabel, WITH_INQUIRY, WITHOUT_INQUIRY} from '@/app/compon
 import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {Checkbox} from 'primereact/checkbox';
 import {IAds} from '@/app/dashboard/admin/ads/(models)/ads';
+import {ConfirmDialog} from 'primereact/confirmdialog';
 
 const FilterResultPage: React.FC = () => {
   const [formData, setFormData] = useState<any[]>([]);
@@ -64,6 +65,16 @@ const FilterResultPage: React.FC = () => {
   const doesGetInitialData = useRef(false);
   const [loadedAddIndexes, setLoadedAddIndexes] = useState<Array<number>>([]);
   const [goTopTopIndex, setGoToTopIndex] = useState<number>(-1);
+  const [mustRemoveFromBuyAd, setMustRemoveFromBuyAd] = useState<any>(null);
+  const [displayConfirmDialog, setDisplayConfirmDialog] = useState<boolean>(false);
+  const cancelDeleteFromBuy = () => {
+    setDisplayConfirmDialog(false);
+  };
+  const confirmDeleteFromBuy = (ad: any) => {
+    setMustRemoveFromBuyAd(ad);
+    setDisplayConfirmDialog(true);
+  };
+
   useEffect(() => {
     if (!!formData && formData.length) {
       setLoadedAddIndexes(newArray => {
@@ -97,10 +108,10 @@ const FilterResultPage: React.FC = () => {
   //   if (!user) {
   //     return
   //   }
-    // if (firstBuyer) {
-    //   setSelectedPackage(WITHOUT_INQUIRY)
-    // }
-    // setSelectedPackage(WITH_INQUIRY)
+  // if (firstBuyer) {
+  //   setSelectedPackage(WITHOUT_INQUIRY)
+  // }
+  // setSelectedPackage(WITH_INQUIRY)
   // }, [user])
   const fetchPrices = async () => {
     try {
@@ -322,6 +333,43 @@ const FilterResultPage: React.FC = () => {
     }
     return formData;
   }, [hasShownInquiryModal, formData]);
+  const removeFileFromBuyHandler = () => {
+    if (mustRemoveFromBuyAd?.id) {
+      try {
+        if (selectedRows.length > 1) {
+          setSelectedRows(prevRows => {
+            const getItemIndex: number = prevRows.findIndex(item => item.id === mustRemoveFromBuyAd.id);
+            if (getItemIndex > -1) {
+              prevRows.splice(getItemIndex, 1)
+            }
+            return prevRows;
+          });
+          toast.success('فایل با موفقیت از لیست خرید حذف شد');
+        } else {
+          setSelectedRows([]);
+          toast.warning('لیست خرید خالی شد');
+          setShowModal(false);
+        }
+      } catch (error) {
+        console.error('Error deleting slider:', error);
+        toast.error('حذف فایل از لیست خرید با خطا مواجه شد');
+      } finally {
+        setDisplayConfirmDialog(false);
+        setMustRemoveFromBuyAd(null);
+        getFactor();
+      }
+    }
+  }
+  const actionsColumn = (item: any) => {
+    return selectedPackage == WITHOUT_INQUIRY ? <>
+      <Button className="p-button-sm p-button-danger"
+              type="button"
+              icon="pi pi-fw pi-trash"
+              onClick={(event) => confirmDeleteFromBuy(item)}>
+
+      </Button>
+    </> : <></>
+  }
   const titleColumnTemplate = (ad: IAds) => {
     return <>{getTypeLabel(ad?.type)} {getRooms(ad?.rooms)}</>
   }
@@ -394,7 +442,8 @@ const FilterResultPage: React.FC = () => {
           run={showTour}
         />
         <LoginModal onHide={onHide} visible={openLoginForm}/>
-        <Dialog header={'جزئیات خرید' + (selectedPackage ? ' (' + InquiryLabel[selectedPackage] + ')' : '')} visible={showModal} onHide={() => setShowModal(false)} className="lg:w-6 md:w-50">
+        <Dialog header={'جزئیات خرید' + (selectedPackage ? ' (' + InquiryLabel[selectedPackage] + ')' : '')}
+                visible={showModal} onHide={() => setShowModal(false)} className="lg:w-6 md:w-50">
           <form onSubmit={submitForm}>
             <hr/>
             <div>
@@ -406,9 +455,9 @@ const FilterResultPage: React.FC = () => {
                 {orderInfo?.discount ? <p
                   className="mr-2">{` تخفیف اعمال شده: ${formatMoneyToPersianUnit(Number(orderInfo?.discount), {returnZero: true})}`} </p> : null}
                 {orderInfo?.total ? <p
-                  className="mr-2">{`هزینه‌ی کل: ${formatMoneyToPersianUnit(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10), {returnZero: true})}`}</p> : null}
+                  className="mr-2">{`هزینه‌ی کل: ${formatMoneyToPersianUnit(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10), {returnZero: true})} تومان`}</p> : null}
                 {orderInfo?.total ? <p
-                  className="mr-2">{`مالیات بر ارزش افزوده: ${formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})}`}</p> : null}
+                  className="mr-2">{`مالیات بر ارزش افزوده: ${formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})} تومان`}</p> : null}
                 <p/>
               </div>
             </div>
@@ -433,6 +482,7 @@ const FilterResultPage: React.FC = () => {
                   }
                 }}></Column>
                 <Column field="address" header="آدرس" body={(rowData) => truncateText(rowData?.address, 16)}></Column>
+                <Column header="" body={actionsColumn}></Column>
               </DataTable>
             </div>
             <hr/>
@@ -489,6 +539,17 @@ const FilterResultPage: React.FC = () => {
           </div>
         </Dialog>
       </div>
+      <ConfirmDialog
+        visible={displayConfirmDialog}
+        onHide={() => setDisplayConfirmDialog(false)}
+        message="آیا مطمئن هستید که می‌خواهید این فایل را از لیست خرید حذف کنید؟"
+        header="تایید حذف"
+        icon="pi pi-exclamation-triangle ml-2 text-red-500"
+        accept={removeFileFromBuyHandler}
+        reject={cancelDeleteFromBuy}
+        acceptLabel="تایید"
+        rejectLabel="انصراف"
+      />
 
       <div className="py-4 px-8 header_footer_background">
         <AppFooter/>
