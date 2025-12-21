@@ -1,6 +1,7 @@
 'use client';
 import React, {createContext, useEffect, useState} from 'react';
 import {ChildContainerProps, LayoutConfig, LayoutContextProps, LayoutState} from '@/types';
+import {redirect} from 'next/navigation';
 
 export const LayoutContext = createContext({} as LayoutContextProps);
 
@@ -97,7 +98,7 @@ export const LayoutProvider = ({children}: ChildContainerProps) => {
 
   useEffect(() => {
     if (!isDesktop()) {
-      window.location.href = 'https://app.bvasett.ir/'
+      redirect('https://app.bvasett.ir/')
     }
   }, []);
 

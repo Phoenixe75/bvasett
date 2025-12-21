@@ -110,7 +110,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
             </div>
             <div>
               <p
-                className={isFreePlan ? styles.plan_info_normal : styles.plan_info}>{isFreePlan ? 'فعال برای کاربران جدید' : 'تخفیف فعال تا 18 مردادماه'}</p>
+                className={isFreePlan ? styles.plan_info_normal : styles.plan_info}>{isFreePlan ? 'فعال برای کاربران جدید' : 'تخفیف فعال تا 20 اسفند ماه'}</p>
             </div>
           </div>
 

@@ -166,8 +166,8 @@ function PropertyDialog({visible, onHide, selectedRowData, canShowExtraDescripti
                   <p className="font-bold mb-0 rtl">
                     <i className="pi pi-info-circle fs-md ml-2"
                        style={{display: "inline-block", verticalAlign: "middle", fontSize: "20px"}}></i>
-                    کاربر گرامی، جهت اخذ و نمایش اطلاعات کامل این فایل و مشاهده بقیه موارد مشابه، فیلتر های مورد نظر را
-                    انتخاب و به صفحه‌ی جستجو مراجعه نمایید.</p>
+                    جهت اخذ شماره تماس مالک و ارتباط مستقیم بدون واسطه به صفحه جستجو مراجعه نمایید.
+                  </p>
                 </div>
               )
             }

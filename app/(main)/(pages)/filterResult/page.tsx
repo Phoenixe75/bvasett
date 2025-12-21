@@ -31,7 +31,13 @@ import {useUserContext} from '@/layout/context/usercontext';
 import {TRANSLATIONS} from './translation';
 import PropertyDialog from '@/app/components/PropertyDialog';
 import LoginModal from '@/app/components/LoginModal';
-import {Inquiry, InquiryLabel, WITH_INQUIRY, WITHOUT_INQUIRY} from '@/app/components/CardPackage/(models)/package';
+import {
+  FREE,
+  Inquiry,
+  InquiryLabel,
+  WITH_INQUIRY,
+  WITHOUT_INQUIRY
+} from '@/app/components/CardPackage/(models)/package';
 import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {Checkbox} from 'primereact/checkbox';
 import {IAds} from '@/app/dashboard/admin/ads/(models)/ads';
@@ -226,7 +232,11 @@ const FilterResultPage: React.FC = () => {
       top: 0,
       behavior: "smooth"
     })
-    if (selectedPackage === WITH_INQUIRY && !firstBuyer && !hasShownInquiryModal) {
+    // if (selectedPackage === WITH_INQUIRY && !firstBuyer && !hasShownInquiryModal) {
+    //   setShowInquiryModal(true);
+    //   return;
+    // }
+    if ((selectedPackage === WITH_INQUIRY || selectedPackage === FREE) && !hasShownInquiryModal) {
       setShowInquiryModal(true);
       return;
     }
@@ -239,7 +249,7 @@ const FilterResultPage: React.FC = () => {
       setOpenLoginForm(true);
       return;
     }
-    await getFactor()
+    await getFactor();
     if (!firstBuyer) {
       setShowModal(true);
     } else {
@@ -277,8 +287,8 @@ const FilterResultPage: React.FC = () => {
     try {
       const formData: ItemBasedOrderBuyRequest = {
         ads: selectedRows.map((row) => row.id),
-        extra_ads: selectedPackage === WITH_INQUIRY ? extraSelectedRows.map((row) => row.id) : [],
-        with_inquiry: selectedPackage === WITH_INQUIRY
+        extra_ads: (selectedPackage === WITH_INQUIRY || selectedPackage === FREE) ? extraSelectedRows.map((row) => row.id) : [],
+        with_inquiry: (selectedPackage === WITH_INQUIRY || selectedPackage === FREE)
       }
       const res = await orderBuy(formData)
       setOrderInfo(res)
@@ -302,7 +312,6 @@ const FilterResultPage: React.FC = () => {
         toast.error('خرید با خطا روبرو شد.');
       }
       const resData: IPaymentStatus = await paymentRequestService({guid: guid!, type: 'ad'});
-      ;
       if (resData?.status === 307) {
         if (resData.redirect_url) {
           // اطمینان از اینکه redirect_url مقدار null نیست
@@ -448,18 +457,51 @@ const FilterResultPage: React.FC = () => {
             <hr/>
             <div>
               <h5>پکیج انتخاب‌شده:</h5>
-              <div className='flex gap-3 align-items-center'>
-                <p className="mr-2">تعداد فایل انتخابی: {selectedRows?.length} عدد </p>
-                {extraSelectedRows.length ?
-                  <p className="mr-2">تعداد فایل جایگزین: {selectedRows?.length} عدد </p> : null}
-                {orderInfo?.discount ? <p
-                  className="mr-2">{` تخفیف اعمال شده: ${formatMoneyToPersianUnit(Number(orderInfo?.discount), {returnZero: true})}`} </p> : null}
-                {orderInfo?.total ? <p
-                  className="mr-2">{`هزینه‌ی کل: ${formatMoneyToPersianUnit(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10), {returnZero: true})} تومان`}</p> : null}
-                {orderInfo?.total ? <p
-                  className="mr-2">{`مالیات بر ارزش افزوده: ${formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})} تومان`}</p> : null}
-                <p/>
+              <div className="grid p-fluid">
+                <div className="col justify-content-between">
+                  <div className="flex flex-nowrap gap-3">
+                    <div className="text-nowrap ml-3">مبلغ خرید:</div>
+                    <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.total), {returnZero: true})} تومان</div>
+                  </div>
+                </div>
+                <div className="col justify-content-between">
+                  <div className="flex flex-nowrap gap-3">
+                    <div className="text-nowrap ml-3">مالیات:</div>
+                    <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})} تومان</div>
+                  </div>
+                </div>
+                <div className="col justify-content-between">
+                  <div className="flex flex-nowrap gap-3">
+                    <div className="text-nowrap ml-3">تعداد خرید:</div>
+                    <div className="text-nowrap">{selectedRows?.length} عدد</div>
+                  </div>
+                </div>
+                {orderInfo?.discount && <div className="col justify-content-between">
+                  <div className="flex flex-nowrap gap-3">
+                    <div className="text-nowrap ml-3">تخفیف اعمال شده:</div>
+                    <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.discount), {returnZero: true})} تومان</div>
+                  </div>
+                </div>}
+
+                {orderInfo?.total && <div className="col justify-content-between">
+                  <div className="flex flex-nowrap gap-3">
+                    <div className="text-nowrap ml-3">جمع کل:</div>
+                    <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10), {returnZero: true})} تومان</div>
+                  </div>
+                </div>}
               </div>
+              {/*<div className='flex flex-wrap justify-content-between gx-4 gap-3 align-items-center'>*/}
+              {/*  <p className="mr-2">تعداد فایل انتخابی: {selectedRows?.length} عدد </p>*/}
+              {/*  {extraSelectedRows.length ?*/}
+              {/*    <p className="mr-2">تعداد فایل جایگزین: {selectedRows?.length} عدد </p> : null}*/}
+              {/*  {orderInfo?.discount ? <p*/}
+              {/*    className="mr-2">{` تخفیف اعمال شده: ${formatMoneyToPersianUnit(Number(orderInfo?.discount), {returnZero: true})}`} </p> : null}*/}
+              {/*  {orderInfo?.total ? <p*/}
+              {/*    className="mr-2">{`هزینه‌ی کل: ${formatMoneyToPersianUnit(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10), {returnZero: true})} تومان`}</p> : null}*/}
+              {/*  {orderInfo?.total ? <p*/}
+              {/*    className="mr-2">{`مالیات بر ارزش افزوده: ${formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})} تومان`}</p> : null}*/}
+              {/*  <p/>*/}
+              {/*</div>*/}
             </div>
             <hr/>
             <h5>آیتم‌های انتخاب‌شده:</h5>

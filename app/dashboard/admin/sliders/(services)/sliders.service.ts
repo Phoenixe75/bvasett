@@ -36,7 +36,7 @@ export const getActiveSlider = async (): Promise<ISliders[]> => {
 
 export const createSlider = async (formData: FormData): Promise<ISlider> => {
     try {
-        const response = await axios.post<ISlider>(`${baseUrl}/api/settings/sliders/`, formData, {
+        const response = await axiosApi.post<ISlider>(`${baseUrl}/api/settings/sliders/`, formData, {
             headers: {
                 Authorization: `Token ${token}`,
                 'Content-Type': 'multipart/form-data'
@@ -50,7 +50,7 @@ export const createSlider = async (formData: FormData): Promise<ISlider> => {
 };
 
 export const getSliderDetails = async (id: number): Promise<ISlider> => {
-    const response = await axios.get<ISlider>(`${baseUrl}/api/settings/sliders/${id}/`, {
+    const response = await axiosApi.get<ISlider>(`${baseUrl}/api/settings/sliders/${id}/`, {
         headers: {
             Authorization: `Token ${token}`
         }
@@ -60,7 +60,7 @@ export const getSliderDetails = async (id: number): Promise<ISlider> => {
 
 export const updateSlider = async (id: number, formData: FormData): Promise<any> => {
     try {
-        const response = await axios.put<any>(`${baseUrl}/api/settings/sliders/${id}/`, formData, {
+        const response = await axiosApi.put<any>(`${baseUrl}/api/settings/sliders/${id}/`, formData, {
             headers: {
                 Authorization: `Token ${token}`
             }
