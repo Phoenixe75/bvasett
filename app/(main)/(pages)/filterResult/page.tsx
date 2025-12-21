@@ -466,12 +466,6 @@ const FilterResultPage: React.FC = () => {
                 </div>
                 <div className="col justify-content-between">
                   <div className="flex flex-nowrap gap-3">
-                    <div className="text-nowrap ml-3">مالیات:</div>
-                    <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})} تومان</div>
-                  </div>
-                </div>
-                <div className="col justify-content-between">
-                  <div className="flex flex-nowrap gap-3">
                     <div className="text-nowrap ml-3">تعداد خرید:</div>
                     <div className="text-nowrap">{selectedRows?.length} عدد</div>
                   </div>
@@ -482,7 +476,12 @@ const FilterResultPage: React.FC = () => {
                     <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.discount), {returnZero: true})} تومان</div>
                   </div>
                 </div>}
-
+                <div className="col justify-content-between">
+                  <div className="flex flex-nowrap gap-3">
+                    <div className="text-nowrap ml-3">مالیات:</div>
+                    <div className="text-nowrap">{formatMoneyToPersianUnit(Number(orderInfo?.total) / 10, {returnZero: true})} تومان</div>
+                  </div>
+                </div>
                 {orderInfo?.total && <div className="col justify-content-between">
                   <div className="flex flex-nowrap gap-3">
                     <div className="text-nowrap ml-3">جمع کل:</div>
