@@ -53,7 +53,6 @@ const FilterItem = ({oldForm}: { oldForm: IFilter | null }) => {
           break;
         case "rent":
           oldForm.purpose = 2;
-          // TODO: remove old filter fields
           oldForm.priceLte = null;
           oldForm.priceGte = null;
           oldForm.prePaidLte = null;
@@ -61,7 +60,6 @@ const FilterItem = ({oldForm}: { oldForm: IFilter | null }) => {
           break;
         case "mortgage":
           oldForm.purpose = 4;
-          // TODO: remove old filter fields
           oldForm.priceLte = null;
           oldForm.priceGte = null;
           oldForm.rentLte = null;
