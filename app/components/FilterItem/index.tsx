@@ -42,10 +42,6 @@ const FilterItem = ({oldForm}: { oldForm: IFilter | null }) => {
   });
 
   useEffect(() => {
-
-  }, [oldForm]);
-
-  useEffect(() => {
     if (oldForm) {
       switch (activeItem) {
         case "sale":
