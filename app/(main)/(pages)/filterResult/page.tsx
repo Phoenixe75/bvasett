@@ -42,6 +42,7 @@ import {formatMoneyToPersianUnit} from '@/app/utils/moneyUtils';
 import {Checkbox} from 'primereact/checkbox';
 import {IAds} from '@/app/dashboard/admin/ads/(models)/ads';
 import {ConfirmDialog} from 'primereact/confirmdialog';
+import {FaCircleExclamation} from 'react-icons/fa6';
 
 const FilterResultPage: React.FC = () => {
   const [formData, setFormData] = useState<any[]>([]);
@@ -393,6 +394,11 @@ const FilterResultPage: React.FC = () => {
           <PackageItem prices={prices} firstBuyer={firstBuyer} selectedPackage={selectedPackage}
                        setSelectedPackage={setSelectedPackage}
                        hasShownInquiryModal={hasShownInquiryModal} tourTarget=".packagess"/>
+        </div>
+        <div className="p-message flex align-items-center bg-guide-btn py-2 px-3 fs-13px">
+          <FaCircleExclamation className="ml-2" />
+          <b>          با خرید فایل های منتخب ، نام مالک ، شماره تماس مستقیم مالک  به همراه نشانی کامل ملک ،در اختیار شما قرار گرفته و به طور مستقیم با مالک ارتباط بر قرار نمایید
+            علت خرید فایل، ارتباط مستقیم با مالک میباشد ، نه واسطه</b>
         </div>
         <hr/>
         <div className='flex align-items-center justify-content-between w-full'>
