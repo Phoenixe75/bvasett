@@ -23,19 +23,53 @@ const navItems: { key: NavItems, label: string }[] = [
   },
 ]
 const FilterItem = ({oldForm}: { oldForm: IFilter | null }) => {
-  const [activeItem, setActiveItem] = useState<NavItems>('sale');
+
+  const bindActiveItemByPurpose = (purpose?: string | number | null) => {
+    switch (purpose) {
+      case 1:
+        return 'sale';
+      case 2:
+        return 'rent';
+      case 4:
+        return 'mortgage';
+      default:
+        return 'sale';
+    }
+  }
+
+  const [activeItem, setActiveItem] = useState<NavItems>(() => {
+    return bindActiveItemByPurpose(oldForm?.purpose);
+  });
+
+  useEffect(() => {
+
+  }, [oldForm]);
 
   useEffect(() => {
     if (oldForm) {
       switch (activeItem) {
         case "sale":
           oldForm.purpose = 1;
+          oldForm.prePaidLte = null;
+          oldForm.prePaidGte = null;
+          oldForm.rentLte = null;
+          oldForm.rentGte = null;
           break;
         case "rent":
           oldForm.purpose = 2;
+          // TODO: remove old filter fields
+          oldForm.priceLte = null;
+          oldForm.priceGte = null;
+          oldForm.prePaidLte = null;
+          oldForm.prePaidGte = null;
           break;
         case "mortgage":
           oldForm.purpose = 4;
+          // TODO: remove old filter fields
+          oldForm.priceLte = null;
+          oldForm.priceGte = null;
+          oldForm.rentLte = null;
+          oldForm.rentGte = null;
           break;
         default:
           break;

@@ -120,7 +120,7 @@ const LandingPage = () => {
   }
 
   const [oldFormData,] = useLocalStorage(null, 'filterForm');
-  const [oldForm, setOldForm] = useState(null);
+  const [oldForm, setOldForm] = useState(oldFormData ?? null);
 
   useEffect(() => {
     if (oldFormData != null) {
