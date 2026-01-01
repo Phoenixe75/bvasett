@@ -65,3 +65,10 @@ export type {
     IUserProps,
     UserContextProps
 };
+
+export interface UnitInterface {
+  code: string
+  id: string
+  title: string
+  unitNo: string
+}

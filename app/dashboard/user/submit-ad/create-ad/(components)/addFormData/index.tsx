@@ -13,14 +13,18 @@ import {
   INeighborhoods,
   IState
 } from '@/app/dashboard/admin/ads/(models)/ads';
-import {getDistricts, getNeighborhoodsByDistrict, getStates} from '@/app/dashboard/admin/ads/(services)/ads.service';
+import {
+  getCitiesByState,
+  getDistricts,
+  getNeighborhoodsByDistrict,
+  getStates
+} from '@/app/dashboard/admin/ads/(services)/ads.service';
 import {SubmitAdFormData} from '../../(models)/submitAdTypes';
 import ImageUploader from './imageUploader';
 import {createAd} from '../../(services)/submitAd.service';
 import {InputNumber} from 'primereact/inputnumber';
 import {
-  activeOption,
-  ageOption, completeOption,
+  ageOption,
   directionsOption,
   locationOption,
   purposeOption,
@@ -29,6 +33,8 @@ import {
 import {MultiSelect, MultiSelectChangeEvent} from 'primereact/multiselect';
 import {InputTextarea} from 'primereact/inputtextarea';
 import {Button} from 'primereact/button';
+import {RegisterUnitUtil} from '@/utils/RegisterUnitUtil';
+import {UnitInterface} from '@/types';
 
 const deedsOptions = [
   {value: "old", label: 'قدیمی'},
@@ -46,9 +52,9 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
     image_ids: [],
     note_book_number: "",
     page_number: "",
-    primary_plate_number: 0,
+    primary_plate_number: null,
     registration_unit: "",
-    secondary_plate_number: 0,
+    secondary_plate_number: null,
     title_deeds_type: null,
   });
   const [adsFormData, setAdsFormData] = useState<IAdsBase>({
@@ -91,12 +97,24 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
     sold: false,
     type: 0,
     state: 0,
-    city: 0
+    city: 0,
+    postal_code: '',
   });
   const [cities, setCities] = useState<ICity[]>([]);
   const [districtsState, setDistrictsState] = useState<IDistricts[]>([]);
   const [neighborhoodsState, setNeighborhoodsState] = useState<INeighborhoods[]>([]);
+  const [units, setUnits] = useState<Array<UnitInterface>>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    if (formData?.state) {
+      if (formData.state == 6) {
+        setUnits(RegisterUnitUtil.get(formData?.state)!);
+      } else {
+        setUnits([]);
+      }
+    }
+  }, [formData, states]);
 
   const handleDistrictDropdownFocus = async () => {
     try {
@@ -147,7 +165,7 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
 
   const handleDistrictChange = async (e: any) => {
     const selectedDistrictId = e.value.id;
-    setValue('district', selectedDistrictId);
+    setAdsValue('district', selectedDistrictId);
     try {
       const fetchedNeighborhoods = await getNeighborhoodsByDistrict(selectedDistrictId);
       setNeighborhoodsState(fetchedNeighborhoods);
@@ -183,6 +201,17 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
     const selectedStateId = e.value.id;
     setFormData((prev) => ({...prev, state: selectedStateId}));
     setAdsFormData((prev) => ({...prev, state: selectedStateId}));
+    try {
+      const fetchedCities = await getCitiesByState(selectedStateId);
+      setCities(fetchedCities);
+    } catch (error) {
+      console.error('Failed to fetch cities:', error);
+    }
+  };
+
+  const handleUnitChange = async (e: any) => {
+    const selectedUnitTitle = e.value.title;
+    setFormData((prev) => ({...prev, registration_unit: selectedUnitTitle}));
   };
 
   const handelDeedsChange = async (e: any) => {
@@ -202,7 +231,7 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
   }, []);
 
   const setAdsValue = useCallback((fieldName: string, fieldValue: any) => {
-    setFormData((prevState: any) => ({
+    setAdsFormData((prevState: any) => ({
       ...prevState,
       [fieldName]: fieldValue
     }));
@@ -212,8 +241,18 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      setLoading(true)
-      await createAd(formData);
+      setLoading(true);
+      const filterNullValues = (data: IAdsBase) => {
+        return Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== ''));
+      };
+
+      const filteredAdsData = filterNullValues(adsFormData);
+      await createAd({
+        ...formData,
+        ad: {
+          ...filteredAdsData
+        }
+      });
       toast.success('آگهی با موفقیت ثبت شد');
       setTimeout(() => {
         router.back()
@@ -268,23 +307,50 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
                     </span>
         </div>
         <div className="field col-12 md:col-4">
-                    <span className="p-float-label">
-                        <InputText type="text" name="registration_unit" required
-                                   value={formData.registration_unit || ''} onChange={handleChange}/>
+          {formData.state === 6 ? (<span className="p-float-label">
+                        <Dropdown
+                          type="text"
+                          name="registration_unit"
+                          id="registration_unit"
+                          value={units.find((option) => option.title === formData.registration_unit) || null}
+                          onChange={handleUnitChange}
+                          options={units}
+                          optionLabel="title"
+                          placeholder="انتخاب کنید"
+                          className="w-full"
+                          required
+                        />
                         <label htmlFor="registration_unit">واحد ثبتی</label>
-                    </span>
+                    </span>) : (<span className="p-float-label">
+                <InputText type="text" name="registration_unit" required
+                           value={formData.registration_unit || ''} onChange={handleChange}/>
+            <label htmlFor="registration_unit">واحد ثبتی</label>
+          </span>)}
         </div>
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
-                        <InputNumber name="primary_plate_number" required value={formData.primary_plate_number || 0}
-                                     onChange={handleChange}/>
+                        <InputNumber name="primary_plate_number"
+                                     required
+                                     value={formData.primary_plate_number}
+                                     onChange={(e) => handleChange({
+                                       target: {
+                                         ...e,
+                                         name: 'primary_plate_number'
+                                       }
+                                     })}/>
                         <label htmlFor="primary_plate_number">اصلی</label>
                     </span>
         </div>
         <div className="field col-12 md:col-4">
                     <span className="p-float-label">
-                        <InputNumber name="secondary_plate_number" value={formData.secondary_plate_number || 0}
-                                     onChange={handleChange}/>
+                        <InputNumber name="secondary_plate_number"
+                                     value={formData.secondary_plate_number}
+                                     onChange={(e) => handleChange({
+                                       target: {
+                                         ...e,
+                                         name: 'secondary_plate_number'
+                                       }
+                                     })}/>
                         <label htmlFor="secondary_plate_number">فرعی</label>
                     </span>
         </div>
@@ -306,15 +372,28 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
         {formData.title_deeds_type === 'new' ? <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputNumber type="text" name="electronic_estate_note_number" required
-                                     value={formData.electronic_estate_note_number || 0} onChange={handleChange}/>
+                                     value={formData.electronic_estate_note_number || 0}
+                                     onChange={(e) => handleChange({
+                                       target: {
+                                         ...e,
+                                         name: 'electronic_estate_note_number'
+                                       }
+                                     })}/>
                         <label htmlFor="first_name">شماره دفتر الکترونیکی</label>
                     </span>
         </div> : null}
         {formData.title_deeds_type === 'old' ? <>
           <div className="field col-12 md:col-4">
                     <span className="p-float-label">
-                        <InputText type="text" name="note_book_number" required value={formData.note_book_number || ''}
-                                   onChange={handleChange}/>
+                        <InputText type="text" name="note_book_number"
+                                   required
+                                   value={formData.note_book_number || ''}
+                                   onChange={(e) => handleChange({
+                                     target: {
+                                       ...e?.target,
+                                       name: 'note_book_number'
+                                     }
+                                   })}/>
                         <label htmlFor="note_book_number">شماره دفتر</label>
                     </span>
           </div>
@@ -339,7 +418,8 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
             <form onSubmit={submitForm} className="grid p-fluid mt-6">
               <div className="field col-12 md:col-4">
             <span className="p-float-label">
-                <InputText type="text" name="title" id="title" autoComplete="off" value={adsFormData.title} onChange={(e) => setAdsValue('title', e.target.value)} required />
+                <InputText type="text" name="title" id="title" autoComplete="off" value={adsFormData.title}
+                           onChange={(e) => setAdsValue('title', e.target?.value ?? '')} required/>
                 <label htmlFor="title">عنوان</label>
             </span>
               </div>
@@ -399,13 +479,6 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
               </div>
               <div className="field col-12 md:col-4">
                     <span className="p-float-label">
-                        <InputText type="text" name="slug" id="slug" autoComplete="off" value={adsFormData.slug}
-                                   onChange={(e) => setAdsValue('slug', e.target.value)}/>
-                        <label htmlFor="slug">شناسه یکتا</label>
-                    </span>
-              </div>
-              <div className="field col-12 md:col-4">
-                    <span className="p-float-label">
                         <InputText type="text" name="area" id="area" autoComplete="off" value={adsFormData.area}
                                    onChange={(e) => setAdsValue('area', e.target.value)} required/>
                         <label htmlFor="area">
@@ -426,7 +499,8 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
               <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" id="floor" value={adsFormData.floor ?? ''}
-                                   onChange={(e) => setAdsValue('floor', e.target.value)} disabled={adsFormData.type === 4}
+                                   onChange={(e) => setAdsValue('floor', e.target.value)}
+                                   disabled={adsFormData.type === 4}
                                    required={adsFormData.type !== 4}/>
                         <label htmlFor="floor">
                             طبقه<span className="text-red-500">*</span>
@@ -475,7 +549,8 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
               <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="warehouses" value={adsFormData.warehouses}
-                                     onChange={(e) => setAdsValue('warehouses', e.value)} disabled={adsFormData.type == 4}
+                                     onChange={(e) => setAdsValue('warehouses', e.value)}
+                                     disabled={adsFormData.type == 4}
                                      required={adsFormData.type !== 4}/>
                         <label htmlFor="warehouses">
                             تعداد انباری <span className="text-red-500">*</span>
@@ -495,7 +570,8 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
               <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="elevators" value={adsFormData.elevators}
-                                     onChange={(e) => setAdsValue('elevators', e.value)} disabled={adsFormData.type == 4}
+                                     onChange={(e) => setAdsValue('elevators', e.value)}
+                                     disabled={adsFormData.type == 4}
                                      required={adsFormData.type !== 4}/>
                         <label htmlFor="elevators">
                             تعداد آسانسور <span className="text-red-500">*</span>
@@ -505,7 +581,8 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
               <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="squat_toilets" value={adsFormData.squat_toilets}
-                                     onChange={(e) => setAdsValue('squat_toilets', e.value)} disabled={adsFormData.type == 4}
+                                     onChange={(e) => setAdsValue('squat_toilets', e.value)}
+                                     disabled={adsFormData.type == 4}
                                      required={adsFormData.type !== 4}/>
                         <label htmlFor="squat_toilets">
                             تعداد سرویس ایرانی <span className="text-red-500">*</span>
@@ -544,10 +621,22 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
               <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="owner_name" id="owner_name" autoComplete="off"
-                                   value={adsFormData.owner_name} onChange={(e) => setAdsValue('owner_name', e.target.value)}
+                                   value={adsFormData.owner_name}
+                                   onChange={(e) => setAdsValue('owner_name', e.target.value)}
                                    required/>
                         <label htmlFor="owner_name">
                             نام مالک <span className="text-red-500">*</span>
+                        </label>
+                    </span>
+              </div>
+              <div className="field col-12 md:col-4">
+                    <span className="p-float-label">
+                        <InputText type="text" name="postal_code" id="postal_code" autoComplete="off"
+                                   value={adsFormData.postal_code}
+                                   onChange={(e) => setAdsValue('postal_code', e.target.value)}
+                                   required/>
+                        <label htmlFor="postal_code">
+                            کد پستی <span className="text-red-500">*</span>
                         </label>
                     </span>
               </div>

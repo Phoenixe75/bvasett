@@ -47,6 +47,7 @@ export interface IAdsBase {
   sold: boolean;
   state: number | null;
   city: number | null;
+  postal_code: string;
 }
 
 export interface IAds {

@@ -75,7 +75,8 @@ const NewAds = () => {
     sold: false,
     type: 0,
     state: 0,
-    city: 0
+    city: 0,
+    postal_code: '',
   });
 
   const [states, setStates] = useState<IState[]>([]);
