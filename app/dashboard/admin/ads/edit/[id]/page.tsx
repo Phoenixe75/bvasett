@@ -81,7 +81,8 @@ const AdsEditPage: FC<PageParams> = ({params}: any) => {
     state: 0,
     city: 0,
     district: 0,
-    neighborhood: 0
+    neighborhood: 0,
+    postal_code: ''
   });
 
   const [states, setStates] = useState<IState[]>([]);
