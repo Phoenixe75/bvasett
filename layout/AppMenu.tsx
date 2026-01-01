@@ -95,6 +95,7 @@ const AppMenu = () => {
             {label: 'سوالات کاربران', icon: 'pi pi-fw pi-question ml-2', to: '/dashboard/admin/users-questions'},
             {label: 'لیست سفارشات', icon: 'pi pi-shopping-bag ml-2', to: '/dashboard/admin/list-payments'},
             {label: 'لیست مقالات', icon: 'pi pi-fw pi-book ml-2', to: '/dashboard/admin/articles'},
+            {label: 'لیست درخواست آگهی‌ها', icon: 'pi pi-fw pi-home ml-2', to: '/dashboard/admin/properties'},
             {label: 'علاقه‌مندی ها', icon: 'pi pi-fw pi-home ml-2', to: '/dashboard/admin/my-favorites'}
           ]
           : [
