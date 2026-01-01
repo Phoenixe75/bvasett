@@ -20,8 +20,8 @@ export const filterAds = async (formData: IFilter, page: number): Promise<any> =
 
         if (formData?.prePaidGte !== undefined && formData.prePaidGte !== null) url += `&rent_pre_paid_amount__gte=${formData.prePaidGte}`;
         if (formData?.prePaidLte !== undefined && formData.prePaidLte !== null) url += `&rent_pre_paid_amount__lte=${formData.prePaidLte}`;
-        if (formData?.rentGte !== undefined && formData.rentGte !== null) url += `&rent_price__lte=${formData.rentGte}`;
-        if (formData?.rentLte !== undefined && formData.rentLte !== null) url += `&rent_price__gte=${formData.rentLte}`;
+        if (formData?.rentGte !== undefined && formData.rentGte !== null) url += `&rent_price__gte=${formData.rentGte}`;
+        if (formData?.rentLte !== undefined && formData.rentLte !== null) url += `&rent_price__lte=${formData.rentLte}`;
         if (formData?.neighbourhood && formData.neighbourhood.length > 0) {
             url += `&neighborhoods=${formData.neighbourhood.join(',')}`;
         }

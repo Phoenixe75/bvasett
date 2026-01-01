@@ -79,7 +79,6 @@ const Rent = ({oldForm}: { oldForm: IFilter | null }) => {
       ) {
         localStorage.setItem('filterForm', JSON.stringify(formData));
         const encodedResults = encodeURIComponent(JSON.stringify(formData));
-        console.log(encodedResults)
         router.push(`/filterResult?results=${encodedResults}`);
       } else {
         toast.error('لطفا فیلدها را پر کنید و محله‌ها را انتخاب کنید');
