@@ -10,7 +10,7 @@ import {INeighborhoods} from '@/app/dashboard/admin/ads/(models)/ads';
 import {getNeighborhoods} from '@/app/dashboard/admin/ads/(services)/ads.service';
 import SelectNeighbourHoodModal from '@/app/components/SelectNeighbourhoodModal/SelectNeighbourHoodModal';
 
-const Mortgage = ({oldForm}: { oldForm: IFilter }) => {
+const Mortgage = ({oldForm}: { oldForm: IFilter | null }) => {
   const [openNeighbourhood, setOpenNeighbourhood] = useState(false);
   const [formData, setFormData] = useState<IFilter>({
     purpose: 4,
