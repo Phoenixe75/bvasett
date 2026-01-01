@@ -10,16 +10,16 @@ import {INeighborhoods} from '@/app/dashboard/admin/ads/(models)/ads';
 import {getNeighborhoods} from '@/app/dashboard/admin/ads/(services)/ads.service';
 import SelectNeighbourHoodModal from '@/app/components/SelectNeighbourhoodModal/SelectNeighbourHoodModal';
 
-const Mortgage = ({oldForm}: { oldForm: IFilter | null }) => {
+const Mortgage = ({oldForm}: { oldForm: IFilter }) => {
   const [openNeighbourhood, setOpenNeighbourhood] = useState(false);
-  const [formData, setFormData] = useState<IFilter | null>({
+  const [formData, setFormData] = useState<IFilter>({
     purpose: 4,
-    prePaidLte: oldForm?.prePaidLte ?? null,
-    prePaidGte: oldForm?.prePaidGte ?? null,
-    areaLte: oldForm?.areaLte ?? null,
-    areaGte: oldForm?.areaGte ?? null,
-    roomLte: oldForm?.roomLte ?? null,
-    roomGte: oldForm?.roomGte ?? null,
+    prePaidLte: oldForm?.prePaidLte,
+    prePaidGte: oldForm?.prePaidGte,
+    areaLte: oldForm?.areaLte,
+    areaGte: oldForm?.areaGte,
+    roomLte: oldForm?.roomLte,
+    roomGte: oldForm?.roomGte,
     neighbourhood: oldForm?.neighbourhood ?? [],
   });
   const [loading, setLoading] = useState<boolean>(false);
@@ -100,7 +100,7 @@ const Mortgage = ({oldForm}: { oldForm: IFilter | null }) => {
             <div className="field col-12">
               <label htmlFor="prePaidLte">حداکثر قیمت رهن (تومان)</label>
               <InputNumber id="prePaidLte" value={formData?.prePaidLte ?? null}
-                           onChange={(e) => setValue('priceLte', e.value)}/>
+                           onChange={(e) => setValue('prePaidLte', e.value)}/>
             </div>
             <div className="field formgrid grid col-12 ">
               <p className="field col-12">متراژ</p>
