@@ -222,7 +222,6 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
     setFormData((prev) => ({...prev, image_ids: data}));
   }
 
-
   const setValue = useCallback((fieldName: string, fieldValue: any) => {
     setFormData((prevState: any) => ({
       ...prevState,

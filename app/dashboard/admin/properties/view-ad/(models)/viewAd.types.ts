@@ -1,3 +1,5 @@
+import {IAdsBase} from '@/app/dashboard/admin/ads/(models)/ads';
+
 export interface Property {
   id:                            number;
   owner:                         number;
@@ -13,6 +15,7 @@ export interface Property {
   status:                        number;
   created:                       Date;
   images:                        Image[];
+  ad?: IAdsBase;
 }
 
 export interface Image {
