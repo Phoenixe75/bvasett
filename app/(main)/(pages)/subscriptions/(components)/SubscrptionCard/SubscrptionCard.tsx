@@ -64,22 +64,22 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
         toast.error('خرید با خطا روبرو شد.');
       }
       // TODO: comment payment
-      toast.error('درگاه در تعمیر می‌باشد.');
+      toast.error('درگاه در تعمیر می‌باشد');
       return;
-      const resData: IPaymentStatus = await paymentRequestService({guid: guid, type: 'subscription'});
-      if (resData?.status === 307) {
-        if (resData.redirect_url) {
-          toast.success('در حال انتقال به درگاه بانکی');
-          router.push(resData.redirect_url);
-          toggleDialog()
-        } else {
-          toast.error('آدرس انتقال معتبر نیست.');
-        }
-      } else if (resData?.status === 503) {
-        toast.error('خرید با خطا روبرو شد.');
-      } else {
-        toast.error('خرید با خطا روبرو شد.');
-      }
+      // const resData: IPaymentStatus = await paymentRequestService({guid: guid, type: 'subscription'});
+      // if (resData?.status === 307) {
+      //   if (resData.redirect_url) {
+      //     toast.success('در حال انتقال به درگاه بانکی');
+      //     router.push(resData.redirect_url);
+      //     toggleDialog()
+      //   } else {
+      //     toast.error('آدرس انتقال معتبر نیست.');
+      //   }
+      // } else if (resData?.status === 503) {
+      //   toast.error('خرید با خطا روبرو شد.');
+      // } else {
+      //   toast.error('خرید با خطا روبرو شد.');
+      // }
     } catch (error) {
       console.error('Error during purchase:', error);
       toast.error('خرید با خطا روبرو شد.');

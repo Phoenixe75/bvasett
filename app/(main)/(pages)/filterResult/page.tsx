@@ -308,32 +308,32 @@ const FilterResultPage: React.FC = () => {
     }
     toast.error('درگاه در تعمیر می‌باشد');
     return;
-    setBtnLoading(true);
-    try {
-      const guid = orderInfo?.order_guid;
-      if (!guid) {
-        toast.error('خرید با خطا روبرو شد.');
-      }
-      const resData: IPaymentStatus = await paymentRequestService({guid: guid!, type: 'ad'});
-      if (resData?.status === 307) {
-        if (resData.redirect_url) {
-          // اطمینان از اینکه redirect_url مقدار null نیست
-          toast.success('در حال انتقال به درگاه بانکی');
-          router.push(resData.redirect_url);
-        } else {
-          toast.error('آدرس انتقال معتبر نیست.');
-        }
-      } else if (resData?.status === 503) {
-        toast.error('خرید با خطا روبرو شد.');
-      } else {
-        toast.error('خرید با خطا روبرو شد.');
-      }
-    } catch (error) {
-      console.error('Error during purchase:', error);
-      toast.error('خرید با خطا روبرو شد.');
-    } finally {
-      setBtnLoading(false);
-    }
+    // setBtnLoading(true);
+    // try {
+    //   const guid = orderInfo?.order_guid;
+    //   if (!guid) {
+    //     toast.error('خرید با خطا روبرو شد.');
+    //   }
+    //   const resData: IPaymentStatus = await paymentRequestService({guid: guid!, type: 'ad'});
+    //   if (resData?.status === 307) {
+    //     if (resData.redirect_url) {
+    //       // اطمینان از اینکه redirect_url مقدار null نیست
+    //       toast.success('در حال انتقال به درگاه بانکی');
+    //       router.push(resData.redirect_url);
+    //     } else {
+    //       toast.error('آدرس انتقال معتبر نیست.');
+    //     }
+    //   } else if (resData?.status === 503) {
+    //     toast.error('خرید با خطا روبرو شد.');
+    //   } else {
+    //     toast.error('خرید با خطا روبرو شد.');
+    //   }
+    // } catch (error) {
+    //   console.error('Error during purchase:', error);
+    //   toast.error('خرید با خطا روبرو شد.');
+    // } finally {
+    //   setBtnLoading(false);
+    // }
   };
   const onChoseExtraClick = () => {
     setShowInquiryModal(false);

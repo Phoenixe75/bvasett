@@ -168,8 +168,8 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
           city: 0,
           postal_code: '',
         });
-        if (fetchedPropertyInfo.ads?.state && fetchedPropertyInfo.ads?.city) {
-          const fetchedCities = await getCitiesByState(fetchedPropertyInfo.ads.state);
+        if (fetchedPropertyInfo.ads?.[0]?.state && fetchedPropertyInfo.ads?.[0]?.city) {
+          const fetchedCities = await getCitiesByState(fetchedPropertyInfo.ads?.[0]?.state);
           setCities(fetchedCities);
         }
       } catch (error) {
