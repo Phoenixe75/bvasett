@@ -12,7 +12,7 @@ export type Inquiry = typeof WITHOUT_INQUIRY | typeof WITH_INQUIRY | typeof FREE
 export const InquiryLabel: {
   [key in Inquiry]: string;
 } = {
-  [FREE]: 'سه فایل رایگان',
+  [FREE]: 'ده فایل رایگان',
   [WITHOUT_INQUIRY]: "بدون استعلام",
   [WITH_INQUIRY]: "با استعلام",
 }

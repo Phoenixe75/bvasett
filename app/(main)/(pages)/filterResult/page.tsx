@@ -207,7 +207,7 @@ const FilterResultPage: React.FC = () => {
 
   const maxCount = useMemo(() => {
     if (firstBuyer) {
-      return 3
+      return 10
     }
     if (!selectedPackage) {
       return 0
@@ -306,6 +306,8 @@ const FilterResultPage: React.FC = () => {
       setOpenLoginForm(true);
       return;
     }
+    toast.error('درگاه در تعمیر می‌باشد');
+    return;
     setBtnLoading(true);
     try {
       const guid = orderInfo?.order_guid;
@@ -467,7 +469,7 @@ const FilterResultPage: React.FC = () => {
                 <div className="md:col-4 col justify-content-between">
                   <div className="flex flex-nowrap gap-3">
                     <div className="text-nowrap ml-3">مبلغ خرید:</div>
-                    <div className="text-nowrap">{Number(orderInfo?.total)} تومان</div>
+                    <div className="text-nowrap">{formatNumber(Number(orderInfo?.total))} تومان</div>
                   </div>
                 </div>
                 <div className="md:col-4 col justify-content-between">
@@ -479,19 +481,19 @@ const FilterResultPage: React.FC = () => {
                 {orderInfo?.discount && <div className="md:col-4 col justify-content-between">
                   <div className="flex flex-nowrap gap-3">
                     <div className="text-nowrap ml-3">تخفیف اعمال شده:</div>
-                    <div className="text-nowrap">{Number(orderInfo?.discount)} تومان</div>
+                    <div className="text-nowrap">{formatNumber(Number(orderInfo?.discount))} تومان</div>
                   </div>
                 </div>}
                 <div className="md:col-4 col justify-content-between">
                   <div className="flex flex-nowrap gap-3">
                     <div className="text-nowrap ml-3">مالیات:</div>
-                    <div className="text-nowrap">{Number(orderInfo?.total) / 10} تومان</div>
+                    <div className="text-nowrap">{formatNumber(Number(orderInfo?.total) / 10)} تومان</div>
                   </div>
                 </div>
                 {orderInfo?.total && <div className="md:col-4 col justify-content-between">
                   <div className="flex flex-nowrap gap-3">
                     <div className="text-nowrap ml-3">جمع کل:</div>
-                    <div className="text-nowrap">{Number(orderInfo?.total) + (Number(orderInfo?.total) / 10)} تومان</div>
+                    <div className="text-nowrap">{formatNumber(Number(orderInfo?.total) + (Number(orderInfo?.total) / 10))} تومان</div>
                   </div>
                 </div>}
               </div>

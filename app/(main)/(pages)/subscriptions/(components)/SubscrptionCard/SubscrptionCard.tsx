@@ -24,11 +24,9 @@ interface SubscriptionCard {
 
 export default function SubscrptionCard({data}: SubscriptionCard) {
   useEffect(() => {
-    if (data.price) {
-      setPrice(Number(data.price)/10);
-    }
+      setPrice(data.price && !isNaN(Number(data.price)) ? (Number(data.price)/10) : 'رایگان');
   }, [data]);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<any>(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const {user} = useUserContext();
@@ -65,6 +63,9 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
       if (!guid) {
         toast.error('خرید با خطا روبرو شد.');
       }
+      // TODO: comment payment
+      toast.error('درگاه در تعمیر می‌باشد.');
+      return;
       const resData: IPaymentStatus = await paymentRequestService({guid: guid, type: 'subscription'});
       if (resData?.status === 307) {
         if (resData.redirect_url) {
@@ -116,7 +117,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
 
           <span className={styles.blue_line}/>
           <Button className="w-full align-items-center justify-content-center" onClick={onButtonClick}>
-            {isFreePlan ? 'انتخاب 3 فایل رایگان من' : 'خرید اشتراک'}
+            {isFreePlan ? 'انتخاب 10 فایل رایگان من' : 'خرید اشتراک'}
           </Button>
         </div>
       </div>
