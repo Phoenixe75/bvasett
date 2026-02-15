@@ -125,9 +125,51 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
         setDistrictsState(fetchedDistricts);
         const fetchedPropertyInfo = await getProperty(id);
         setFormData(fetchedPropertyInfo as any);
-        setAdsFormData((fetchedPropertyInfo as any).ad);
-        if (fetchedPropertyInfo.ad?.state && fetchedPropertyInfo.ad?.city) {
-          const fetchedCities = await getCitiesByState(fetchedPropertyInfo.ad.state);
+        setAdsFormData((fetchedPropertyInfo as any).ads?.[0] ?? {
+          active: null,
+          complete: null,
+          notes: null,
+          ordering: 1,
+          title: '',
+          slug: '',
+          location: null,
+          directions: [],
+          area: '',
+          floor: null,
+          floors: null,
+          units_per_floor: null,
+          age: null,
+          rooms: null,
+          warehouses: null,
+          parking: null,
+          elevators: null,
+          squat_toilets: null,
+          sitting_toilets: null,
+          district: null,
+          neighborhood: null,
+          address: '',
+          plate_number: null,
+          owner_name: '',
+          owner_phone: '',
+          owner_phone2: null,
+          description: null,
+          purpose: null,
+          rent_pre_paid_amount: '',
+          rent_pre_paid_amount_rounded: '',
+          rent_price: '',
+          rent_price_rounded: '',
+          unit_price: '',
+          unit_price_rounded: '',
+          total_price: '',
+          total_price_rounded: '',
+          sold: false,
+          type: 0,
+          state: 0,
+          city: 0,
+          postal_code: '',
+        });
+        if (fetchedPropertyInfo.ads?.state && fetchedPropertyInfo.ads?.city) {
+          const fetchedCities = await getCitiesByState(fetchedPropertyInfo.ads.state);
           setCities(fetchedCities);
         }
       } catch (error) {
@@ -167,11 +209,15 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
     e.preventDefault();
     const newformData: any = {...formData};
     newformData.image_ids = formData?.images?.map(item => item.id) as any || [];
-    delete newformData['images']
+    delete newformData['images'];
+    newformData.ad = adsFormData;
+    delete newformData['ads'];
     try {
       setLoading(true);
-      console.log({formData})
-      await editPropertyAd(newformData, id);
+      await editPropertyAd({
+        ...newformData,
+
+      }, id);
       toast.success('آگهی با موفقیت ویرایش شد');
       router.back()
     } catch (error) {
@@ -317,20 +363,16 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
             <ImageUploader onChange={onUploadImagesChange} images={formData.images!}/>
           </div>
           <div className="col-12">
-
-            <div className="field col-12">
-              <div className="grid p-fluid">
-                <h3>اطلاعات آگهی</h3>
-                <hr/>
-                <div className="card detailsData">
-                  <div className="field col-12 md:col-4">
+            <h3>اطلاعات آگهی</h3>
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="title" id="title" autoComplete="off"
-                                   value={adsFormData.title} required disabled/>
+                                   value={adsFormData.title} disabled/>
                         <label htmlFor="title">عنوان</label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -341,26 +383,25 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                           optionLabel="name"
                           placeholder="انتخاب کنید"
                           className="w-full"
-                          required
                           disabled
                         />
                         <label htmlFor="purpose">
                             نوع معامله <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown type="text" name="type" id="type"
                                   value={TypeOption.find((option) => option.code === adsFormData.type)}
                                   options={TypeOption} optionLabel="name"
-                                  placeholder="انتخاب کنید" required disabled/>
+                                  placeholder="انتخاب کنید" disabled/>
                         <label htmlFor="type">
                             نوع ملک <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -370,67 +411,61 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                           options={locationOption}
                           optionLabel="name"
                           placeholder="انتخاب کنید"
-                          required
                           disabled
                         />
                         <label htmlFor="location">موقعیت ملک</label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <MultiSelect name="directions" id="directions" value={directionsState}
                                      onChange={(e: MultiSelectChangeEvent) => setDirectionsState(e.value)}
                                      options={directionsOption}
                                      optionLabel="name"
                                      placeholder="انتخاب کنید"
-                                     required
                                      disabled/>
                         <label htmlFor="directions">جهت ملک</label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="area" id="area" autoComplete="off" value={adsFormData.area}
-                                   disabled
-                                   required/>
+                                   disabled/>
                         <label htmlFor="area">
                             متراژ (متر) <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="floors"
                                      value={adsFormData.floors}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="floors">
                             تعداد طبقات <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" id="floor" value={adsFormData.floor ?? ''}
-                                   disabled
-                                   required={adsFormData.type !== 4}/>
+                                   disabled />
                         <label htmlFor="floor">
                             طبقه<span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="units_per_floor"
                                      value={adsFormData.units_per_floor}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="units_per_floor">
                             تعداد واحد در هر طبقه <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -441,135 +476,123 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                           optionLabel="name"
                           placeholder="انتخاب کنید"
                           disabled
-                          required={adsFormData.type !== 4}
                         />
                         <label htmlFor="age">
                             سن بنا <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="rooms" value={adsFormData.rooms}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="rooms">
                             تعداد اتاق خواب <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="warehouses" value={adsFormData.warehouses}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="warehouses">
                             تعداد انباری <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="parking" value={adsFormData.parking}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="parking">
                             تعداد پارکینگ <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="elevators" value={adsFormData.elevators}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="elevators">
                             تعداد آسانسور <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="squat_toilets" value={adsFormData.squat_toilets}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled />
                         <label htmlFor="squat_toilets">
                             تعداد سرویس ایرانی <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div className={`field col-12 md:col-4 ${adsFormData.type === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputNumber type="text" id="sitting_toilets"
                                      value={adsFormData.sitting_toilets}
-                                     disabled
-                                     required={adsFormData.type !== 4}/>
+                                     disabled/>
 
                         <label htmlFor="sitting_toilets">
                             تعداد سرویس فرنگی <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text"
                                    autoComplete="off"
                                    id="address"
                                    value={adsFormData.address}
-                                   required
                                    disabled
                         />
                         <label htmlFor="address">
                             آدرس <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputNumber type="text"
                                      id="plate_number"
                                      value={adsFormData.plate_number}
-                                     disabled
-                                     required/>
+                                     disabled />
                         <label htmlFor="plate_number">
                             شماره پلاک <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="owner_name" id="owner_name" autoComplete="off"
                                    value={adsFormData.owner_name}
-                                   disabled
-                                   required/>
+                                   disabled />
                         <label htmlFor="owner_name">
                             نام مالک <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="postal_code" id="postal_code" autoComplete="off"
                                    value={adsFormData.postal_code}
-                                   disabled
-                                   required/>
+                                   disabled />
                         <label htmlFor="postal_code">
                             کد پستی <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text" name="owner_phone" id="owner_phone" autoComplete="off"
                                    value={adsFormData.owner_phone}
-                                   disabled
-                                   required/>
+                                   disabled />
                         <label htmlFor="owner_phone">
                             شماره تماس مالک <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputText type="text"
                                    name="owner_phone2"
@@ -579,10 +602,10 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                                    value={adsFormData.owner_phone2 ?? ''}/>
                         <label htmlFor="owner_phone2">شماره تماس مالک</label>
                     </span>
-                  </div>
+          </div>
 
-                  <div
-                    className={`field col-12 md:col-4 ${adsFormData.purpose === 1 || adsFormData.purpose === 5 ? `hidden` : `block`}`}>
+          <div
+            className={`field col-12 md:col-4 ${adsFormData.purpose === 1 || adsFormData.purpose === 5 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" autoComplete="off" id="rent_pre_paid_amount"
                                    disabled
@@ -591,9 +614,9 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                             ودیعه اجاره <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div
-                    className={`field col-12 md:col-4 ${adsFormData.purpose === 1 || adsFormData.purpose === 4 || adsFormData.purpose === 5 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${adsFormData.purpose === 1 || adsFormData.purpose === 4 || adsFormData.purpose === 5 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" autoComplete="off" id="rent_price"
                                    disabled
@@ -602,9 +625,9 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                             مبلغ اجاره <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div
-                    className={`field col-12 md:col-4 ${adsFormData.purpose === 2 || adsFormData.purpose === 3 || adsFormData.purpose === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${adsFormData.purpose === 2 || adsFormData.purpose === 3 || adsFormData.purpose === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" autoComplete="off" id="unit_price"
                                    disabled
@@ -613,9 +636,9 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                             قیمت متری <span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
-                  <div
-                    className={`field col-12 md:col-4 ${adsFormData.purpose === 2 || adsFormData.purpose === 3 || adsFormData.purpose === 4 ? `hidden` : `block`}`}>
+          </div>
+          <div
+            className={`field col-12 md:col-4 ${adsFormData.purpose === 2 || adsFormData.purpose === 3 || adsFormData.purpose === 4 ? `hidden` : `block`}`}>
                     <span className="p-float-label">
                         <InputText type="text" autoComplete="off" id="total_price"
                                    disabled
@@ -624,9 +647,9 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                             قیمت کل<span className="text-red-500">*</span>
                         </label>
                     </span>
-                  </div>
+          </div>
 
-                  <div className="field col-12 md:col-4">
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -642,13 +665,14 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                         />
                         <label htmlFor="state">استان</label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
                           name="city"
                           id="city"
+                          disabled
                           value={cities.find((option) => option.id === adsFormData.city) || null}
                           options={cities}
                           optionLabel="name"
@@ -658,8 +682,8 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                         />
                         <label htmlFor="city">شهر</label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -674,8 +698,8 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                         />
                         <label htmlFor="state">منطقه شهرداری</label>
                     </span>
-                  </div>
-                  <div className="field col-12 md:col-4">
+          </div>
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <Dropdown
                           type="text"
@@ -691,49 +715,46 @@ const EditPropertyForm = ({id}: EditPropertyForm) => {
                         />
                         <label htmlFor="neighborhood">محله</label>
                     </span>
-                  </div>
-                  {/*<div className="field col-12 md:col-4">*/}
-                  {/*      <span className="p-float-label">*/}
-                  {/*          <Dropdown*/}
-                  {/*            type="text"*/}
-                  {/*            name="active"*/}
-                  {/*            id="active"*/}
-                  {/*            value={activeOption.find((option) => option.code === adsFormData.active)}*/}
-                  {/*            onChange={(e) => setAdsValue('active', e.value.code)}*/}
-                  {/*            options={activeOption}*/}
-                  {/*            optionLabel="name"*/}
-                  {/*            placeholder="انتخاب کنید"*/}
-                  {/*            className="w-full"*/}
-                  {/*          />*/}
-                  {/*          <label htmlFor="active">وضعیت آگهی</label>*/}
-                  {/*      </span>*/}
-                  {/*</div>*/}
-                  {/*<div className="field col-12 md:col-4">*/}
-                  {/*      <span className="p-float-label">*/}
-                  {/*          <Dropdown*/}
-                  {/*            type="text"*/}
-                  {/*            name="complete"*/}
-                  {/*            id="complete"*/}
-                  {/*            value={completeOption.find((option) => option.code === adsFormData.complete)}*/}
-                  {/*            onChange={(e) => setAdsValue('complete', e.value.code)}*/}
-                  {/*            options={completeOption}*/}
-                  {/*            optionLabel="name"*/}
-                  {/*            placeholder="انتخاب کنید"*/}
-                  {/*            className="w-full"*/}
-                  {/*          />*/}
-                  {/*          <label htmlFor="complete">وضعیت تکمیل</label>*/}
-                  {/*      </span>*/}
-                  {/*</div>*/}
-                  <div className="field col-12 md:col-4">
+          </div>
+          {/*<div className="field col-12 md:col-4">*/}
+          {/*      <span className="p-float-label">*/}
+          {/*          <Dropdown*/}
+          {/*            type="text"*/}
+          {/*            name="active"*/}
+          {/*            id="active"*/}
+          {/*            value={activeOption.find((option) => option.code === adsFormData.active)}*/}
+          {/*            onChange={(e) => setAdsValue('active', e.value.code)}*/}
+          {/*            options={activeOption}*/}
+          {/*            optionLabel="name"*/}
+          {/*            placeholder="انتخاب کنید"*/}
+          {/*            className="w-full"*/}
+          {/*          />*/}
+          {/*          <label htmlFor="active">وضعیت آگهی</label>*/}
+          {/*      </span>*/}
+          {/*</div>*/}
+          {/*<div className="field col-12 md:col-4">*/}
+          {/*      <span className="p-float-label">*/}
+          {/*          <Dropdown*/}
+          {/*            type="text"*/}
+          {/*            name="complete"*/}
+          {/*            id="complete"*/}
+          {/*            value={completeOption.find((option) => option.code === adsFormData.complete)}*/}
+          {/*            onChange={(e) => setAdsValue('complete', e.value.code)}*/}
+          {/*            options={completeOption}*/}
+          {/*            optionLabel="name"*/}
+          {/*            placeholder="انتخاب کنید"*/}
+          {/*            className="w-full"*/}
+          {/*          />*/}
+          {/*          <label htmlFor="complete">وضعیت تکمیل</label>*/}
+          {/*      </span>*/}
+          {/*</div>*/}
+          <div className="field col-12 md:col-4">
                     <span className="p-float-label">
                         <InputTextarea name="description" id="description" autoComplete="off"
+                                       disabled
                                        value={adsFormData.description ?? ''}/>
                         <label htmlFor="description">توضیحات</label>
                     </span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <div className="col-12">
             <div className="field flex col-12 md:col-2">

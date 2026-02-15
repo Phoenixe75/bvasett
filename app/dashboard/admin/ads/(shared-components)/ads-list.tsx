@@ -41,11 +41,12 @@ const AdsTable = () => {
     try {
       setLoading(true);
       let data;
-      if (filters.title || filters.slug) {
-        data = await filterAdsAdmin(filters, page);
-      } else {
-        data = await getAllAds(page);
-      }
+      data = await filterAdsAdmin(filters, page);
+      // if (filters.title || filters.slug || filters.owner_phone) {
+      //
+      // } else {
+      //   data = await getAllAds(page);
+      // }
       setAds(data.results);
       setCount(data.count);
       setLoading(false);

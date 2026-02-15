@@ -9,8 +9,9 @@ export const filterAdsAdmin = async (formData: IFilterAds, page: number): Promis
     try {
         let url = `/api/ads/search/?page=${page}`;
 
-        if (formData?.title !== undefined && formData.title !== null) url += `&title__icontains=${formData.title}`;
-        if (formData?.slug !== undefined && formData.slug !== null) url += `&id__icontains=${formData.slug}`;
+        if (formData?.title != undefined && formData.title !== '') url += `&title=${formData.title}`;
+        if (formData?.slug != undefined && formData.slug !== '') url += `&id=${formData.slug}`;
+        if (formData?.owner_phone != undefined && formData.owner_phone !== '') url += `&owner_phone=${formData.owner_phone}`;
 
         const response: AxiosResponse<IAdsResponse> = await axiosApi.get(url);
         return response.data;

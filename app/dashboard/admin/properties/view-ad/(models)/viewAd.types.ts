@@ -15,7 +15,7 @@ export interface Property {
   status:                        number;
   created:                       Date;
   images:                        Image[];
-  ad?: IAdsBase;
+  ads?: Array<IAdsBase>;
 }
 
 export interface Image {

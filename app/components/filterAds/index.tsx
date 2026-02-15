@@ -10,7 +10,7 @@ interface FilterAdsProps {
 }
 
 const FilterAds: React.FC<FilterAdsProps> = ({ onFilterSubmit }) => {
-    const [formData, setFormData] = useState({ title: '', slug: '' });
+    const [formData, setFormData] = useState({ title: '', slug: '', owner_phone: '' });
     const [hasFilters, setHasFilters] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +28,9 @@ const FilterAds: React.FC<FilterAdsProps> = ({ onFilterSubmit }) => {
     };
 
     const resetFilters = () => {
-        setFormData({ title: '', slug: '' });
+        setFormData({ title: '', slug: '', owner_phone: '' });
         setHasFilters(false);
-        onFilterSubmit({ title: '', slug: '' });
+        onFilterSubmit({ title: '', slug: '', owner_phone: '' });
     };
 
     return (
@@ -54,11 +54,15 @@ const FilterAds: React.FC<FilterAdsProps> = ({ onFilterSubmit }) => {
                                     <label htmlFor="slug">شناسه یکتا</label>
                                     <InputText id="slug" value={formData.slug} onChange={handleChange} />
                                 </div>
-                                <div className="field col-12 md:col-1">
+                                <div className="field col-12 md:col-3">
+                                    <label htmlFor="owner_phone">شماره موبایل مالک آگهی</label>
+                                    <InputText id="owner_phone" value={formData.owner_phone} onChange={handleChange} />
+                                </div>
+                                <div className="field col-12 md:col-3">
                                     <Button raised type="submit" label="جستجو" icon="pi pi-search" className="mt-4" />
                                 </div>
                                 {hasFilters && (
-                                    <div className="field col-12 md:col-1">
+                                    <div className="field col-12 md:col-3">
                                         <Button raised type="button" label="انصراف" icon="pi pi-times" className="mt-4 p-button-danger" onClick={resetFilters} />
                                     </div>
                                 )}
