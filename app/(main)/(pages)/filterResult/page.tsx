@@ -43,6 +43,7 @@ import {Checkbox} from 'primereact/checkbox';
 import {IAds} from '@/app/dashboard/admin/ads/(models)/ads';
 import {ConfirmDialog} from 'primereact/confirmdialog';
 import {FaCircleExclamation} from 'react-icons/fa6';
+import MaintenanceModal from '@/app/components/MaintenanceModal';
 
 const FilterResultPage: React.FC = () => {
   const [formData, setFormData] = useState<any[]>([]);
@@ -74,6 +75,7 @@ const FilterResultPage: React.FC = () => {
   const [goTopTopIndex, setGoToTopIndex] = useState<number>(-1);
   const [mustRemoveFromBuyAd, setMustRemoveFromBuyAd] = useState<any>(null);
   const [displayConfirmDialog, setDisplayConfirmDialog] = useState<boolean>(false);
+  const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
   const cancelDeleteFromBuy = () => {
     setDisplayConfirmDialog(false);
   };
@@ -306,7 +308,7 @@ const FilterResultPage: React.FC = () => {
       setOpenLoginForm(true);
       return;
     }
-    toast.error('درگاه در تعمیر می‌باشد');
+    setShowMaintenanceModal(true);
     return;
     // setBtnLoading(true);
     // try {
@@ -599,6 +601,7 @@ const FilterResultPage: React.FC = () => {
         acceptLabel="تایید"
         rejectLabel="انصراف"
       />
+      <MaintenanceModal visible={showMaintenanceModal} onHide={() => setShowMaintenanceModal(false)} />
 
       <div className="py-4 px-8 header_footer_background">
         <AppFooter/>

@@ -15,6 +15,7 @@ import {TRANSLATIONS} from '../../../filterResult/translation';
 import {IPaymentStatus} from '../../../filterResult/(models)/orderBuy';
 import {paymentRequestService} from '../../../filterResult/(services)/orderBuy.service';
 import {classNames} from 'primereact/utils';
+import MaintenanceModal from '@/app/components/MaintenanceModal';
 
 const itemDescription = ['قابلیت انتخاب 20 محله', 'بدون محدودیت مشاهده فایل در مناطق منتخب', 'فعال بر روی تمام معاملات خرید و فروش / رهن / اجاره', 'بارگذاری فایل ها به صورت روزانه از زمان تهیه اشتراک', 'قابلیت استعلام برای دریافت فایل های فعال'];
 
@@ -29,6 +30,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
   const [price, setPrice] = useState<any>(0);
   const [openDialog, setOpenDialog] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
   const {user} = useUserContext();
   const toggleDialog = () => {
     setOpenDialog(pre => !pre)
@@ -63,8 +65,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
       if (!guid) {
         toast.error('خرید با خطا روبرو شد.');
       }
-      // TODO: comment payment
-      toast.error('درگاه در تعمیر می‌باشد');
+      setShowMaintenanceModal(true);
       return;
       // const resData: IPaymentStatus = await paymentRequestService({guid: guid, type: 'subscription'});
       // if (resData?.status === 307) {
@@ -125,6 +126,7 @@ export default function SubscrptionCard({data}: SubscriptionCard) {
         setShowLoginDialog(false)
       }} visible={showLoginDialog}/>
       <SelectNeighbourHoodModal maxSelection={20} isVisible={openDialog} onCancel={toggleDialog} onOk={onOk}/>
+      <MaintenanceModal visible={showMaintenanceModal} onHide={() => setShowMaintenanceModal(false)} />
     </>
   );
 }
