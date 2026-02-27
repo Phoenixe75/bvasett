@@ -126,6 +126,9 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
   };
 
   const formatNumber = (value: any) => {
+    if (value === '') {
+      return '';
+    }
     const num = Number(String(value).replace(/,/g, ''));
     return num.toLocaleString();
   };
@@ -151,6 +154,9 @@ const SubmitAdForm = ({params}: { params: { id: number } }) => {
   };
 
   const parseNumber = (value: string) => {
+    if (value === '') {
+      return '';
+    }
     return Number(value.replace(/,/g, ''));
   };
 
