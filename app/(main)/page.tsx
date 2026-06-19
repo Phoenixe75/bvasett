@@ -20,6 +20,7 @@ import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import styles from '@/app/components/SelectNeighbourhoodModal/select-neighbourhood-modal.module.scss';
 import {Dialog} from 'primereact/dialog';
+import {Toast} from 'primereact/toast';
 
 const joyRideSteps = [
   {
@@ -121,6 +122,7 @@ const LandingPage = () => {
 
   const [oldFormData,] = useLocalStorage(null, 'filterForm');
   const [oldForm, setOldForm] = useState(oldFormData ?? null);
+  const [isUnderDevelop, setIsUnderDevelop] = useState(true);
 
   useEffect(() => {
     if (oldFormData != null) {
@@ -148,15 +150,16 @@ const LandingPage = () => {
       <div id="home" className="landing-wrapper">
         <AppHeader loadingIsFinished={loadingIsFinished} toggleMenuItemClick={toggleMenuItemClick} isHidden={isHidden}
                    setIsHidden={setIsHidden}/>
-        <div className="grid mx-0 over-flow-x-hidden flex-nowrap align-items-center justify-content-start px-3 mt-0"
-             style={{backgroundColor: '#111'}}>
-          <div className="col-auto">
-            <StaticTime/>
-          </div>
-          <div className="col pb-0">
-            <MarqueeBanner/>
-          </div>
-        </div>
+        {/* TODO Uncomment this */}
+        {/*<div className="grid mx-0 over-flow-x-hidden flex-nowrap align-items-center justify-content-start px-3 mt-0"*/}
+        {/*     style={{backgroundColor: '#111'}}>*/}
+        {/*  <div className="col-auto">*/}
+        {/*    <StaticTime/>*/}
+        {/*  </div>*/}
+        {/*  <div className="col pb-0">*/}
+        {/*    <MarqueeBanner/>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
         <div id="Carousel" className="hidden lg:flex flex-column overflow-hidden carousel-custom">
           <SliderProvider>
             <Carousel/>
@@ -201,14 +204,15 @@ const LandingPage = () => {
             <div className="grid justify-content-start mb-4">
               <div className="md:col-6 col-12">
                 <div className="grid justify-content-center">
-                  <div className="col py-0">
-                    <Button raised type="button"
-                            id="freeFiles"
-                            className="guide-btn justify-content-center w-full"
-                            onClick={previewFreeFiles}>
-                      10 فایل رایگان
-                    </Button>
-                  </div>
+                  {/* TODO Uncomment this */}
+                  {/*<div className="col py-0">*/}
+                  {/*  <Button raised type="button"*/}
+                  {/*          id="freeFiles"*/}
+                  {/*          className="guide-btn justify-content-center w-full"*/}
+                  {/*          onClick={previewFreeFiles}>*/}
+                  {/*    10 فایل رایگان*/}
+                  {/*  </Button>*/}
+                  {/*</div>*/}
                   <div className="col py-0">
                     <Button raised type="button"
                             className="guide-btn justify-content-center w-full fs-12px px-0 lh-14px"
@@ -216,14 +220,15 @@ const LandingPage = () => {
                       فایل استعلامی / غیر استعلامی
                     </Button>
                   </div>
-                  <div className="col py-0">
-                    <Link href="/subscriptions">
-                      <Button raised type="button"
-                              className="guide-btn justify-content-center w-full">
-                        خرید اشتراک
-                      </Button>
-                    </Link>
-                  </div>
+                  {/* TODO Uncomment this */}
+                  {/*<div className="col py-0">*/}
+                  {/*  <Link href="/subscriptions">*/}
+                  {/*    <Button raised type="button"*/}
+                  {/*            className="guide-btn justify-content-center w-full">*/}
+                  {/*      خرید اشتراک*/}
+                  {/*    </Button>*/}
+                  {/*  </Link>*/}
+                  {/*</div>*/}
                 </div>
                 <div className="grid mt-3">
                   <div className="col-12 py-0 text-center">
@@ -347,6 +352,21 @@ const LandingPage = () => {
             </Button>
           </div>
 
+        </div>
+      </Dialog>
+
+      <Dialog header={<h2>توجه</h2>}
+              onHide={() => setIsUnderDevelop(false)}
+              closable={true}
+              visible={isUnderDevelop}>
+        <div className={styles.toast_wrapper}>
+          <p>فایل‌های نمایش داده شده صرفا جهت تست و آزمایشی است</p>
+          <div className="flex justify-content-end w-full mt-auto gap-2">
+            <Button
+              onClick={() => setIsUnderDevelop(false)}>
+              تایید
+            </Button>
+          </div>
         </div>
       </Dialog>
     </div>
