@@ -141,7 +141,7 @@ const AppHeader = ({toggleMenuItemClick, isHidden, loadingIsFinished, setIsHidde
     // style={{ backgroundColor: '#083b19' }}
     <div
       className="py-4 px-4 mx-0 lg:px-8 flex align-items-center justify-content-between relative headerColor fixed-top header lg:pt-0 lg:pb-3">
-      <h1 className="header-text">اینجا محل آگهی واسطه‌ها <span>نیست</span></h1>
+      <h1 className="header-text">رو<span>در</span>رو محل آگهی واسطه‌ها <span>نیست</span></h1>
       <Link href="/" className="flex align-items-center">
         <Image src={data?.logo && typeof data?.logo === 'string' ? data?.logo : defaultImage} alt="Preview" width={50}
                height={50} style={{objectFit: 'cover'}}/>
